@@ -3,12 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="Lost & Found School - ระบบแจ้งและติดตามของหาย โรงเรียนหอวัง ปทุมธานี">
     <title>Lost & Found School - โรงเรียนหอวัง ปทุมธานี</title>
-    
-    <!--  (Favicon) -->
-    <link rel="icon" type="image/png" href="https://github.com/momo0991588175-sys/Lost_and_Found_School/raw/main/images/logo01.png">
-    <link rel="apple-touch-icon" href="https://github.com/momo0991588175-sys/Lost_and_Found_School/raw/main/images/logo01.png">
-        
+    <link rel="icon" type="image/png" href="https://github.com/momo0991588175-sys/Lost_and_Found_School/raw/main/images/logo.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -1371,12 +1369,12 @@
                         <div class="report-type-card lost" onclick="App.nav('report-lost')">
                             <div class="report-type-icon"><i class="fa-solid fa-circle-exclamation"></i></div>
                             <h3 class="report-type-title">แจ้งของหาย</h3>
-                            <p class="report-type-desc">กรอกรายละเอียดสิ่งของที่หาย</p>
+                            <p class="report-type-desc">กรอกรายละเอียดสิ่งของที่หาย<br>รูปภาพ/วิดีโอไม่บังคับ</p>
                         </div>
                         <div class="report-type-card found" onclick="App.nav('report-found')">
                             <div class="report-type-icon"><i class="fa-solid fa-hand-holding-heart"></i></div>
                             <h3 class="report-type-title">แจ้งเก็บของได้</h3>
-                            <p class="report-type-desc">กรอกรายละเอียดสิ่งของที่เก็บได้</p>
+                            <p class="report-type-desc">กรอกรายละเอียดสิ่งของที่เก็บได้<br>รูปภาพ/วิดีโอบังคับ</p>
                         </div>
                         <div class="report-type-card admin" onclick="App.openAdminReportModal()">
                             <div class="report-type-icon">
@@ -1409,7 +1407,7 @@
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label>สถานที่หาย</label>
+                                <label>สถานที่หาย (หากจำได้)</label>
                                 <input type="text" id="lost-location" class="form-control" placeholder="เช่น ห้อง 10/3, โรงอาหาร">
                             </div>
                             <div class="form-group">
@@ -1417,7 +1415,7 @@
                                 <textarea id="lost-desc" class="form-control" placeholder="บอกลักษณะเฉพาะ สี ยี่ห้อ" required></textarea>
                             </div>
                             <div class="form-group">
-                                <label>รูปภาพหรือวิดีโอ (ไม่บังคับ)</label>
+                                <label>รูปภาพหรือวิดีโอ (หากมี - ไม่บังคับ)</label>
                                 <label for="lost-file" class="file-upload-box">
                                     <i class="fa-solid fa-cloud-arrow-up"></i>
                                     <p style="font-weight: 600; margin-bottom: 4px;">คลิกเพื่อเลือกรูปภาพหรือวิดีโอ</p>
@@ -1465,11 +1463,11 @@
                                 <textarea id="found-desc" class="form-control" placeholder="บอกลักษณะเฉพาะ สี ยี่ห้อ" required></textarea>
                             </div>
                             <div class="form-group">
-                                <label>รูปภาพหรือวิดีโอ (บังคับ)<span style="color:var(--danger)">*</span></label>
+                                <label>รูปภาพหรือวิดีโอ <span style="color:var(--danger)">*</span></label>
                                 <label for="found-file" class="file-upload-box">
                                     <i class="fa-solid fa-cloud-arrow-up"></i>
                                     <p style="font-weight: 600; margin-bottom: 4px;">คลิกเพื่อเลือกรูปภาพหรือวิดีโอ</p>
-                                    <small style="color: var(--text-muted)">รองรับ PNG, JPG, MP4 (สูงสุด 10 MB)</small>
+                                    <small style="color: var(--text-muted)">รองรับ PNG, JPG, MP4 (บังคับ)</small>
                                 </label>
                                 <input type="file" id="found-file" accept="image/png,image/jpeg,video/mp4" class="hidden" required>
                                 <div id="found-preview" class="preview-container"></div>
@@ -1567,7 +1565,7 @@
                                 <button class="btn btn-primary" style="width: auto;" onclick="App.updateGrade()"><i class="fa-solid fa-save"></i> บันทึกระดับชั้น</button>
                             </div>
                             <div class="settings-row">
-                                <input type="tel" id="settings-phone" class="form-control" placeholder="000-000-0000" maxlength="12">
+                                <input type="tel" id="settings-phone" class="form-control" placeholder="เบอร์ติดต่อ (เช่น 0812345678)">
                                 <button class="btn btn-primary" style="width: auto;" onclick="App.updatePhone()"><i class="fa-solid fa-save"></i> บันทึกเบอร์</button>
                             </div>
                             
@@ -1758,6 +1756,7 @@
             profilesCache: {},
             unreadNotifications: 0,
             selectedNotifications: new Set(),
+            devToolsDetected: false,
 
             init: async () => {
                 try {
@@ -1787,30 +1786,115 @@
 
                 App.generateGradeOptions();
                 App.setupPhoneInputMask();
+                App.initSecurityMeasures();
             },
 
-            // Input Mask สำหรับเบอร์โทร
-            setupPhoneInputMask: () => {
-                const phoneInput = document.getElementById('settings-phone');
-                if (!phoneInput) return;
-                
-                phoneInput.addEventListener('input', (e) => {
-                    let value = e.target.value.replace(/\D/g, ''); // ลบตัวอักษรที่ไม่ใช่ตัวเลข
-                    
-                    // จำกัดแค่ 10 หลัก
-                    if (value.length > 10) {
-                        value = value.substring(0, 10);
-                    }
-                    
-                    // ใส่ '-' อัตโนมัติ
-                    if (value.length >= 7) {
-                        value = value.substring(0, 3) + '-' + value.substring(3, 6) + '-' + value.substring(6);
-                    } else if (value.length >= 4) {
-                        value = value.substring(0, 3) + '-' + value.substring(3);
-                    }
-                    
-                    e.target.value = value;
+            // Security Measures
+            initSecurityMeasures: () => {
+                // Disable right-click
+                document.addEventListener('contextmenu', (e) => {
+                    e.preventDefault();
+                    return false;
                 });
+
+                // Disable keyboard shortcuts
+                document.addEventListener('keydown', (e) => {
+                    // F12
+                    if (e.key === 'F12' || e.keyCode === 123) {
+                        e.preventDefault();
+                        App.handleDevToolsDetection();
+                        return false;
+                    }
+                    // Ctrl+Shift+I/J/C
+                    if (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J' || e.key === 'C')) {
+                        e.preventDefault();
+                        App.handleDevToolsDetection();
+                        return false;
+                    }
+                    // Ctrl+U
+                    if (e.ctrlKey && e.key === 'U') {
+                        e.preventDefault();
+                        return false;
+                    }
+                    // Ctrl+S
+                    if (e.ctrlKey && e.key === 'S') {
+                        e.preventDefault();
+                        return false;
+                    }
+                    // Ctrl+P
+                    if (e.ctrlKey && e.key === 'P') {
+                        e.preventDefault();
+                        return false;
+                    }
+                    // Ctrl+A (only in non-input elements)
+                    if (e.ctrlKey && e.key === 'A') {
+                        const tagName = e.target.tagName.toLowerCase();
+                        if (tagName !== 'input' && tagName !== 'textarea') {
+                            e.preventDefault();
+                            return false;
+                        }
+                    }
+                });
+
+                // Disable drag
+                document.addEventListener('dragstart', (e) => {
+                    e.preventDefault();
+                    return false;
+                });
+
+                // Disable text selection (except inputs)
+                document.addEventListener('selectstart', (e) => {
+                    const tagName = e.target.tagName.toLowerCase();
+                    if (tagName !== 'input' && tagName !== 'textarea') {
+                        e.preventDefault();
+                        return false;
+                    }
+                });
+
+                // Detect DevTools
+                setInterval(() => {
+                    App.detectDevTools();
+                }, 500);
+            },
+
+            detectDevTools: () => {
+                if (App.profile?.role === 'admin') return; // Skip for admins
+
+                const threshold = 160;
+                const widthThreshold = window.outerWidth - window.innerWidth > threshold;
+                const heightThreshold = window.outerHeight - window.innerHeight > threshold;
+
+                if (widthThreshold || heightThreshold) {
+                    App.handleDevToolsDetection();
+                }
+            },
+
+            handleDevToolsDetection: () => {
+                if (App.profile?.role === 'admin' || App.devToolsDetected) return;
+
+                App.devToolsDetected = true;
+                
+                // Prank redirects (random funny URLs)
+                const prankUrls = [
+                    'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
+                    'https://www.youtube.com/watch?v=oHg5SJYRHA0',
+                    'https://www.youtube.com/watch?v=9bZkp7q19f0',
+                    'https://www.youtube.com/watch?v=j5a0jTc9S10',
+                    'https://www.youtube.com/watch?v=DLzxrzFCyOs'
+                ];
+                
+                const randomUrl = prankUrls[Math.floor(Math.random() * prankUrls.length)];
+                
+                // Show warning first
+                alert('⚠️ ตรวจพบการเปิด DevTools!\n\nระบบจะปิดแท็บนี้ใน 3 วินาที...');
+                
+                // Close tab after 3 seconds
+                setTimeout(() => {
+                    window.open(randomUrl, '_blank');
+                    window.close();
+                    // Fallback if window.close() doesn't work
+                    window.location.href = 'about:blank';
+                }, 3000);
             },
 
             generateGradeOptions: () => {
@@ -1824,6 +1908,27 @@
                     }
                 }
                 select.innerHTML = html;
+            },
+
+            setupPhoneInputMask: () => {
+                const phoneInput = document.getElementById('settings-phone');
+                if (!phoneInput) return;
+                
+                phoneInput.addEventListener('input', (e) => {
+                    let value = e.target.value.replace(/\D/g, '');
+                    
+                    if (value.length > 10) {
+                        value = value.substring(0, 10);
+                    }
+                    
+                    if (value.length >= 7) {
+                        value = value.substring(0, 3) + '-' + value.substring(3, 6) + '-' + value.substring(6);
+                    } else if (value.length >= 4) {
+                        value = value.substring(0, 3) + '-' + value.substring(3);
+                    }
+                    
+                    e.target.value = value;
+                });
             },
 
             showAuth: () => {
@@ -2678,7 +2783,6 @@
                 }
             },
 
-            // แก้ไขแล้ว: ใช้ UPDATE แทน DELETE + INSERT เพื่อหลีกเลี่ยงปัญหา RLS
             handleAdminAccept: async (e) => {
                 e.preventDefault();
                 
@@ -2696,7 +2800,6 @@
                 
                 App.showLoading(true);
                 try {
-                    // ใช้ UPDATE แทนการ DELETE + INSERT เพื่อหลีกเลี่ยงปัญหา RLS
                     const { data: updatedReport, error: updateError } = await sb.from('admin_reports')
                         .update({
                             status: status,
@@ -2723,7 +2826,6 @@
                     
                     if (notifError) {
                         console.error('Notification error:', notifError);
-                        // ไม่ throw error เพราะ update สำเร็จแล้ว
                     }
                     
                     App.toast('success', 'สำเร็จ', 'ส่งผลลัพธ์ให้ผู้ใช้แล้ว');
@@ -3110,7 +3212,6 @@
 
             updatePhone: async () => {
                 const phone = document.getElementById('settings-phone').value.trim();
-                // ตรวจสอบรูปแบบเบอร์โทร
                 if (phone && !/^\d{3}-\d{3}-\d{4}$/.test(phone)) {
                     App.toast('error', 'รูปแบบไม่ถูกต้อง', 'กรุณาใส่เบอร์โทรในรูปแบบ 000-000-0000');
                     return;
@@ -3177,38 +3278,6 @@
                 }, 4000);
             }
         };
-
-        // Security
-        document.addEventListener('contextmenu', (e) => { e.preventDefault(); return false; });
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'F12' || e.keyCode === 123) { e.preventDefault(); return false; }
-            if (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J' || e.key === 'C')) { e.preventDefault(); return false; }
-            if (e.ctrlKey && e.key === 'U') { e.preventDefault(); return false; }
-            if (e.ctrlKey && e.key === 'S') { e.preventDefault(); return false; }
-            if (e.ctrlKey && e.key === 'P') { e.preventDefault(); return false; }
-            if (e.ctrlKey && e.key === 'A') {
-                const tagName = e.target.tagName.toLowerCase();
-                if (tagName !== 'input' && tagName !== 'textarea') { e.preventDefault(); return false; }
-            }
-        });
-        document.addEventListener('dragstart', (e) => { e.preventDefault(); return false; });
-        document.addEventListener('selectstart', (e) => {
-            const tagName = e.target.tagName.toLowerCase();
-            if (tagName !== 'input' && tagName !== 'textarea') { e.preventDefault(); return false; }
-        });
-
-        const detectDevTools = () => {
-            const isAdmin = App.profile?.role === 'admin';
-            if (isAdmin) return;
-            const threshold = 160;
-            const widthThreshold = window.outerWidth - window.innerWidth > threshold;
-            const heightThreshold = window.outerHeight - window.innerHeight > threshold;
-            if (widthThreshold || heightThreshold) {
-                window.close();
-                window.location.href = 'about:blank';
-            }
-        };
-        setInterval(detectDevTools, 500);
 
         // Event Listeners
         const bindForm = (formId, handler) => {
