@@ -74,13 +74,11 @@
             to { transform: rotate(360deg); } 
         }
 
-        /* Scrollbar Styling */
         ::-webkit-scrollbar { width: 8px; height: 8px; }
         ::-webkit-scrollbar-track { background: var(--border-light); }
         ::-webkit-scrollbar-thumb { background: var(--primary-light); border-radius: 4px; }
         ::-webkit-scrollbar-thumb:hover { background: var(--primary); }
 
-        /* Auth Page */
         #page-auth { 
             display: flex; 
             align-items: center; 
@@ -168,7 +166,6 @@
             overflow-y: auto;
         }
         
-        /* Buttons */
         .btn { 
             padding: 14px 24px; 
             border: none; 
@@ -295,7 +292,6 @@
             color: var(--primary-dark);
         }
 
-        /* App Layout */
         #app-container { 
             display: flex; 
             flex-direction: column; 
@@ -345,7 +341,6 @@
             font-weight: 400;
         }
 
-        /* Notification Button */
         .header-notification-btn {
             position: relative;
             background: rgba(255,255,255,0.2);
@@ -472,7 +467,6 @@
             letter-spacing: -0.5px;
         }
 
-        /* Cards */
         .card { 
             background: rgba(255, 255, 255, 0.98);
             backdrop-filter: blur(20px);
@@ -575,7 +569,6 @@
             font-weight: 500;
         }
 
-        /* Items Grid */
         .items-grid { 
             display: grid; 
             grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); 
@@ -664,7 +657,6 @@
             flex-wrap: wrap;
         }
 
-        /* Report Type Selection */
         .report-type-selection { 
             display: grid; 
             grid-template-columns: repeat(3, 1fr); 
@@ -739,7 +731,6 @@
             line-height: 1.6;
         }
 
-        /* File Upload */
         .file-upload-box { 
             border: 2px dashed var(--border); 
             border-radius: var(--radius); 
@@ -784,7 +775,6 @@
             object-fit: cover;
         }
 
-        /* Modal */
         .modal-overlay { 
             position: fixed; 
             inset: 0; 
@@ -846,7 +836,6 @@
             background: rgba(239, 68, 68, 0.1);
         }
 
-        /* Admin Section */
         .admin-section { 
             background: var(--border-light); 
             padding: 24px; 
@@ -920,7 +909,6 @@
             color: var(--danger-dark);
         }
 
-        /* Admin Report Card */
         .admin-report-card { 
             background: white; 
             border-radius: var(--radius-lg); 
@@ -1006,7 +994,6 @@
             min-width: 100px;
         }
 
-        /* Settings */
         .settings-section { 
             margin-bottom: 32px; 
             padding-bottom: 32px; 
@@ -1043,7 +1030,6 @@
             flex: 1;
         }
 
-        /* Toast & Loading */
         #toast-container { 
             position: fixed; 
             top: 20px; 
@@ -1092,7 +1078,6 @@
             box-shadow: var(--shadow-md);
         }
 
-        /* Notification Page */
         .notification-page-header { 
             display: flex; 
             justify-content: space-between; 
@@ -1194,7 +1179,6 @@
             color: #991B1B;
         }
 
-        /* User Detail Modal */
         .user-detail-grid { 
             display: grid; 
             grid-template-columns: repeat(2, 1fr); 
@@ -1221,7 +1205,37 @@
             word-break: break-all;
         }
 
-        /* Responsive */
+        /* Account Info Box */
+        .account-info-box {
+            background: linear-gradient(135deg, #F0F9FF 0%, #E0F2FE 100%);
+            border: 1px solid #BAE6FD;
+            border-radius: var(--radius);
+            padding: 16px;
+            margin-top: 16px;
+        }
+        
+        .account-info-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 8px;
+            font-size: 13px;
+        }
+        
+        .account-info-item:last-child {
+            margin-bottom: 0;
+        }
+        
+        .account-info-item i {
+            color: var(--primary);
+            width: 16px;
+        }
+        
+        .account-info-item span {
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
         @media (max-width: 768px) {
             .app-layout { flex-direction: column; }
             .sidebar { 
@@ -1548,8 +1562,24 @@
                                 <button class="btn btn-primary" style="width: auto;" onclick="App.updateGrade()"><i class="fa-solid fa-save"></i> บันทึกระดับชั้น</button>
                             </div>
                             <div class="settings-row">
-                                <input type="tel" id="settings-phone" class="form-control" placeholder="เบอร์ติดต่อ (เช่น 0812345678)">
+                                <input type="tel" id="settings-phone" class="form-control" placeholder="000-000-0000" maxlength="12">
                                 <button class="btn btn-primary" style="width: auto;" onclick="App.updatePhone()"><i class="fa-solid fa-save"></i> บันทึกเบอร์</button>
+                            </div>
+                            
+                            <!-- Account Info Box -->
+                            <div class="account-info-box">
+                                <div class="account-info-item">
+                                    <i class="fa-solid fa-envelope"></i>
+                                    <span>อีเมล: <strong id="account-email">-</strong></span>
+                                </div>
+                                <div class="account-info-item">
+                                    <i class="fa-solid fa-shield-halved"></i>
+                                    <span>ยศ: <strong id="account-role">-</strong></span>
+                                </div>
+                                <div class="account-info-item">
+                                    <i class="fa-solid fa-clock"></i>
+                                    <span>บัญชีถูกสร้างเมื่อ: <strong id="account-created">-</strong></span>
+                                </div>
                             </div>
                         </div>
                         <div class="settings-section">
@@ -1751,6 +1781,31 @@
                 });
 
                 App.generateGradeOptions();
+                App.setupPhoneInputMask();
+            },
+
+            // Input Mask สำหรับเบอร์โทร
+            setupPhoneInputMask: () => {
+                const phoneInput = document.getElementById('settings-phone');
+                if (!phoneInput) return;
+                
+                phoneInput.addEventListener('input', (e) => {
+                    let value = e.target.value.replace(/\D/g, ''); // ลบตัวอักษรที่ไม่ใช่ตัวเลข
+                    
+                    // จำกัดแค่ 10 หลัก
+                    if (value.length > 10) {
+                        value = value.substring(0, 10);
+                    }
+                    
+                    // ใส่ '-' อัตโนมัติ
+                    if (value.length >= 7) {
+                        value = value.substring(0, 3) + '-' + value.substring(3, 6) + '-' + value.substring(6);
+                    } else if (value.length >= 4) {
+                        value = value.substring(0, 3) + '-' + value.substring(3);
+                    }
+                    
+                    e.target.value = value;
+                });
             },
 
             generateGradeOptions: () => {
@@ -1893,6 +1948,35 @@
                 
                 const phoneInput = document.getElementById('settings-phone');
                 if(phoneInput) phoneInput.value = App.profile.phone || '';
+                
+                // แสดงข้อมูลบัญชี
+                const accountEmail = document.getElementById('account-email');
+                if(accountEmail) accountEmail.textContent = App.user.email || '-';
+                
+                const accountRole = document.getElementById('account-role');
+                if(accountRole) {
+                    if (App.profile.role === 'admin') accountRole.textContent = 'ผู้ดูแลระบบ';
+                    else if (App.profile.role === 'teacher') accountRole.textContent = 'ครู';
+                    else accountRole.textContent = 'นักเรียน';
+                }
+                
+                const accountCreated = document.getElementById('account-created');
+                if(accountCreated && App.profile.created_at) {
+                    const date = new Date(App.profile.created_at);
+                    const dateStr = date.toLocaleDateString('th-TH', {
+                        year: 'numeric',
+                        month: '2-digit',
+                        day: '2-digit'
+                    });
+                    const timeStr = date.toLocaleTimeString('th-TH', {
+                        hour: '2-digit',
+                        minute: '2-digit',
+                        second: '2-digit'
+                    });
+                    accountCreated.textContent = `${dateStr} - ${timeStr}`;
+                } else if(accountCreated) {
+                    accountCreated.textContent = '-';
+                }
             },
 
             loadDashboardStats: async () => {
@@ -2174,7 +2258,7 @@
 
             loadProfilesCache: async () => {
                 try {
-                    const { data: profiles } = await sb.from('profiles').select('id, full_name, email, avatar_url, role, birthday, homeroom, grade_level, phone, is_banned');
+                    const { data: profiles } = await sb.from('profiles').select('id, full_name, email, avatar_url, role, birthday, homeroom, grade_level, phone, is_banned, created_at');
                     if (profiles) {
                         profiles.forEach(p => {
                             App.profilesCache[p.id] = p;
@@ -2589,6 +2673,7 @@
                 }
             },
 
+            // แก้ไขแล้ว: ใช้ UPDATE แทน DELETE + INSERT เพื่อหลีกเลี่ยงปัญหา RLS
             handleAdminAccept: async (e) => {
                 e.preventDefault();
                 
@@ -2602,47 +2687,47 @@
                     return;
                 }
                 
-                if (!confirm(`ยืนยันการส่งผลลัพธ์? ข้อมูลจะเปลี่ยนเป็นสำเนาใหม่`)) return;
+                if (!confirm(`ยืนยันการส่งผลลัพธ์?`)) return;
                 
                 App.showLoading(true);
                 try {
-                    const { data: originalReport } = await sb.from('admin_reports').select('user_id, subject, description, image_url').eq('id', reportId).single();
-                    if (!originalReport) throw new Error('ไม่พบคำร้อง');
+                    // ใช้ UPDATE แทนการ DELETE + INSERT เพื่อหลีกเลี่ยงปัญหา RLS
+                    const { data: updatedReport, error: updateError } = await sb.from('admin_reports')
+                        .update({
+                            status: status,
+                            admin_title: title,
+                            admin_response: detail,
+                            resolved_at: new Date().toISOString()
+                        })
+                        .eq('id', reportId)
+                        .select()
+                        .single();
                     
-                    const { error: deleteError } = await sb.from('admin_reports').delete().eq('id', reportId);
-                    if (deleteError) throw deleteError;
+                    if (updateError) throw updateError;
                     
-                    const { data: newReport, error: insertError } = await sb.from('admin_reports').insert({
-                        user_id: originalReport.user_id,
-                        subject: `[สำเนา] ${originalReport.subject}`,
-                        description: originalReport.description,
-                        image_url: originalReport.image_url,
-                        status: status,
-                        admin_title: title,
-                        admin_response: detail,
-                        resolved_at: new Date().toISOString()
-                    }).select().single();
-                    
-                    if (insertError) throw insertError;
-                    
+                    // สร้าง notification ให้ผู้ส่ง
                     const notifType = status === 'resolved' ? 'admin_response' : 'admin_reject';
                     const { error: notifError } = await sb.from('notifications').insert({
-                        user_id: originalReport.user_id,
+                        user_id: updatedReport.user_id,
                         type: notifType,
-                        admin_report_id: newReport.id,
+                        admin_report_id: reportId,
                         title: title,
                         message: detail,
                         is_read: false
                     });
                     
-                    if (notifError) throw notifError;
+                    if (notifError) {
+                        console.error('Notification error:', notifError);
+                        // ไม่ throw error เพราะ update สำเร็จแล้ว
+                    }
                     
-                    App.toast('success', 'สำเร็จ', 'ส่งผลลัพธ์ให้ผู้ใช้แล้ว (ข้อมูลเปลี่ยนเป็นสำเนาใหม่)');
+                    App.toast('success', 'สำเร็จ', 'ส่งผลลัพธ์ให้ผู้ใช้แล้ว');
                     App.closeAdminAcceptModal();
                     App.loadAdminReports();
                     App.loadDashboardStats();
                 } catch (err) {
                     App.toast('error', 'เกิดข้อผิดพลาด', err.message);
+                    console.error('Admin accept error:', err);
                 } finally {
                     App.showLoading(false);
                 }
@@ -2746,6 +2831,22 @@
                 else if (user.role === 'teacher') roleText = 'ครู';
                 else roleText = 'นักเรียน';
                 
+                let createdText = '-';
+                if (user.created_at) {
+                    const date = new Date(user.created_at);
+                    const dateStr = date.toLocaleDateString('th-TH', {
+                        year: 'numeric',
+                        month: '2-digit',
+                        day: '2-digit'
+                    });
+                    const timeStr = date.toLocaleTimeString('th-TH', {
+                        hour: '2-digit',
+                        minute: '2-digit',
+                        second: '2-digit'
+                    });
+                    createdText = `${dateStr} - ${timeStr}`;
+                }
+                
                 document.getElementById('user-detail-content').innerHTML = `
                     <div style="text-align:center; margin-bottom:20px;">
                         <img src="${user.avatar_url || `https://ui-avatars.com/api/?name=${(user.full_name || 'U').charAt(0)}&background=6366F1&color=fff&size=150`}" style="width:100px; height:100px; border-radius:50%; object-fit:cover; border:4px solid var(--primary);">
@@ -2760,7 +2861,7 @@
                         <div class="user-detail-item"><div class="user-detail-label"><i class="fa-solid fa-door-open"></i> ห้อง Homeroom</div><div class="user-detail-value">${user.homeroom || '-'}</div></div>
                         <div class="user-detail-item"><div class="user-detail-label"><i class="fa-solid fa-graduation-cap"></i> ระดับชั้น</div><div class="user-detail-value">${user.grade_level || '-'}</div></div>
                         <div class="user-detail-item"><div class="user-detail-label"><i class="fa-solid fa-phone"></i> เบอร์ติดต่อ</div><div class="user-detail-value">${user.phone || '-'}</div></div>
-                        <div class="user-detail-item"><div class="user-detail-label"><i class="fa-solid fa-clock"></i> สร้างเมื่อ</div><div class="user-detail-value">${user.created_at ? new Date(user.created_at).toLocaleDateString('th-TH') : '-'}</div></div>
+                        <div class="user-detail-item"><div class="user-detail-label"><i class="fa-solid fa-clock"></i> สร้างเมื่อ</div><div class="user-detail-value">${createdText}</div></div>
                         <div class="user-detail-item"><div class="user-detail-label"><i class="fa-solid fa-ban"></i> สถานะ</div><div class="user-detail-value">${user.is_banned ? '<span style="color:var(--danger);">ถูกแบน</span>' : '<span style="color:var(--success);">ปกติ</span>'}</div></div>
                     </div>
                     <div style="margin-top:20px; text-align:center;">
@@ -3004,6 +3105,11 @@
 
             updatePhone: async () => {
                 const phone = document.getElementById('settings-phone').value.trim();
+                // ตรวจสอบรูปแบบเบอร์โทร
+                if (phone && !/^\d{3}-\d{3}-\d{4}$/.test(phone)) {
+                    App.toast('error', 'รูปแบบไม่ถูกต้อง', 'กรุณาใส่เบอร์โทรในรูปแบบ 000-000-0000');
+                    return;
+                }
                 App.showLoading(true);
                 try {
                     const { error } = await sb.from('profiles').update({ phone: phone || null }).eq('id', App.user.id);
