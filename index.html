@@ -4,9 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="description" content="Lost & Found School - ระบบแจ้งและติดตามของหาย โรงเรียนหอวัง ปทุมธานี">
     <title>Lost & Found School - โรงเรียนหอวัง ปทุมธานี</title>
+    
+    <!-- Favicon แก้ไขเป็น logo01.png ตามที่ขอ -->
     <link rel="icon" type="image/png" href="https://github.com/momo0991588175-sys/Lost_and_Found_School/raw/main/images/logo01.png">
+    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -14,1249 +16,234 @@
 
     <style>
         :root {
-            --primary: #6366F1;
-            --primary-dark: #4F46E5;
-            --primary-light: #818CF8;
-            --success: #10B981;
-            --success-dark: #059669;
-            --danger: #EF4444;
-            --danger-dark: #DC2626;
-            --warning: #F59E0B;
-            --warning-dark: #D97706;
-            --admin-gold: #FFD700;
-            --student-blue: #3B82F6;
-            --teacher-red: #DC2626;
-            --bg: #F8FAFC;
-            --card: #FFFFFF;
-            --text: #0F172A;
-            --text-secondary: #475569;
-            --text-muted: #94A3B8;
-            --border: #E2E8F0;
-            --border-light: #F1F5F9;
-            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-            --shadow-md: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-            --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-            --shadow-xl: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-            --radius: 12px;
-            --radius-lg: 16px;
-            --radius-xl: 24px;
+            --primary: #6366F1; --primary-dark: #4F46E5; --primary-light: #818CF8;
+            --success: #10B981; --success-dark: #059669;
+            --danger: #EF4444; --danger-dark: #DC2626;
+            --warning: #F59E0B; --warning-dark: #D97706;
+            --admin-gold: #FFD700; --student-blue: #3B82F6; --teacher-red: #DC2626;
+            --bg: #F8FAFC; --card: #FFFFFF;
+            --text: #0F172A; --text-secondary: #475569; --text-muted: #94A3B8;
+            --border: #E2E8F0; --border-light: #F1F5F9;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+            --radius: 12px; --radius-lg: 16px; --radius-xl: 24px;
             --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        
         body { 
-            font-family: 'Prompt', -apple-system, BlinkMacSystemFont, sans-serif; 
+            font-family: 'Prompt', sans-serif; 
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); 
             color: var(--text); 
             min-height: 100vh;
             -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
         }
         
         .hidden { display: none !important; }
-        .fade-in { animation: fadeIn 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
-        
-        @keyframes fadeIn { 
-            from { opacity: 0; transform: translateY(20px); } 
-            to { opacity: 1; transform: translateY(0); } 
-        }
-        
-        @keyframes slideIn { 
-            from { transform: translateX(100%); opacity: 0; } 
-            to { transform: translateX(0); opacity: 1; } 
-        }
-        
-        @keyframes pulse { 
-            0%, 100% { transform: scale(1); } 
-            50% { transform: scale(1.1); } 
-        }
-        
-        @keyframes spin { 
-            to { transform: rotate(360deg); } 
-        }
+        .fade-in { animation: fadeIn 0.4s ease-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes slideIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+        @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); } }
+        @keyframes spin { to { transform: rotate(360deg); } }
 
-        ::-webkit-scrollbar { width: 8px; height: 8px; }
+        ::-webkit-scrollbar { width: 8px; }
         ::-webkit-scrollbar-track { background: var(--border-light); }
         ::-webkit-scrollbar-thumb { background: var(--primary-light); border-radius: 4px; }
-        ::-webkit-scrollbar-thumb:hover { background: var(--primary); }
 
-        #page-auth { 
-            display: flex; 
-            align-items: center; 
-            justify-content: center; 
-            min-height: 100vh; 
-            padding: 20px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        }
-        
-        .auth-box { 
-            width: 100%; 
-            max-width: 460px; 
-            background: rgba(255, 255, 255, 0.98);
-            backdrop-filter: blur(20px);
-            padding: 48px; 
-            border-radius: var(--radius-xl); 
-            box-shadow: var(--shadow-xl);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-        
+        /* Auth & Layout */
+        #page-auth { display: flex; align-items: center; justify-content: center; min-height: 100vh; padding: 20px; }
+        .auth-box { width: 100%; max-width: 460px; background: rgba(255, 255, 255, 0.98); padding: 48px; border-radius: var(--radius-xl); box-shadow: var(--shadow-lg); }
         .auth-header { text-align: center; margin-bottom: 36px; }
-        
-        .auth-logo { 
-            width: 110px; 
-            height: 110px; 
-            border-radius: 50%; 
-            object-fit: contain; 
-            margin-bottom: 24px; 
-            box-shadow: var(--shadow-lg);
-            padding: 12px; 
-            background: white;
-            border: 3px solid var(--primary-light);
-        }
-        
-        .auth-header h1 { 
-            font-size: 28px; 
-            font-weight: 700; 
-            margin-bottom: 8px; 
-            color: var(--text);
-            letter-spacing: -0.5px;
-        }
-        
-        .auth-header p { 
-            color: var(--text-secondary); 
-            font-size: 14px;
-            font-weight: 400;
-        }
+        .auth-logo { width: 110px; height: 110px; border-radius: 50%; object-fit: contain; margin-bottom: 24px; box-shadow: var(--shadow); padding: 12px; background: white; border: 3px solid var(--primary-light); }
+        .auth-header h1 { font-size: 28px; font-weight: 700; margin-bottom: 8px; }
+        .auth-header p { color: var(--text-secondary); font-size: 14px; }
         
         .form-group { margin-bottom: 20px; }
+        .form-group label { display: block; font-weight: 600; margin-bottom: 8px; font-size: 14px; }
+        .form-control { width: 100%; padding: 14px 18px; border: 2px solid var(--border); border-radius: var(--radius); font-family: inherit; font-size: 15px; transition: var(--transition); background: white; resize: none; }
+        .form-control:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1); }
+        textarea.form-control { min-height: 100px; max-height: 300px; overflow-y: auto; }
         
-        .form-group label { 
-            display: block; 
-            font-weight: 600; 
-            margin-bottom: 8px; 
-            color: var(--text); 
-            font-size: 14px;
-        }
-        
-        .form-control { 
-            width: 100%; 
-            padding: 14px 18px; 
-            border: 2px solid var(--border); 
-            border-radius: var(--radius); 
-            font-family: inherit; 
-            font-size: 15px; 
-            transition: var(--transition); 
-            background: white;
-            resize: none;
-        }
-        
-        .form-control:focus { 
-            outline: none; 
-            border-color: var(--primary); 
-            box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1);
-        }
-        
-        .form-control::placeholder {
-            color: var(--text-muted);
-        }
-        
-        textarea.form-control {
-            resize: none;
-            min-height: 100px;
-            max-height: 300px;
-            overflow-y: auto;
-        }
-        
-        .btn { 
-            padding: 14px 24px; 
-            border: none; 
-            border-radius: var(--radius); 
-            font-family: inherit; 
-            font-weight: 600; 
-            font-size: 15px; 
-            cursor: pointer; 
-            transition: var(--transition); 
-            display: inline-flex; 
-            align-items: center; 
-            justify-content: center; 
-            gap: 8px; 
-            width: 100%;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .btn::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 0;
-            height: 0;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.3);
-            transform: translate(-50%, -50%);
-            transition: width 0.6s, height 0.6s;
-        }
-        
-        .btn:active::before {
-            width: 300px;
-            height: 300px;
-        }
-        
-        .btn-primary { 
-            background: linear-gradient(135deg, var(--primary), var(--primary-dark)); 
-            color: white; 
-            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
-        }
-        
-        .btn-primary:hover { 
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(99, 102, 241, 0.4);
-        }
-        
-        .btn-success { 
-            background: linear-gradient(135deg, var(--success), var(--success-dark)); 
-            color: white;
-            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
-        }
-        
-        .btn-success:hover { 
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(16, 185, 129, 0.4);
-        }
-        
-        .btn-danger { 
-            background: linear-gradient(135deg, var(--danger), var(--danger-dark)); 
-            color: white;
-            box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
-        }
-        
-        .btn-danger:hover { 
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(239, 68, 68, 0.4);
-        }
-        
-        .btn-warning { 
-            background: linear-gradient(135deg, var(--warning), var(--warning-dark)); 
-            color: white;
-            box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
-        }
-        
-        .btn-warning:hover { 
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(245, 158, 11, 0.4);
-        }
-        
-        .btn-info { 
-            background: linear-gradient(135deg, var(--student-blue), #2563EB); 
-            color: white;
-            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
-        }
-        
-        .btn-info:hover { 
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(59, 130, 246, 0.4);
-        }
-        
-        .btn-outline { 
-            background: transparent; 
-            border: 2px solid var(--border); 
-            color: var(--text);
-        }
-        
-        .btn-outline:hover { 
-            border-color: var(--primary);
-            color: var(--primary);
-            background: rgba(99, 102, 241, 0.05);
-        }
-        
+        .btn { padding: 14px 24px; border: none; border-radius: var(--radius); font-family: inherit; font-weight: 600; font-size: 15px; cursor: pointer; transition: var(--transition); display: inline-flex; align-items: center; justify-content: center; gap: 8px; width: 100%; }
+        .btn-primary { background: linear-gradient(135deg, var(--primary), var(--primary-dark)); color: white; box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3); }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(99, 102, 241, 0.4); }
+        .btn-success { background: linear-gradient(135deg, var(--success), var(--success-dark)); color: white; }
+        .btn-success:hover { transform: translateY(-2px); }
+        .btn-danger { background: linear-gradient(135deg, var(--danger), var(--danger-dark)); color: white; }
+        .btn-danger:hover { transform: translateY(-2px); }
+        .btn-warning { background: linear-gradient(135deg, var(--warning), var(--warning-dark)); color: white; }
+        .btn-warning:hover { transform: translateY(-2px); }
+        .btn-info { background: linear-gradient(135deg, var(--student-blue), #2563EB); color: white; }
+        .btn-info:hover { transform: translateY(-2px); }
+        .btn-outline { background: transparent; border: 2px solid var(--border); color: var(--text); }
+        .btn-outline:hover { border-color: var(--primary); color: var(--primary); background: rgba(99, 102, 241, 0.05); }
         .btn-sm { padding: 10px 16px; font-size: 13px; width: auto; }
-        .btn-lg { padding: 16px 32px; font-size: 16px; }
         
-        .auth-switch { 
-            text-align: center; 
-            margin-top: 24px; 
-            font-size: 14px; 
-            color: var(--text-secondary);
-        }
-        
-        .auth-switch a { 
-            color: var(--primary); 
-            font-weight: 600; 
-            cursor: pointer; 
-            text-decoration: none;
-            transition: var(--transition);
-        }
-        
-        .auth-switch a:hover { 
-            text-decoration: underline;
-            color: var(--primary-dark);
-        }
+        .auth-switch { text-align: center; margin-top: 24px; font-size: 14px; color: var(--text-secondary); }
+        .auth-switch a { color: var(--primary); font-weight: 600; cursor: pointer; text-decoration: none; }
+        .auth-switch a:hover { text-decoration: underline; }
 
-        #app-container { 
-            display: flex; 
-            flex-direction: column; 
-            min-height: 100vh;
-        }
-        
-        .top-header { 
-            background: linear-gradient(135deg, #D4A373 0%, #BC8A5F 100%); 
-            padding: 16px 32px; 
-            box-shadow: var(--shadow-lg); 
-            display: flex; 
-            align-items: center; 
-            justify-content: space-between; 
-            gap: 16px;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            backdrop-filter: blur(10px);
-        }
-        
+        #app-container { display: flex; flex-direction: column; min-height: 100vh; }
+        .top-header { background: linear-gradient(135deg, #D4A373 0%, #BC8A5F 100%); padding: 16px 32px; box-shadow: var(--shadow-lg); display: flex; align-items: center; justify-content: space-between; gap: 16px; position: sticky; top: 0; z-index: 100; }
         .header-left { display: flex; align-items: center; gap: 16px; }
         .header-right { display: flex; align-items: center; gap: 12px; }
-        
-        .school-logo { 
-            width: 52px; 
-            height: 52px; 
-            object-fit: contain; 
-            background: white; 
-            border-radius: 50%; 
-            padding: 6px; 
-            box-shadow: var(--shadow-md);
-            border: 2px solid rgba(255, 255, 255, 0.3);
-        }
-        
-        .school-info h1 { 
-            color: white; 
-            font-size: 22px; 
-            font-weight: 700; 
-            margin-bottom: 2px; 
-            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
-            letter-spacing: -0.3px;
-        }
-        
-        .school-info p { 
-            color: rgba(255,255,255,0.95); 
-            font-size: 13px;
-            font-weight: 400;
-        }
+        .school-logo { width: 52px; height: 52px; object-fit: contain; background: white; border-radius: 50%; padding: 6px; box-shadow: var(--shadow); border: 2px solid rgba(255, 255, 255, 0.3); }
+        .school-info h1 { color: white; font-size: 22px; font-weight: 700; margin-bottom: 2px; text-shadow: 0 2px 4px rgba(0,0,0,0.2); }
+        .school-info p { color: rgba(255,255,255,0.95); font-size: 13px; }
 
-        .header-notification-btn {
-            position: relative;
-            background: rgba(255,255,255,0.2);
-            border: 2px solid rgba(255,255,255,0.3);
-            width: 48px;
-            height: 48px;
-            border-radius: 50%;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: var(--transition);
-            color: white;
-            font-size: 20px;
-            backdrop-filter: blur(10px);
-        }
-        
-        .header-notification-btn:hover {
-            background: rgba(255,255,255,0.3);
-            transform: scale(1.1);
-        }
-        
-        .notification-dot { 
-            position: absolute; 
-            top: -2px; 
-            right: -2px; 
-            width: 14px; 
-            height: 14px; 
-            background: var(--danger); 
-            border-radius: 50%; 
-            border: 2px solid white;
-            animation: pulse 1.5s infinite;
-            display: none;
-        }
-        
+        .header-notification-btn { position: relative; background: rgba(255,255,255,0.2); border: 2px solid rgba(255,255,255,0.3); width: 48px; height: 48px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: var(--transition); color: white; font-size: 20px; }
+        .header-notification-btn:hover { background: rgba(255,255,255,0.3); transform: scale(1.1); }
+        .notification-dot { position: absolute; top: -2px; right: -2px; width: 14px; height: 14px; background: var(--danger); border-radius: 50%; border: 2px solid white; animation: pulse 1.5s infinite; display: none; }
         .notification-dot.active { display: block; }
 
         .app-layout { display: flex; flex: 1; }
-        
-        .sidebar { 
-            width: 280px; 
-            background: rgba(255, 255, 255, 0.98);
-            backdrop-filter: blur(20px);
-            border-right: 1px solid var(--border);
-            padding: 24px 16px; 
-            display: flex; 
-            flex-direction: column; 
-            gap: 8px;
-            box-shadow: var(--shadow-md);
-        }
-        
-        .nav-btn { 
-            padding: 14px 18px; 
-            border: none; 
-            background: transparent; 
-            color: var(--text-secondary); 
-            border-radius: var(--radius); 
-            font-family: inherit; 
-            font-weight: 500; 
-            font-size: 14px; 
-            cursor: pointer; 
-            transition: var(--transition); 
-            display: flex; 
-            align-items: center; 
-            gap: 12px; 
-            text-align: left; 
-            position: relative;
-        }
-        
-        .nav-btn:hover { 
-            background: linear-gradient(135deg, #EEF2FF, #E0E7FF); 
-            transform: translateX(4px);
-            color: var(--primary);
-        }
-        
-        .nav-btn.active { 
-            background: linear-gradient(135deg, var(--primary), var(--primary-dark)); 
-            color: white; 
-            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
-        }
-        
+        .sidebar { width: 280px; background: rgba(255, 255, 255, 0.98); border-right: 1px solid var(--border); padding: 24px 16px; display: flex; flex-direction: column; gap: 8px; box-shadow: var(--shadow); }
+        .nav-btn { padding: 14px 18px; border: none; background: transparent; color: var(--text-secondary); border-radius: var(--radius); font-family: inherit; font-weight: 500; font-size: 14px; cursor: pointer; transition: var(--transition); display: flex; align-items: center; gap: 12px; text-align: left; }
+        .nav-btn:hover { background: linear-gradient(135deg, #EEF2FF, #E0E7FF); transform: translateX(4px); color: var(--primary); }
+        .nav-btn.active { background: linear-gradient(135deg, var(--primary), var(--primary-dark)); color: white; box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3); }
         .nav-btn i { font-size: 18px; width: 24px; }
 
-        .main-content { 
-            flex: 1; 
-            padding: 32px; 
-            overflow-y: auto;
-        }
-        
-        .page-header { 
-            display: flex; 
-            align-items: center; 
-            gap: 16px; 
-            margin-bottom: 32px;
-        }
-        
-        .back-btn { 
-            background: white; 
-            border: 2px solid var(--border); 
-            width: 46px; 
-            height: 46px; 
-            border-radius: 50%; 
-            cursor: pointer; 
-            display: flex; 
-            align-items: center; 
-            justify-content: center; 
-            transition: var(--transition); 
-            box-shadow: var(--shadow);
-            color: var(--text);
-        }
-        
-        .back-btn:hover { 
-            border-color: var(--primary); 
-            color: var(--primary); 
-            transform: translateX(-4px);
-            box-shadow: var(--shadow-md);
-        }
-        
-        .page-title { 
-            font-size: 30px; 
-            font-weight: 700; 
-            color: white; 
-            text-shadow: 0 2px 8px rgba(0,0,0,0.2);
-            letter-spacing: -0.5px;
-        }
+        .main-content { flex: 1; padding: 32px; overflow-y: auto; }
+        .page-header { display: flex; align-items: center; gap: 16px; margin-bottom: 32px; }
+        .back-btn { background: white; border: 2px solid var(--border); width: 46px; height: 46px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: var(--transition); box-shadow: var(--shadow); color: var(--text); }
+        .back-btn:hover { border-color: var(--primary); color: var(--primary); transform: translateX(-4px); }
+        .page-title { font-size: 30px; font-weight: 700; color: white; text-shadow: 0 2px 8px rgba(0,0,0,0.2); }
 
-        .card { 
-            background: rgba(255, 255, 255, 0.98);
-            backdrop-filter: blur(20px);
-            border-radius: var(--radius-xl); 
-            padding: 36px; 
-            box-shadow: var(--shadow-lg); 
-            margin-bottom: 24px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
+        .card { background: rgba(255, 255, 255, 0.98); border-radius: var(--radius-xl); padding: 36px; box-shadow: var(--shadow-lg); margin-bottom: 24px; }
+        .profile-card { text-align: center; max-width: 680px; margin: 0 auto; }
+        .avatar-large { width: 140px; height: 140px; border-radius: 50%; object-fit: cover; border: 5px solid var(--primary); margin-bottom: 20px; box-shadow: 0 8px 24px rgba(99, 102, 241, 0.3); }
+        .user-name { font-size: 28px; font-weight: 700; margin-bottom: 8px; }
+        .user-email { color: var(--text-secondary); font-size: 14px; margin-bottom: 8px; }
         
-        .profile-card { 
-            text-align: center; 
-            max-width: 680px; 
-            margin: 0 auto; 
-            background: linear-gradient(135deg, rgba(255,255,255,0.98) 0%, rgba(248,250,252,0.98) 100%);
-        }
+        .role-badge { display: inline-block; padding: 6px 16px; border-radius: 20px; font-size: 12px; font-weight: 600; margin-bottom: 20px; }
+        .role-badge.student { background: linear-gradient(135deg, var(--student-blue), #2563EB); color: white; }
+        .role-badge.teacher { background: linear-gradient(135deg, var(--teacher-red), #B91C1C); color: white; }
+        .role-badge.admin { background: linear-gradient(135deg, var(--admin-gold), #F59E0B); color: #000; }
         
-        .avatar-large { 
-            width: 140px; 
-            height: 140px; 
-            border-radius: 50%; 
-            object-fit: cover; 
-            border: 5px solid var(--primary); 
-            margin-bottom: 20px; 
-            box-shadow: 0 8px 24px rgba(99, 102, 241, 0.3);
-        }
-        
-        .user-name { 
-            font-size: 28px; 
-            font-weight: 700; 
-            margin-bottom: 8px; 
-            color: var(--text);
-            letter-spacing: -0.5px;
-        }
-        
-        .user-email { 
-            color: var(--text-secondary); 
-            font-size: 14px; 
-            margin-bottom: 8px;
-        }
-        
-        .role-badge { 
-            display: inline-block; 
-            padding: 6px 16px; 
-            border-radius: 20px; 
-            font-size: 12px; 
-            font-weight: 600; 
-            margin-bottom: 20px;
-            box-shadow: var(--shadow-sm);
-        }
-        
-        .role-badge.student { 
-            background: linear-gradient(135deg, var(--student-blue), #2563EB); 
-            color: white;
-        }
-        
-        .role-badge.teacher { 
-            background: linear-gradient(135deg, var(--teacher-red), #B91C1C); 
-            color: white;
-        }
-        
-        .role-badge.admin { 
-            background: linear-gradient(135deg, var(--admin-gold), #F59E0B); 
-            color: #000;
-        }
-        
-        .stats-row { 
-            display: grid; 
-            grid-template-columns: repeat(3, 1fr); 
-            gap: 16px; 
-            margin-top: 28px;
-        }
-        
-        .stat-card { 
-            background: linear-gradient(135deg, #EEF2FF, #E0E7FF); 
-            padding: 24px; 
-            border-radius: var(--radius-lg); 
-            border: 2px solid var(--border); 
-            box-shadow: var(--shadow-sm);
-            transition: var(--transition);
-            cursor: pointer;
-        }
-        
-        .stat-card:hover { 
-            transform: translateY(-4px);
-            box-shadow: var(--shadow-md);
-        }
-        
-        .stat-value { 
-            font-size: 34px; 
-            font-weight: 700; 
-            color: var(--primary); 
-            margin-bottom: 6px;
-            letter-spacing: -1px;
-        }
-        
-        .stat-label { 
-            font-size: 13px; 
-            color: var(--text-secondary);
-            font-weight: 500;
-        }
+        .stats-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 28px; }
+        .stat-card { background: linear-gradient(135deg, #EEF2FF, #E0E7FF); padding: 24px; border-radius: var(--radius-lg); border: 2px solid var(--border); box-shadow: var(--shadow); transition: var(--transition); cursor: pointer; }
+        .stat-card:hover { transform: translateY(-4px); }
+        .stat-value { font-size: 34px; font-weight: 700; color: var(--primary); margin-bottom: 6px; }
+        .stat-label { font-size: 13px; color: var(--text-secondary); font-weight: 500; }
 
-        .items-grid { 
-            display: grid; 
-            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); 
-            gap: 24px;
-        }
-        
-        .item-card { 
-            background: white; 
-            border-radius: var(--radius-lg); 
-            overflow: hidden; 
-            box-shadow: var(--shadow-md); 
-            transition: var(--transition); 
-            display: flex; 
-            flex-direction: column;
-            border: 1px solid var(--border-light);
-        }
-        
-        .item-card:hover { 
-            transform: translateY(-6px); 
-            box-shadow: var(--shadow-xl);
-        }
-        
-        .item-image { 
-            width: 100%; 
-            height: 220px; 
-            object-fit: cover; 
-            background: linear-gradient(135deg, #F3F4F6, #E5E7EB);
-        }
-        
-        .item-content { 
-            padding: 24px; 
-            flex: 1; 
-            display: flex; 
-            flex-direction: column;
-        }
-        
-        .item-badge { 
-            display: inline-block; 
-            padding: 6px 14px; 
-            border-radius: 20px; 
-            font-size: 11px; 
-            font-weight: 600; 
-            margin-bottom: 12px; 
-            background: #FEE2E2; 
-            color: var(--danger);
-            width: fit-content;
-        }
-        
-        .item-badge.found { 
-            background: #D1FAE5; 
-            color: var(--success-dark);
-        }
-        
-        .item-title { 
-            font-size: 20px; 
-            font-weight: 700; 
-            margin-bottom: 10px; 
-            color: var(--text);
-            letter-spacing: -0.3px;
-        }
-        
-        .item-info { 
-            font-size: 13px; 
-            color: var(--text-secondary); 
-            margin-bottom: 8px; 
-            display: flex; 
-            align-items: center; 
-            gap: 8px;
-        }
-        
-        .item-author { 
-            font-size: 12px; 
-            color: var(--primary); 
-            font-weight: 600; 
-            margin-bottom: 8px; 
-            display: flex; 
-            align-items: center; 
-            gap: 6px;
-        }
-        
-        .item-actions { 
-            display: flex; 
-            gap: 10px; 
-            margin-top: auto; 
-            padding-top: 16px; 
-            flex-wrap: wrap;
-        }
+        .items-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 24px; }
+        .item-card { background: white; border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow); transition: var(--transition); display: flex; flex-direction: column; border: 1px solid var(--border-light); }
+        .item-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-lg); }
+        .item-image { width: 100%; height: 220px; object-fit: cover; background: linear-gradient(135deg, #F3F4F6, #E5E7EB); }
+        .item-content { padding: 24px; flex: 1; display: flex; flex-direction: column; }
+        .item-badge { display: inline-block; padding: 6px 14px; border-radius: 20px; font-size: 11px; font-weight: 600; margin-bottom: 12px; background: #FEE2E2; color: var(--danger); width: fit-content; }
+        .item-badge.found { background: #D1FAE5; color: var(--success-dark); }
+        .item-title { font-size: 20px; font-weight: 700; margin-bottom: 10px; }
+        .item-info { font-size: 13px; color: var(--text-secondary); margin-bottom: 8px; display: flex; align-items: center; gap: 8px; }
+        .item-actions { display: flex; gap: 10px; margin-top: auto; padding-top: 16px; flex-wrap: wrap; }
 
-        .report-type-selection { 
-            display: grid; 
-            grid-template-columns: repeat(3, 1fr); 
-            gap: 24px; 
-            max-width: 900px; 
-            margin: 0 auto;
-        }
-        
-        .report-type-card { 
-            background: rgba(255, 255, 255, 0.98);
-            backdrop-filter: blur(20px);
-            border-radius: var(--radius-xl); 
-            padding: 48px 32px; 
-            text-align: center; 
-            cursor: pointer; 
-            transition: var(--transition); 
-            box-shadow: var(--shadow-lg); 
-            border: 3px solid transparent;
-        }
-        
-        .report-type-card:hover { 
-            transform: translateY(-8px); 
-            box-shadow: var(--shadow-xl);
-        }
-        
+        .report-type-selection { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; max-width: 900px; margin: 0 auto; }
+        .report-type-card { background: rgba(255, 255, 255, 0.98); border-radius: var(--radius-xl); padding: 48px 32px; text-align: center; cursor: pointer; transition: var(--transition); box-shadow: var(--shadow-lg); border: 3px solid transparent; }
+        .report-type-card:hover { transform: translateY(-8px); box-shadow: var(--shadow-lg); }
         .report-type-card.lost:hover { border-color: var(--danger); }
         .report-type-card.found:hover { border-color: var(--success); }
         .report-type-card.admin:hover { border-color: var(--admin-gold); }
-        
-        .report-type-icon { 
-            width: 100px; 
-            height: 100px; 
-            border-radius: 50%; 
-            display: flex; 
-            align-items: center; 
-            justify-content: center; 
-            margin: 0 auto 24px; 
-            font-size: 44px; 
-            color: white;
-            box-shadow: var(--shadow-lg);
-        }
-        
-        .report-type-card.lost .report-type-icon { 
-            background: linear-gradient(135deg, var(--danger), var(--danger-dark));
-        }
-        
-        .report-type-card.found .report-type-icon { 
-            background: linear-gradient(135deg, var(--success), var(--success-dark));
-        }
-        
-        .report-type-card.admin .report-type-icon { 
-            background: linear-gradient(135deg, var(--admin-gold), var(--warning));
-        }
-        
-        .report-type-icon img { 
-            width: 60px; 
-            height: 60px; 
-            object-fit: contain;
-        }
-        
-        .report-type-title { 
-            font-size: 24px; 
-            font-weight: 700; 
-            margin-bottom: 12px; 
-            color: var(--text);
-            letter-spacing: -0.5px;
-        }
-        
-        .report-type-desc { 
-            font-size: 14px; 
-            color: var(--text-secondary); 
-            line-height: 1.6;
-        }
+        .report-type-icon { width: 100px; height: 100px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 24px; font-size: 44px; color: white; box-shadow: var(--shadow); }
+        .report-type-card.lost .report-type-icon { background: linear-gradient(135deg, var(--danger), var(--danger-dark)); }
+        .report-type-card.found .report-type-icon { background: linear-gradient(135deg, var(--success), var(--success-dark)); }
+        .report-type-card.admin .report-type-icon { background: linear-gradient(135deg, var(--admin-gold), var(--warning)); }
+        .report-type-icon img { width: 60px; height: 60px; object-fit: contain; }
+        .report-type-title { font-size: 24px; font-weight: 700; margin-bottom: 12px; }
+        .report-type-desc { font-size: 14px; color: var(--text-secondary); line-height: 1.6; }
 
-        .file-upload-box { 
-            border: 2px dashed var(--border); 
-            border-radius: var(--radius); 
-            padding: 32px; 
-            text-align: center; 
-            cursor: pointer; 
-            transition: var(--transition); 
-            background: var(--border-light);
-        }
-        
-        .file-upload-box:hover { 
-            border-color: var(--primary); 
-            background: rgba(99, 102, 241, 0.05);
-        }
-        
-        .file-upload-box i { 
-            font-size: 36px; 
-            color: var(--text-muted); 
-            margin-bottom: 12px;
-        }
-        
-        .preview-container { 
-            margin-top: 16px; 
-            display: flex; 
-            gap: 12px; 
-            flex-wrap: wrap;
-        }
-        
-        .preview-item { 
-            position: relative; 
-            width: 100px; 
-            height: 100px; 
-            border-radius: var(--radius); 
-            overflow: hidden; 
-            border: 2px solid var(--border);
-            box-shadow: var(--shadow-sm);
-        }
-        
-        .preview-item img, .preview-item video { 
-            width: 100%; 
-            height: 100%; 
-            object-fit: cover;
-        }
+        .file-upload-box { border: 2px dashed var(--border); border-radius: var(--radius); padding: 32px; text-align: center; cursor: pointer; transition: var(--transition); background: var(--border-light); }
+        .file-upload-box:hover { border-color: var(--primary); background: rgba(99, 102, 241, 0.05); }
+        .file-upload-box i { font-size: 36px; color: var(--text-muted); margin-bottom: 12px; }
+        .preview-container { margin-top: 16px; display: flex; gap: 12px; flex-wrap: wrap; }
+        .preview-item { position: relative; width: 100px; height: 100px; border-radius: var(--radius); overflow: hidden; border: 2px solid var(--border); }
+        .preview-item img, .preview-item video { width: 100%; height: 100%; object-fit: cover; }
 
-        .modal-overlay { 
-            position: fixed; 
-            inset: 0; 
-            background: rgba(15, 23, 42, 0.7); 
-            backdrop-filter: blur(8px);
-            display: flex; 
-            align-items: center; 
-            justify-content: center; 
-            z-index: 10000; 
-            animation: fadeIn 0.3s ease;
-        }
-        
-        .modal-content { 
-            background: white; 
-            border-radius: var(--radius-xl); 
-            padding: 36px; 
-            max-width: 580px; 
-            width: 90%; 
-            max-height: 90vh; 
-            overflow-y: auto; 
-            box-shadow: var(--shadow-xl);
-        }
-        
+        .modal-overlay { position: fixed; inset: 0; background: rgba(15, 23, 42, 0.7); backdrop-filter: blur(8px); display: flex; align-items: center; justify-content: center; z-index: 10000; animation: fadeIn 0.3s ease; }
+        .modal-content { background: white; border-radius: var(--radius-xl); padding: 36px; max-width: 580px; width: 90%; max-height: 90vh; overflow-y: auto; box-shadow: var(--shadow-lg); }
         .modal-content.large { max-width: 900px; }
-        
-        .modal-header { 
-            display: flex; 
-            justify-content: space-between; 
-            align-items: center; 
-            margin-bottom: 24px; 
-            padding-bottom: 16px; 
-            border-bottom: 2px solid var(--border-light);
-        }
-        
-        .modal-title { 
-            font-size: 22px; 
-            font-weight: 700; 
-            color: var(--text);
-            letter-spacing: -0.5px;
-        }
-        
-        .modal-close { 
-            background: none; 
-            border: none; 
-            font-size: 24px; 
-            cursor: pointer; 
-            color: var(--text-muted); 
-            transition: var(--transition);
-            width: 36px;
-            height: 36px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 50%;
-        }
-        
-        .modal-close:hover { 
-            color: var(--danger);
-            background: rgba(239, 68, 68, 0.1);
-        }
+        .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; padding-bottom: 16px; border-bottom: 2px solid var(--border-light); }
+        .modal-title { font-size: 22px; font-weight: 700; }
+        .modal-close { background: none; border: none; font-size: 24px; cursor: pointer; color: var(--text-muted); transition: var(--transition); width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; border-radius: 50%; }
+        .modal-close:hover { color: var(--danger); background: rgba(239, 68, 68, 0.1); }
 
-        .admin-section { 
-            background: var(--border-light); 
-            padding: 24px; 
-            border-radius: var(--radius-lg); 
-            margin-bottom: 24px;
-        }
-        
-        .admin-section h3 { 
-            margin-bottom: 20px; 
-            display: flex; 
-            align-items: center; 
-            gap: 10px;
-            font-size: 18px;
-            font-weight: 700;
-        }
-        
-        .admin-table { 
-            width: 100%; 
-            border-collapse: collapse; 
-            background: white; 
-            border-radius: var(--radius); 
-            overflow: hidden;
-            box-shadow: var(--shadow-sm);
-        }
-        
-        .admin-table th, .admin-table td { 
-            padding: 14px; 
-            text-align: left; 
-            border-bottom: 1px solid var(--border-light); 
-            font-size: 14px;
-        }
-        
-        .admin-table th { 
-            background: linear-gradient(135deg, var(--primary), var(--primary-dark)); 
-            color: white; 
-            font-weight: 600;
-        }
-        
-        .admin-table tr:hover { 
-            background: var(--border-light);
-        }
-        
-        .banned-badge { 
-            background: var(--danger); 
-            color: white; 
-            padding: 4px 10px; 
-            border-radius: 12px; 
-            font-size: 11px; 
-            font-weight: 600;
-        }
-        
-        .status-badge { 
-            padding: 5px 12px; 
-            border-radius: 12px; 
-            font-size: 11px; 
-            font-weight: 600;
-        }
-        
-        .status-badge.pending { 
-            background: #FEF3C7; 
-            color: var(--warning-dark);
-        }
-        
-        .status-badge.resolved { 
-            background: #D1FAE5; 
-            color: var(--success-dark);
-        }
-        
-        .status-badge.rejected { 
-            background: #FEE2E2; 
-            color: var(--danger-dark);
-        }
+        .admin-section { background: var(--border-light); padding: 24px; border-radius: var(--radius-lg); margin-bottom: 24px; }
+        .admin-section h3 { margin-bottom: 20px; display: flex; align-items: center; gap: 10px; font-size: 18px; font-weight: 700; }
+        .admin-table { width: 100%; border-collapse: collapse; background: white; border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow); }
+        .admin-table th, .admin-table td { padding: 14px; text-align: left; border-bottom: 1px solid var(--border-light); font-size: 14px; }
+        .admin-table th { background: linear-gradient(135deg, var(--primary), var(--primary-dark)); color: white; font-weight: 600; }
+        .admin-table tr:hover { background: var(--border-light); }
+        .banned-badge { background: var(--danger); color: white; padding: 4px 10px; border-radius: 12px; font-size: 11px; font-weight: 600; }
+        .status-badge { padding: 5px 12px; border-radius: 12px; font-size: 11px; font-weight: 600; }
+        .status-badge.pending { background: #FEF3C7; color: var(--warning-dark); }
+        .status-badge.resolved { background: #D1FAE5; color: var(--success-dark); }
+        .status-badge.rejected { background: #FEE2E2; color: var(--danger-dark); }
 
-        .admin-report-card { 
-            background: white; 
-            border-radius: var(--radius-lg); 
-            overflow: hidden; 
-            box-shadow: var(--shadow-md);
-            transition: var(--transition); 
-            display: flex; 
-            flex-direction: column;
-            border: 1px solid var(--border-light);
-        }
-        
-        .admin-report-card:hover { 
-            transform: translateY(-4px); 
-            box-shadow: var(--shadow-lg);
-        }
-        
-        .admin-report-image { 
-            width: 100%; 
-            height: 200px; 
-            object-fit: cover; 
-            border-bottom: 1px solid var(--border-light);
-        }
-        
-        .admin-report-content { 
-            padding: 24px; 
-            flex: 1; 
-            display: flex; 
-            flex-direction: column;
-        }
-        
-        .admin-report-subject { 
-            font-size: 18px; 
-            font-weight: 700; 
-            margin-bottom: 10px; 
-            color: var(--text);
-            line-height: 1.4;
-            letter-spacing: -0.3px;
-        }
-        
-        .admin-report-meta { 
-            display: flex; 
-            align-items: center; 
-            gap: 8px; 
-            font-size: 13px; 
-            color: var(--text-secondary); 
-            margin-bottom: 6px;
-        }
-        
-        .admin-report-desc { 
-            font-size: 14px; 
-            color: var(--text-secondary); 
-            flex: 1; 
-            margin: 12px 0; 
-            line-height: 1.6;
-            display: -webkit-box;
-            -webkit-line-clamp: 3;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-        }
-        
-        .admin-report-response { 
-            background: #D1FAE5; 
-            padding: 12px 14px; 
-            border-radius: var(--radius); 
-            margin-top: 12px; 
-            font-size: 13px;
-            border-left: 4px solid var(--success);
-        }
-        
-        .admin-report-response strong { 
-            color: var(--success-dark);
-        }
-        
-        .admin-report-actions { 
-            display: flex; 
-            gap: 10px; 
-            margin-top: 16px; 
-            flex-wrap: wrap;
-        }
-        
-        .admin-report-actions .btn { 
-            flex: 1; 
-            min-width: 100px;
-        }
+        .admin-report-card { background: white; border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow); transition: var(--transition); display: flex; flex-direction: column; border: 1px solid var(--border-light); }
+        .admin-report-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
+        .admin-report-image { width: 100%; height: 200px; object-fit: cover; border-bottom: 1px solid var(--border-light); }
+        .admin-report-content { padding: 24px; flex: 1; display: flex; flex-direction: column; }
+        .admin-report-subject { font-size: 18px; font-weight: 700; margin-bottom: 10px; line-height: 1.4; }
+        .admin-report-meta { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--text-secondary); margin-bottom: 6px; }
+        .admin-report-desc { font-size: 14px; color: var(--text-secondary); flex: 1; margin: 12px 0; line-height: 1.6; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+        .admin-report-response { background: #D1FAE5; padding: 12px 14px; border-radius: var(--radius); margin-top: 12px; font-size: 13px; border-left: 4px solid var(--success); }
+        .admin-report-response strong { color: var(--success-dark); }
+        .admin-report-actions { display: flex; gap: 10px; margin-top: 16px; flex-wrap: wrap; }
+        .admin-report-actions .btn { flex: 1; min-width: 100px; }
 
-        .settings-section { 
-            margin-bottom: 32px; 
-            padding-bottom: 32px; 
-            border-bottom: 1px solid var(--border);
-        }
-        
-        .settings-section:last-child { 
-            border-bottom: none; 
-            margin-bottom: 0; 
-            padding-bottom: 0;
-        }
-        
-        .settings-title { 
-            font-size: 20px; 
-            font-weight: 700; 
-            margin-bottom: 20px; 
-            color: var(--text); 
-            display: flex; 
-            align-items: center; 
-            gap: 10px;
-            letter-spacing: -0.3px;
-        }
-        
-        .settings-row { 
-            display: flex; 
-            align-items: center; 
-            gap: 16px; 
-            margin-bottom: 16px; 
-            flex-wrap: wrap;
-        }
-        
-        .settings-row .form-control { 
-            max-width: 380px;
-            flex: 1;
-        }
+        .settings-section { margin-bottom: 32px; padding-bottom: 32px; border-bottom: 1px solid var(--border); }
+        .settings-section:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+        .settings-title { font-size: 20px; font-weight: 700; margin-bottom: 20px; display: flex; align-items: center; gap: 10px; }
+        .settings-row { display: flex; align-items: center; gap: 16px; margin-bottom: 16px; flex-wrap: wrap; }
+        .settings-row .form-control { max-width: 380px; flex: 1; }
 
-        #toast-container { 
-            position: fixed; 
-            top: 20px; 
-            right: 20px; 
-            z-index: 9999; 
-            display: flex; 
-            flex-direction: column; 
-            gap: 12px;
-        }
-        
-        .toast { 
-            background: white; 
-            padding: 18px 24px; 
-            border-radius: var(--radius); 
-            box-shadow: var(--shadow-lg); 
-            display: flex; 
-            align-items: center; 
-            gap: 14px; 
-            min-width: 320px; 
-            border-left: 5px solid var(--primary); 
-            animation: slideIn 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        
+        #toast-container { position: fixed; top: 20px; right: 20px; z-index: 9999; display: flex; flex-direction: column; gap: 12px; }
+        .toast { background: white; padding: 18px 24px; border-radius: var(--radius); box-shadow: var(--shadow-lg); display: flex; align-items: center; gap: 14px; min-width: 320px; border-left: 5px solid var(--primary); animation: slideIn 0.4s ease; }
         .toast.success { border-left-color: var(--success); }
         .toast.error { border-left-color: var(--danger); }
         .toast.warning { border-left-color: var(--warning); }
 
-        #loading-overlay { 
-            position: fixed; 
-            inset: 0; 
-            background: rgba(255,255,255,0.95); 
-            backdrop-filter: blur(8px); 
-            display: flex; 
-            align-items: center; 
-            justify-content: center; 
-            z-index: 9998;
-        }
-        
-        .spinner { 
-            width: 56px; 
-            height: 56px; 
-            border: 5px solid var(--border); 
-            border-top-color: var(--primary); 
-            border-radius: 50%; 
-            animation: spin 1s linear infinite;
-            box-shadow: var(--shadow-md);
-        }
+        #loading-overlay { position: fixed; inset: 0; background: rgba(255,255,255,0.95); backdrop-filter: blur(8px); display: flex; align-items: center; justify-content: center; z-index: 9998; }
+        .spinner { width: 56px; height: 56px; border: 5px solid var(--border); border-top-color: var(--primary); border-radius: 50%; animation: spin 1s linear infinite; }
 
-        .notification-page-header { 
-            display: flex; 
-            justify-content: space-between; 
-            align-items: center; 
-            margin-bottom: 24px;
-            flex-wrap: wrap;
-            gap: 16px;
-        }
-        
-        .notification-actions-bar {
-            display: flex;
-            gap: 12px;
-            flex-wrap: wrap;
-        }
-        
-        .notification-card { 
-            background: white; 
-            border-radius: var(--radius); 
-            padding: 20px 24px; 
-            margin-bottom: 16px; 
-            box-shadow: var(--shadow);
-            border-left: 5px solid var(--primary);
-            transition: var(--transition);
-        }
-        
-        .notification-card:hover { 
-            transform: translateX(4px); 
-            box-shadow: var(--shadow-md);
-        }
-        
+        .notification-page-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; flex-wrap: wrap; gap: 16px; }
+        .notification-actions-bar { display: flex; gap: 12px; flex-wrap: wrap; }
+        .notification-card { background: white; border-radius: var(--radius); padding: 20px 24px; margin-bottom: 16px; box-shadow: var(--shadow); border-left: 5px solid var(--primary); transition: var(--transition); }
+        .notification-card:hover { transform: translateX(4px); box-shadow: var(--shadow-lg); }
         .notification-card.type-admin_response { border-left-color: var(--success); }
         .notification-card.type-admin_reject { border-left-color: var(--danger); }
         .notification-card.unread { background: #F0F9FF; }
-        
-        .notification-header { 
-            display: flex; 
-            justify-content: space-between; 
-            align-items: flex-start; 
-            margin-bottom: 12px; 
-            flex-wrap: wrap; 
-            gap: 10px;
-        }
-        
-        .notification-title-text { 
-            font-weight: 600; 
-            font-size: 15px; 
-            color: var(--text); 
-            display: flex; 
-            align-items: center; 
-            gap: 10px; 
-            flex-wrap: wrap;
-        }
-        
-        .notification-time { 
-            font-size: 12px; 
-            color: var(--text-muted); 
-            white-space: nowrap;
-        }
-        
-        .notification-message { 
-            font-size: 14px; 
-            color: var(--text-secondary); 
-            line-height: 1.6; 
-            white-space: pre-wrap; 
-            margin-bottom: 12px;
-        }
-        
-        .notification-actions { 
-            display: flex; 
-            justify-content: flex-end; 
-            gap: 10px;
-        }
+        .notification-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px; flex-wrap: wrap; gap: 10px; }
+        .notification-title-text { font-weight: 600; font-size: 15px; display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+        .notification-time { font-size: 12px; color: var(--text-muted); white-space: nowrap; }
+        .notification-message { font-size: 14px; color: var(--text-secondary); line-height: 1.6; white-space: pre-wrap; margin-bottom: 12px; }
+        .notification-actions { display: flex; justify-content: flex-end; gap: 10px; }
 
-        .alert-box { 
-            padding: 12px 16px; 
-            border-radius: var(--radius); 
-            margin-bottom: 20px; 
-            font-size: 14px; 
-            display: flex; 
-            align-items: flex-start; 
-            gap: 10px;
-        }
-        
-        .alert-box.warning { 
-            background: #FEF3C7; 
-            border-left: 4px solid var(--warning); 
-            color: #92400E;
-        }
-        
-        .alert-box.info { 
-            background: #D1FAE5; 
-            border-left: 4px solid var(--success); 
-            color: #065F46;
-        }
-        
-        .alert-box.danger { 
-            background: #FEE2E2; 
-            border-left: 4px solid var(--danger); 
-            color: #991B1B;
-        }
+        .alert-box { padding: 12px 16px; border-radius: var(--radius); margin-bottom: 20px; font-size: 14px; display: flex; align-items: flex-start; gap: 10px; }
+        .alert-box.info { background: #D1FAE5; border-left: 4px solid var(--success); color: #065F46; }
+        .alert-box.danger { background: #FEE2E2; border-left: 4px solid var(--danger); color: #991B1B; }
 
-        .user-detail-grid { 
-            display: grid; 
-            grid-template-columns: repeat(2, 1fr); 
-            gap: 16px;
-        }
-        
-        .user-detail-item { 
-            background: var(--border-light); 
-            padding: 16px; 
-            border-radius: var(--radius);
-        }
-        
-        .user-detail-label { 
-            font-size: 12px; 
-            color: var(--text-muted); 
-            margin-bottom: 6px;
-            font-weight: 500;
-        }
-        
-        .user-detail-value { 
-            font-size: 14px; 
-            font-weight: 600; 
-            color: var(--text); 
-            word-break: break-all;
-        }
+        .user-detail-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+        .user-detail-item { background: var(--border-light); padding: 16px; border-radius: var(--radius); }
+        .user-detail-label { font-size: 12px; color: var(--text-muted); margin-bottom: 6px; font-weight: 500; }
+        .user-detail-value { font-size: 14px; font-weight: 600; word-break: break-all; }
 
-        /* Account Info Box */
-        .account-info-box {
-            background: linear-gradient(135deg, #F0F9FF 0%, #E0F2FE 100%);
-            border: 1px solid #BAE6FD;
-            border-radius: var(--radius);
-            padding: 16px;
-            margin-top: 16px;
-        }
-        
-        .account-info-item {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 8px;
-            font-size: 13px;
-        }
-        
-        .account-info-item:last-child {
-            margin-bottom: 0;
-        }
-        
-        .account-info-item i {
-            color: var(--primary);
-            width: 16px;
-        }
-        
-        .account-info-item span {
-            color: var(--text-secondary);
-            font-weight: 500;
-        }
+        .account-info-box { background: linear-gradient(135deg, #F0F9FF 0%, #E0F2FE 100%); border: 1px solid #BAE6FD; border-radius: var(--radius); padding: 16px; margin-top: 16px; }
+        .account-info-item { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; font-size: 13px; }
+        .account-info-item:last-child { margin-bottom: 0; }
+        .account-info-item i { color: var(--primary); width: 16px; }
+        .account-info-item span { color: var(--text-secondary); font-weight: 500; }
+
+        .password-strength { margin-top: 8px; font-size: 12px; }
+        .strength-bar { height: 4px; background: var(--border); border-radius: 2px; margin-top: 4px; overflow: hidden; }
+        .strength-fill { height: 100%; transition: all 0.3s; border-radius: 2px; }
+        .strength-weak { background: var(--danger); width: 33%; }
+        .strength-medium { background: var(--warning); width: 66%; }
+        .strength-strong { background: var(--success); width: 100%; }
 
         @media (max-width: 768px) {
             .app-layout { flex-direction: column; }
-            .sidebar { 
-                width: 100%; 
-                border-right: none; 
-                border-bottom: 1px solid var(--border); 
-                flex-direction: row; 
-                flex-wrap: wrap; 
-                padding: 12px; 
-                gap: 8px;
-            }
-            .nav-btn { 
-                flex: 1; 
-                min-width: 120px; 
-                padding: 10px 14px; 
-                font-size: 13px; 
-                justify-content: center;
-            }
+            .sidebar { width: 100%; border-right: none; border-bottom: 1px solid var(--border); flex-direction: row; flex-wrap: wrap; padding: 12px; gap: 8px; }
+            .nav-btn { flex: 1; min-width: 120px; padding: 10px 14px; font-size: 13px; justify-content: center; }
             .main-content { padding: 20px; }
             .stats-row { grid-template-columns: 1fr; }
             .items-grid { grid-template-columns: 1fr; }
@@ -1568,21 +555,10 @@
                                 <input type="tel" id="settings-phone" class="form-control" placeholder="เบอร์ติดต่อ (เช่น 0812345678)">
                                 <button class="btn btn-primary" style="width: auto;" onclick="App.updatePhone()"><i class="fa-solid fa-save"></i> บันทึกเบอร์</button>
                             </div>
-                            
-                            <!-- Account Info Box -->
                             <div class="account-info-box">
-                                <div class="account-info-item">
-                                    <i class="fa-solid fa-envelope"></i>
-                                    <span>อีเมล: <strong id="account-email">-</strong></span>
-                                </div>
-                                <div class="account-info-item">
-                                    <i class="fa-solid fa-shield-halved"></i>
-                                    <span>ยศ: <strong id="account-role">-</strong></span>
-                                </div>
-                                <div class="account-info-item">
-                                    <i class="fa-solid fa-clock"></i>
-                                    <span>บัญชีถูกสร้างเมื่อ: <strong id="account-created">-</strong></span>
-                                </div>
+                                <div class="account-info-item"><i class="fa-solid fa-envelope"></i><span>อีเมล: <strong id="account-email">-</strong></span></div>
+                                <div class="account-info-item"><i class="fa-solid fa-shield-halved"></i><span>ยศ: <strong id="account-role">-</strong></span></div>
+                                <div class="account-info-item"><i class="fa-solid fa-clock"></i><span>บัญชีถูกสร้างเมื่อ: <strong id="account-created">-</strong></span></div>
                             </div>
                         </div>
                         <div class="settings-section">
@@ -1789,110 +765,48 @@
                 App.initSecurityMeasures();
             },
 
-            // Security Measures
             initSecurityMeasures: () => {
-                // Disable right-click
-                document.addEventListener('contextmenu', (e) => {
-                    e.preventDefault();
-                    return false;
-                });
-
-                // Disable keyboard shortcuts
+                document.addEventListener('contextmenu', (e) => { e.preventDefault(); return false; });
                 document.addEventListener('keydown', (e) => {
-                    // F12
-                    if (e.key === 'F12' || e.keyCode === 123) {
-                        e.preventDefault();
-                        App.handleDevToolsDetection();
-                        return false;
-                    }
-                    // Ctrl+Shift+I/J/C
-                    if (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J' || e.key === 'C')) {
-                        e.preventDefault();
-                        App.handleDevToolsDetection();
-                        return false;
-                    }
-                    // Ctrl+U
-                    if (e.ctrlKey && e.key === 'U') {
-                        e.preventDefault();
-                        return false;
-                    }
-                    // Ctrl+S
-                    if (e.ctrlKey && e.key === 'S') {
-                        e.preventDefault();
-                        return false;
-                    }
-                    // Ctrl+P
-                    if (e.ctrlKey && e.key === 'P') {
-                        e.preventDefault();
-                        return false;
-                    }
-                    // Ctrl+A (only in non-input elements)
+                    if (e.key === 'F12' || e.keyCode === 123) { e.preventDefault(); App.handleDevToolsDetection(); return false; }
+                    if (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J' || e.key === 'C')) { e.preventDefault(); App.handleDevToolsDetection(); return false; }
+                    if (e.ctrlKey && e.key === 'U') { e.preventDefault(); return false; }
+                    if (e.ctrlKey && e.key === 'S') { e.preventDefault(); return false; }
+                    if (e.ctrlKey && e.key === 'P') { e.preventDefault(); return false; }
                     if (e.ctrlKey && e.key === 'A') {
                         const tagName = e.target.tagName.toLowerCase();
-                        if (tagName !== 'input' && tagName !== 'textarea') {
-                            e.preventDefault();
-                            return false;
-                        }
+                        if (tagName !== 'input' && tagName !== 'textarea') { e.preventDefault(); return false; }
                     }
                 });
-
-                // Disable drag
-                document.addEventListener('dragstart', (e) => {
-                    e.preventDefault();
-                    return false;
-                });
-
-                // Disable text selection (except inputs)
+                document.addEventListener('dragstart', (e) => { e.preventDefault(); return false; });
                 document.addEventListener('selectstart', (e) => {
                     const tagName = e.target.tagName.toLowerCase();
-                    if (tagName !== 'input' && tagName !== 'textarea') {
-                        e.preventDefault();
-                        return false;
-                    }
+                    if (tagName !== 'input' && tagName !== 'textarea') { e.preventDefault(); return false; }
                 });
-
-                // Detect DevTools
-                setInterval(() => {
-                    App.detectDevTools();
-                }, 500);
+                setInterval(() => { App.detectDevTools(); }, 500);
             },
 
             detectDevTools: () => {
-                if (App.profile?.role === 'admin') return; // Skip for admins
-
+                if (App.profile?.role === 'admin' || App.devToolsDetected) return;
                 const threshold = 160;
-                const widthThreshold = window.outerWidth - window.innerWidth > threshold;
-                const heightThreshold = window.outerHeight - window.innerHeight > threshold;
-
-                if (widthThreshold || heightThreshold) {
+                if ((window.outerWidth - window.innerWidth > threshold) || (window.outerHeight - window.innerHeight > threshold)) {
                     App.handleDevToolsDetection();
                 }
             },
 
             handleDevToolsDetection: () => {
                 if (App.profile?.role === 'admin' || App.devToolsDetected) return;
-
                 App.devToolsDetected = true;
-                
-                // Prank redirects (random funny URLs)
                 const prankUrls = [
                     'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
                     'https://www.youtube.com/watch?v=oHg5SJYRHA0',
-                    'https://www.youtube.com/watch?v=9bZkp7q19f0',
-                    'https://www.youtube.com/watch?v=j5a0jTc9S10',
-                    'https://www.youtube.com/watch?v=DLzxrzFCyOs'
+                    'https://www.youtube.com/watch?v=9bZkp7q19f0'
                 ];
-                
                 const randomUrl = prankUrls[Math.floor(Math.random() * prankUrls.length)];
-                
-                // Show warning first
                 alert('⚠️ ตรวจพบการเปิด DevTools!\n\nระบบจะปิดแท็บนี้ใน 3 วินาที...');
-                
-                // Close tab after 3 seconds
                 setTimeout(() => {
                     window.open(randomUrl, '_blank');
                     window.close();
-                    // Fallback if window.close() doesn't work
                     window.location.href = 'about:blank';
                 }, 3000);
             },
@@ -1903,8 +817,7 @@
                 let html = '<option value="">เลือกระดับชั้น</option>';
                 for (let grade = 1; grade <= 6; grade++) {
                     for (let room = 1; room <= 14; room++) {
-                        const value = `ม.${grade}/${room}`;
-                        html += `<option value="${value}">${value}</option>`;
+                        html += `<option value="ม.${grade}/${room}">ม.${grade}/${room}</option>`;
                     }
                 }
                 select.innerHTML = html;
@@ -1913,20 +826,11 @@
             setupPhoneInputMask: () => {
                 const phoneInput = document.getElementById('settings-phone');
                 if (!phoneInput) return;
-                
                 phoneInput.addEventListener('input', (e) => {
                     let value = e.target.value.replace(/\D/g, '');
-                    
-                    if (value.length > 10) {
-                        value = value.substring(0, 10);
-                    }
-                    
-                    if (value.length >= 7) {
-                        value = value.substring(0, 3) + '-' + value.substring(3, 6) + '-' + value.substring(6);
-                    } else if (value.length >= 4) {
-                        value = value.substring(0, 3) + '-' + value.substring(3);
-                    }
-                    
+                    if (value.length > 10) value = value.substring(0, 10);
+                    if (value.length >= 7) value = value.substring(0, 3) + '-' + value.substring(3, 6) + '-' + value.substring(6);
+                    else if (value.length >= 4) value = value.substring(0, 3) + '-' + value.substring(3);
                     e.target.value = value;
                 });
             },
@@ -1954,19 +858,14 @@
                 }
             },
 
-            goBack: () => {
-                App.nav(App.previousPage || 'home');
-            },
+            goBack: () => { App.nav(App.previousPage || 'home'); },
 
             nav: (pageId) => {
                 const currentPage = document.querySelector('.page-section:not(.hidden)');
                 if (currentPage && pageId !== 'notifications') {
                     const currentId = currentPage.id.replace('page-', '');
-                    if (currentId !== 'notifications') {
-                        App.previousPage = currentId;
-                    }
+                    if (currentId !== 'notifications') App.previousPage = currentId;
                 }
-
                 document.querySelectorAll('.page-section').forEach(p => p.classList.add('hidden'));
                 const targetPage = document.getElementById(`page-${pageId}`);
                 if (targetPage) targetPage.classList.remove('hidden');
@@ -1976,13 +875,11 @@
                 if (activeBtn) activeBtn.classList.add('active');
                 
                 window.scrollTo(0, 0);
-                
                 if (pageId === 'home') App.loadDashboardStats();
                 if (pageId === 'view-lost') App.loadLostItems();
                 if (pageId === 'notifications') App.loadNotificationsPage();
                 if (pageId === 'admin') App.loadAdminPanel();
                 if (pageId === 'settings') App.loadSettingsData();
-                
                 App.loadUnreadNotifications();
             },
 
@@ -1991,34 +888,21 @@
                     let { data: profile, error } = await sb.from('profiles').select('*').eq('id', App.user.id).single();
                     if (error || !profile) {
                         await sb.from('profiles').insert({ 
-                            id: App.user.id, 
-                            email: App.user.email, 
-                            full_name: App.user.email.split('@')[0], 
+                            id: App.user.id, email: App.user.email, full_name: App.user.email.split('@')[0], 
                             role: App.user.email === 'administrator@hwp.ac.th' ? 'admin' : 'student' 
                         });
-                        profile = { 
-                            full_name: App.user.email.split('@')[0], 
-                            avatar_url: null, 
-                            role: App.user.email === 'administrator@hwp.ac.th' ? 'admin' : 'student',
-                            is_banned: false 
-                        };
+                        profile = { full_name: App.user.email.split('@')[0], avatar_url: null, role: App.user.email === 'administrator@hwp.ac.th' ? 'admin' : 'student', is_banned: false };
                     }
-                    
                     if (profile.is_banned && profile.role !== 'admin') {
                         App.toast('error', 'บัญชีถูกแบน', profile.banned_reason || 'บัญชีของคุณถูกแบนโดยผู้ดูแลระบบ');
                         await sb.auth.signOut();
                         App.showAuth();
                         return;
                     }
-                    
                     App.profile = profile;
                     App.updateProfileUI();
-                    
-                    if (profile.role === 'admin') {
-                        document.getElementById('admin-nav-btn').classList.remove('hidden');
-                    } else {
-                        document.getElementById('admin-nav-btn').classList.add('hidden');
-                    }
+                    if (profile.role === 'admin') document.getElementById('admin-nav-btn').classList.remove('hidden');
+                    else document.getElementById('admin-nav-btn').classList.add('hidden');
                 } catch (err) { 
                     console.error('Load profile error:', err);
                     App.toast('error', 'โหลดข้อมูลไม่สำเร็จ', 'กรุณาลองใหม่อีกครั้ง');
@@ -2030,62 +914,27 @@
                 document.getElementById('dash-email').textContent = App.user.email;
                 
                 const roleBadgeContainer = document.getElementById('role-badge-container');
-                if (App.profile.role === 'admin') {
-                    roleBadgeContainer.innerHTML = '<span class="role-badge admin"><i class="fa-solid fa-shield-halved"></i> ผู้ดูแลระบบ</span>';
-                } else if (App.profile.role === 'teacher') {
-                    roleBadgeContainer.innerHTML = '<span class="role-badge teacher"><i class="fa-solid fa-chalkboard-user"></i> ครู</span>';
-                } else {
-                    roleBadgeContainer.innerHTML = '<span class="role-badge student"><i class="fa-solid fa-user-graduate"></i> นักเรียน</span>';
-                }
+                if (App.profile.role === 'admin') roleBadgeContainer.innerHTML = '<span class="role-badge admin"><i class="fa-solid fa-shield-halved"></i> ผู้ดูแลระบบ</span>';
+                else if (App.profile.role === 'teacher') roleBadgeContainer.innerHTML = '<span class="role-badge teacher"><i class="fa-solid fa-chalkboard-user"></i> ครู</span>';
+                else roleBadgeContainer.innerHTML = '<span class="role-badge student"><i class="fa-solid fa-user-graduate"></i> นักเรียน</span>';
                 
                 const avatarUrl = App.profile.avatar_url || `https://ui-avatars.com/api/?name=${(App.profile.full_name || 'U').charAt(0).toUpperCase()}&background=6366F1&color=fff&size=150`;
                 document.getElementById('dash-avatar').src = avatarUrl;
-                
                 const settingsAvatar = document.getElementById('settings-avatar-preview');
                 if(settingsAvatar) settingsAvatar.src = avatarUrl;
                 
-                const usernameInput = document.getElementById('settings-username');
-                if(usernameInput) usernameInput.value = App.profile.full_name || '';
+                document.getElementById('settings-username').value = App.profile.full_name || '';
+                document.getElementById('settings-birthday').value = App.profile.birthday || '';
+                document.getElementById('settings-homeroom').value = App.profile.homeroom || '';
+                document.getElementById('settings-grade').value = App.profile.grade_level || '';
+                document.getElementById('settings-phone').value = App.profile.phone || '';
                 
-                const birthdayInput = document.getElementById('settings-birthday');
-                if(birthdayInput) birthdayInput.value = App.profile.birthday || '';
+                document.getElementById('account-email').textContent = App.user.email || '-';
+                document.getElementById('account-role').textContent = App.profile.role === 'admin' ? 'ผู้ดูแลระบบ' : (App.profile.role === 'teacher' ? 'ครู' : 'นักเรียน');
                 
-                const homeroomInput = document.getElementById('settings-homeroom');
-                if(homeroomInput) homeroomInput.value = App.profile.homeroom || '';
-                
-                const gradeSelect = document.getElementById('settings-grade');
-                if(gradeSelect) gradeSelect.value = App.profile.grade_level || '';
-                
-                const phoneInput = document.getElementById('settings-phone');
-                if(phoneInput) phoneInput.value = App.profile.phone || '';
-                
-                // แสดงข้อมูลบัญชี
-                const accountEmail = document.getElementById('account-email');
-                if(accountEmail) accountEmail.textContent = App.user.email || '-';
-                
-                const accountRole = document.getElementById('account-role');
-                if(accountRole) {
-                    if (App.profile.role === 'admin') accountRole.textContent = 'ผู้ดูแลระบบ';
-                    else if (App.profile.role === 'teacher') accountRole.textContent = 'ครู';
-                    else accountRole.textContent = 'นักเรียน';
-                }
-                
-                const accountCreated = document.getElementById('account-created');
-                if(accountCreated && App.profile.created_at) {
+                if (App.profile.created_at) {
                     const date = new Date(App.profile.created_at);
-                    const dateStr = date.toLocaleDateString('th-TH', {
-                        year: 'numeric',
-                        month: '2-digit',
-                        day: '2-digit'
-                    });
-                    const timeStr = date.toLocaleTimeString('th-TH', {
-                        hour: '2-digit',
-                        minute: '2-digit',
-                        second: '2-digit'
-                    });
-                    accountCreated.textContent = `${dateStr} - ${timeStr}`;
-                } else if(accountCreated) {
-                    accountCreated.textContent = '-';
+                    document.getElementById('account-created').textContent = `${date.toLocaleDateString('th-TH')} - ${date.toLocaleTimeString('th-TH', {hour: '2-digit', minute: '2-digit', second: '2-digit'})}`;
                 }
             },
 
@@ -2096,7 +945,6 @@
                         const { count: totalFound } = await sb.from('items').select('*', {count:'exact', head:true}).eq('type', 'found');
                         const { count: totalUsers } = await sb.from('profiles').select('*', {count:'exact', head:true}).neq('id', App.user.id);
                         const { count: pendingReports } = await sb.from('admin_reports').select('*', {count:'exact', head:true}).eq('status', 'pending');
-                        
                         document.getElementById('stats-row').innerHTML = `
                             <div class="stat-card"><div class="stat-value">${totalLost || 0}</div><div class="stat-label">การแจ้งของหาย (ทั้งหมด)</div></div>
                             <div class="stat-card"><div class="stat-value">${totalFound || 0}</div><div class="stat-label">การแจ้งเก็บของได้ (ทั้งหมด)</div></div>
@@ -2107,37 +955,24 @@
                         const { count: lost } = await sb.from('items').select('*', {count:'exact', head:true}).eq('user_id', App.user.id).eq('type', 'lost');
                         const { count: found } = await sb.from('items').select('*', {count:'exact', head:true}).eq('user_id', App.user.id).eq('type', 'found');
                         const { count: myReports } = await sb.from('admin_reports').select('*', {count:'exact', head:true}).eq('user_id', App.user.id);
-                        
                         document.getElementById('stats-row').innerHTML = `
                             <div class="stat-card"><div class="stat-value">${lost || 0}</div><div class="stat-label">แจ้งของหาย</div></div>
                             <div class="stat-card"><div class="stat-value">${found || 0}</div><div class="stat-label">แจ้งเก็บของได้</div></div>
                             <div class="stat-card"><div class="stat-value">${myReports || 0}</div><div class="stat-label">ส่งคำร้องขอ</div></div>
                         `;
                     }
-                } catch (err) { 
-                    console.error('Stats error:', err);
-                }
+                } catch (err) { console.error('Stats error:', err); }
             },
 
             loadUnreadNotifications: async () => {
                 try {
-                    const { count, error } = await sb.from('notifications')
-                        .select('*', {count: 'exact', head: true})
-                        .eq('user_id', App.user.id)
-                        .eq('is_read', false);
-                    
+                    const { count, error } = await sb.from('notifications').select('*', {count: 'exact', head: true}).eq('user_id', App.user.id).eq('is_read', false);
                     if (error) throw error;
-                    
                     App.unreadNotifications = count || 0;
                     const dot = document.getElementById('notification-dot');
-                    if (App.unreadNotifications > 0) {
-                        dot.classList.add('active');
-                    } else {
-                        dot.classList.remove('active');
-                    }
-                } catch (err) {
-                    console.error('Load notifications error:', err);
-                }
+                    if (App.unreadNotifications > 0) dot.classList.add('active');
+                    else dot.classList.remove('active');
+                } catch (err) { console.error('Load notifications error:', err); }
             },
 
             checkPasswordStrength: (password) => {
@@ -2153,7 +988,6 @@
                     if(settingsStrengthDiv) settingsStrengthDiv.classList.add('hidden');
                     return;
                 }
-                
                 if(strengthDiv) strengthDiv.classList.remove('hidden');
                 if(settingsStrengthDiv) settingsStrengthDiv.classList.remove('hidden');
                 
@@ -2178,41 +1012,24 @@
                 e.preventDefault(); 
                 App.showLoading(true);
                 try {
-                    const { error } = await sb.auth.signInWithPassword({ 
-                        email: document.getElementById('login-email').value, 
-                        password: document.getElementById('login-pass').value 
-                    });
+                    const { error } = await sb.auth.signInWithPassword({ email: document.getElementById('login-email').value, password: document.getElementById('login-pass').value });
                     if (error) throw error;
-                } catch (err) {
-                    App.toast('error', 'เข้าสู่ระบบไม่สำเร็จ', err.message);
-                } finally {
-                    App.showLoading(false);
-                }
+                } catch (err) { App.toast('error', 'เข้าสู่ระบบไม่สำเร็จ', err.message); } 
+                finally { App.showLoading(false); }
             },
 
             handleRegister: async (e) => {
                 e.preventDefault(); 
                 const password = document.getElementById('reg-pass').value;
-                if (password.length < 8) {
-                    App.toast('error', 'รหัสผ่านไม่ปลอดภัย', 'กรุณาใช้รหัสผ่านอย่างน้อย 8 ตัวอักษร');
-                    return;
-                }
-                
+                if (password.length < 8) { App.toast('error', 'รหัสผ่านไม่ปลอดภัย', 'กรุณาใช้รหัสผ่านอย่างน้อย 8 ตัวอักษร'); return; }
                 App.showLoading(true);
                 try {
-                    const { error } = await sb.auth.signUp({
-                        email: document.getElementById('reg-email').value, 
-                        password: password,
-                        options: { data: { full_name: document.getElementById('reg-name').value } }
-                    });
+                    const { error } = await sb.auth.signUp({ email: document.getElementById('reg-email').value, password: password, options: { data: { full_name: document.getElementById('reg-name').value } } });
                     if (error) throw error;
                     App.toast('success', 'สมัครสำเร็จ', 'กรุณาเข้าสู่ระบบ'); 
                     App.toggleAuth('login');
-                } catch (err) {
-                    App.toast('error', 'สมัครไม่สำเร็จ', err.message);
-                } finally {
-                    App.showLoading(false);
-                }
+                } catch (err) { App.toast('error', 'สมัครไม่สำเร็จ', err.message); } 
+                finally { App.showLoading(false); }
             },
 
             handleLost: async (e) => {
@@ -2220,28 +1037,15 @@
                 App.showLoading(true);
                 try {
                     let media_url = null;
-                    const fileInput = document.getElementById('lost-file');
-                    const file = fileInput.files[0];
-
+                    const file = document.getElementById('lost-file').files[0];
                     if (file) {
-                        const ext = file.name.split('.').pop();
-                        const fileName = `${App.user.id}_${Date.now()}.${ext}`;
+                        const fileName = `${App.user.id}_${Date.now()}.${file.name.split('.').pop()}`;
                         const { error: uploadError } = await sb.storage.from('item-images').upload(fileName, file);
                         if (uploadError) throw uploadError;
                         const { data: { publicUrl } } = sb.storage.from('item-images').getPublicUrl(fileName);
                         media_url = publicUrl;
                     }
-
-                    const itemData = {
-                        user_id: App.editingOriginalUserId || App.user.id,
-                        type: 'lost',
-                        status: 'active',
-                        title: document.getElementById('lost-title').value,
-                        category: document.getElementById('lost-category').value,
-                        location: document.getElementById('lost-location').value,
-                        description: document.getElementById('lost-desc').value,
-                        image_url: media_url
-                    };
+                    const itemData = { user_id: App.editingOriginalUserId || App.user.id, type: 'lost', status: 'active', title: document.getElementById('lost-title').value, category: document.getElementById('lost-category').value, location: document.getElementById('lost-location').value, description: document.getElementById('lost-desc').value, image_url: media_url };
                     
                     let error;
                     if (App.editingItemId) {
@@ -2251,88 +1055,52 @@
                         const { error: insertError } = await sb.from('items').insert(itemData);
                         error = insertError;
                     }
-                    
                     if (error) throw error;
-                    
                     App.toast('success', 'สำเร็จ', App.editingItemId ? 'แก้ไขข้อมูลเรียบร้อยแล้ว' : 'ระบบบันทึกการแจ้งของหายแล้ว');
                     App.cancelEdit();
                     App.nav('home');
-                } catch (err) {
-                    App.toast('error', 'เกิดข้อผิดพลาด', err.message);
-                } finally {
-                    App.showLoading(false);
-                }
+                } catch (err) { App.toast('error', 'เกิดข้อผิดพลาด', err.message); } 
+                finally { App.showLoading(false); }
             },
 
             handleFound: async (e) => {
                 e.preventDefault();
                 const file = document.getElementById('found-file').files[0];
-                if (!file) {
-                    App.toast('error', 'ไม่สมบูรณ์', 'กรุณาอัปโหลดรูปภาพหรือวิดีโอ');
-                    return;
-                }
-
+                if (!file) { App.toast('error', 'ไม่สมบูรณ์', 'กรุณาอัปโหลดรูปภาพหรือวิดีโอ'); return; }
                 App.showLoading(true);
                 try {
-                    const ext = file.name.split('.').pop();
-                    const fileName = `${App.user.id}_${Date.now()}.${ext}`;
+                    const fileName = `${App.user.id}_${Date.now()}.${file.name.split('.').pop()}`;
                     const { error: uploadError } = await sb.storage.from('item-images').upload(fileName, file);
                     if (uploadError) throw uploadError;
                     const { data: { publicUrl } } = sb.storage.from('item-images').getPublicUrl(fileName);
-
-                    const { error } = await sb.from('items').insert({
-                        user_id: App.user.id,
-                        type: 'found',
-                        status: 'active',
-                        title: document.getElementById('found-title').value,
-                        category: document.getElementById('found-category').value,
-                        location: document.getElementById('found-location').value,
-                        description: document.getElementById('found-desc').value,
-                        image_url: publicUrl
-                    });
+                    const { error } = await sb.from('items').insert({ user_id: App.user.id, type: 'found', status: 'active', title: document.getElementById('found-title').value, category: document.getElementById('found-category').value, location: document.getElementById('found-location').value, description: document.getElementById('found-desc').value, image_url: publicUrl });
                     if (error) throw error;
-
                     App.toast('success', 'สำเร็จ', 'ระบบบันทึกการแจ้งเก็บของได้แล้ว');
                     e.target.reset();
                     document.getElementById('found-preview').innerHTML = '';
                     App.nav('home');
-                } catch (err) {
-                    App.toast('error', 'เกิดข้อผิดพลาด', err.message);
-                } finally {
-                    App.showLoading(false);
-                }
+                } catch (err) { App.toast('error', 'เกิดข้อผิดพลาด', err.message); } 
+                finally { App.showLoading(false); }
             },
 
             editItem: async (itemId) => {
                 try {
                     const { data: item, error } = await sb.from('items').select('*').eq('id', itemId).single();
                     if (error || !item) throw error;
-                    
-                    const isOwner = item.user_id === App.user.id;
-                    const isAdmin = App.profile.role === 'admin';
-                    
-                    if (!isOwner && !isAdmin) {
-                        App.toast('error', 'ไม่มีสิทธิ์', 'คุณไม่มีสิทธิ์แก้ไขโพสต์นี้');
-                        return;
-                    }
+                    if (item.user_id !== App.user.id && App.profile.role !== 'admin') { App.toast('error', 'ไม่มีสิทธิ์', 'คุณไม่มีสิทธิ์แก้ไขโพสต์นี้'); return; }
                     
                     document.getElementById('lost-title').value = item.title;
                     document.getElementById('lost-category').value = item.category;
                     document.getElementById('lost-location').value = item.location || '';
                     document.getElementById('lost-desc').value = item.description;
-                    
                     App.editingItemId = itemId;
                     App.editingOriginalUserId = item.user_id;
-                    
                     document.getElementById('report-lost-title').textContent = 'แก้ไขรายการของหาย';
                     document.getElementById('btn-submit-lost').innerHTML = '<i class="fa-solid fa-save"></i> บันทึกการแก้ไข';
                     document.getElementById('btn-cancel-edit').classList.remove('hidden');
-                    
                     App.nav('report-lost');
                     App.toast('success', 'โหมดแก้ไข', 'แก้ไขข้อมูลแล้วกดบันทึก');
-                } catch (err) {
-                    App.toast('error', 'โหลดข้อมูลไม่สำเร็จ', err.message);
-                }
+                } catch (err) { App.toast('error', 'โหลดข้อมูลไม่สำเร็จ', err.message); }
             },
 
             cancelEdit: () => {
@@ -2350,82 +1118,54 @@
                 App.showLoading(true);
                 try {
                     const { data: item } = await sb.from('items').select('image_url').eq('id', itemId).single();
-                    if (item && item.image_url) {
-                        const fileName = item.image_url.split('/').pop();
-                        await sb.storage.from('item-images').remove([fileName]);
-                    }
+                    if (item && item.image_url) await sb.storage.from('item-images').remove([item.image_url.split('/').pop()]);
                     const { error } = await sb.from('items').delete().eq('id', itemId);
                     if (error) throw error;
-                    
                     App.toast('success', 'สำเร็จ', 'ลบรายการเรียบร้อยแล้ว');
                     App.loadLostItems();
-                } catch (err) {
-                    App.toast('error', 'ลบไม่สำเร็จ', err.message);
-                } finally {
-                    App.showLoading(false);
-                }
+                } catch (err) { App.toast('error', 'ลบไม่สำเร็จ', err.message); } 
+                finally { App.showLoading(false); }
             },
 
             loadProfilesCache: async () => {
                 try {
                     const { data: profiles } = await sb.from('profiles').select('id, full_name, email, avatar_url, role, birthday, homeroom, grade_level, phone, is_banned, created_at');
-                    if (profiles) {
-                        profiles.forEach(p => {
-                            App.profilesCache[p.id] = p;
-                        });
-                    }
-                } catch (err) {
-                    console.error('Load profiles cache error:', err);
-                }
+                    if (profiles) profiles.forEach(p => { App.profilesCache[p.id] = p; });
+                } catch (err) { console.error('Load profiles cache error:', err); }
             },
 
-            getProfileName: (userId) => {
-                const profile = App.profilesCache[userId];
-                return profile?.full_name || 'ไม่ระบุชื่อ';
-            },
+            getProfileName: (userId) => App.profilesCache[userId]?.full_name || 'ไม่ระบุชื่อ',
 
             formatDateTime: (dateStr) => {
                 const date = new Date(dateStr);
-                const datePart = date.toLocaleDateString('th-TH');
-                const timePart = date.toLocaleTimeString('th-TH', { hour: '2-digit', minute: '2-digit' });
-                return `${datePart} ${timePart} น.`;
+                return `${date.toLocaleDateString('th-TH')} ${date.toLocaleTimeString('th-TH', { hour: '2-digit', minute: '2-digit' })} น.`;
             },
 
             loadLostItems: async () => {
                 const container = document.getElementById('lost-list');
                 container.innerHTML = '<div style="text-align:center; padding:60px;"><div class="spinner" style="margin:0 auto;"></div></div>';
-                
                 try {
                     await App.loadProfilesCache();
-                    
                     const { data, error } = await sb.from('items').select('*').in('type', ['lost', 'found']).eq('status', 'active').order('created_at', {ascending: false});
                     if (error) throw error;
-                    
                     if (!data || data.length === 0) {
                         container.innerHTML = '<div style="text-align:center; padding:60px; color:white; background:rgba(255,255,255,0.1); border-radius:16px;"><i class="fa-solid fa-box-open" style="font-size:48px; margin-bottom:16px; opacity:0.5;"></i><p style="font-size:18px;">ไม่พบรายการในระบบ</p></div>';
                         return;
                     }
-                    
                     const isAdmin = App.profile.role === 'admin';
-                    
                     container.innerHTML = data.map(item => {
                         const isOwner = item.user_id === App.user.id;
-                        const isLost = item.type === 'lost';
-                        const authorName = App.getProfileName(item.user_id);
-                        const dateTime = App.formatDateTime(item.created_at);
-                        
                         return `
                         <div class="item-card">
-                            ${item.image_url ? `<img src="${item.image_url}" class="item-image">` : 
-                            '<div class="item-image" style="display:flex;align-items:center;justify-content:center;"><i class="fa-solid fa-image" style="font-size:48px; color:#D1D5DB;"></i></div>'}
+                            ${item.image_url ? `<img src="${item.image_url}" class="item-image">` : '<div class="item-image" style="display:flex;align-items:center;justify-content:center;"><i class="fa-solid fa-image" style="font-size:48px; color:#D1D5DB;"></i></div>'}
                             <div class="item-content">
-                                <span class="item-badge ${isLost ? '' : 'found'}">${isLost ? 'ของหาย' : 'เก็บของได้'}</span>
+                                <span class="item-badge ${item.type === 'lost' ? '' : 'found'}">${item.type === 'lost' ? 'ของหาย' : 'เก็บของได้'}</span>
                                 <h3 class="item-title">${item.title}</h3>
-                                <div class="item-author"><i class="fa-solid fa-user"></i> ${authorName}</div>
+                                <div class="item-info"><i class="fa-solid fa-user"></i> ${App.getProfileName(item.user_id)}</div>
                                 <div class="item-info"><i class="fa-solid fa-location-dot"></i> ${item.location || '-'}</div>
                                 <div class="item-info"><i class="fa-solid fa-tag"></i> ${item.category}</div>
-                                <p style="margin-top:10px; font-size:13px; color:var(--text-secondary); flex:1;">${item.description}</p>
-                                <div style="margin-top:10px; font-size:12px; color:var(--text-muted);"><i class="fa-regular fa-clock"></i> ${dateTime}</div>
+                                <p style="margin-top:10px; font-size:13px; color:var(--text-secondary); flex:1;">${item.description}</div>
+                                <div style="margin-top:10px; font-size:12px; color:var(--text-muted);"><i class="fa-regular fa-clock"></i> ${App.formatDateTime(item.created_at)}</div>
                                 <div class="item-actions">
                                     ${(isOwner || isAdmin) ? `
                                         <button class="btn btn-warning btn-sm" style="flex:1;" onclick="App.editItem('${item.id}')"><i class="fa-solid fa-pen"></i> แก้ไข</button>
@@ -2433,10 +1173,9 @@
                                     ` : ''}
                                 </div>
                             </div>
-                        </div>
-                    `}).join('');
+                        </div>`;
+                    }).join('');
                 } catch (err) {
-                    console.error('Load items error:', err);
                     container.innerHTML = '<div style="text-align:center; padding:60px; color:white;"><p>เกิดข้อผิดพลาดในการโหลดข้อมูล</p></div>';
                 }
             },
@@ -2444,174 +1183,106 @@
             loadNotificationsPage: async () => {
                 const container = document.getElementById('notifications-list');
                 container.innerHTML = '<div style="text-align:center; padding:40px;"><div class="spinner" style="margin:0 auto;"></div></div>';
-                
                 try {
-                    // โหลด notifications พร้อมข้อมูล admin_report
-                    const { data: notifications, error } = await sb.from('notifications')
-                        .select(`
-                            *,
-                            admin_reports!admin_report_id (
-                                subject,
-                                admin_title,
-                                admin_response,
-                                status
-                            )
-                        `)
-                        .eq('user_id', App.user.id)
-                        .order('created_at', { ascending: false });
-                    
+                    const { data: notifications, error } = await sb.from('notifications').select('*').eq('user_id', App.user.id).order('created_at', { ascending: false });
                     if (error) throw error;
-                    
                     if (!notifications || notifications.length === 0) {
                         container.innerHTML = '<div style="text-align:center; padding:60px; color:var(--text-muted);"><i class="fa-solid fa-bell-slash" style="font-size:64px; margin-bottom:16px; opacity:0.3;"></i><p style="font-size:16px;">ไม่มีการแจ้งเตือน</p></div>';
                         return;
                     }
-                    
                     container.innerHTML = notifications.map(notif => {
                         const dateTime = App.formatDateTime(notif.created_at);
-                        let icon, badgeClass, typeLabel;
-                        
-                        if (notif.type === 'admin_response') {
-                            icon = 'fa-check-circle';
-                            badgeClass = 'success';
-                            typeLabel = 'คำร้องได้รับการดำเนินการ';
-                        } else if (notif.type === 'admin_reject') {
-                            icon = 'fa-times-circle';
-                            badgeClass = 'danger';
-                            typeLabel = 'คำร้องถูกปฏิเสธ';
-                        } else {
-                            icon = 'fa-bell';
-                            badgeClass = '';
-                            typeLabel = 'แจ้งเตือน';
-                        }
-                        
-                        const isSelected = App.selectedNotifications.has(notif.id);
+                        let icon = 'fa-bell', badgeClass = '', typeLabel = 'แจ้งเตือน';
+                        if (notif.type === 'admin_response') { icon = 'fa-check-circle'; badgeClass = 'success'; typeLabel = 'คำร้องได้รับการดำเนินการ'; }
+                        else if (notif.type === 'admin_reject') { icon = 'fa-times-circle'; badgeClass = 'danger'; typeLabel = 'คำร้องถูกปฏิเสธ'; }
                         
                         return `
                             <div class="notification-card type-${notif.type} ${!notif.is_read ? 'unread' : ''}" data-id="${notif.id}">
                                 <div style="display:flex; align-items:flex-start; gap:12px;">
-                                    <input type="checkbox" class="notif-checkbox" data-id="${notif.id}" ${isSelected ? 'checked' : ''} onchange="App.toggleNotification('${notif.id}')" style="margin-top:3px; cursor:pointer;">
+                                    <input type="checkbox" class="notif-checkbox" data-id="${notif.id}" ${App.selectedNotifications.has(notif.id) ? 'checked' : ''} onchange="App.toggleNotification('${notif.id}')" style="margin-top:3px; cursor:pointer;">
                                     <div style="flex:1;">
                                         <div class="notification-header">
-                                            <div class="notification-title-text">
-                                                <span class="item-badge ${badgeClass}"><i class="fa-solid ${icon}"></i> ${typeLabel}</span>
-                                            </div>
+                                            <div class="notification-title-text"><span class="item-badge ${badgeClass}"><i class="fa-solid ${icon}"></i> ${typeLabel}</span></div>
                                             <div class="notification-time"><i class="fa-regular fa-clock"></i> ${dateTime}</div>
                                         </div>
-                                        ${notif.title ? `<div style="font-weight:600; margin-bottom:6px; color:var(--text); font-size:14px;">${notif.title}</div>` : ''}
+                                        ${notif.title ? `<div style="font-weight:600; margin-bottom:6px; font-size:14px;">${notif.title}</div>` : ''}
                                         ${notif.message ? `<div class="notification-message">${notif.message}</div>` : ''}
                                         <div class="notification-actions">
                                             <button class="btn btn-outline btn-sm" onclick="App.deleteNotification('${notif.id}')" style="width:auto;"><i class="fa-solid fa-trash"></i> ลบ</button>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        `;
+                            </div>`;
                     }).join('');
                 } catch (err) {
-                    console.error('Load notifications error:', err);
                     container.innerHTML = '<div style="color:var(--danger); padding:20px;">เกิดข้อผิดพลาดในการโหลดข้อมูล: ' + err.message + '</div>';
                 }
             },
 
             toggleNotification: (notifId) => {
-                if (App.selectedNotifications.has(notifId)) {
-                    App.selectedNotifications.delete(notifId);
-                } else {
-                    App.selectedNotifications.add(notifId);
-                }
+                if (App.selectedNotifications.has(notifId)) App.selectedNotifications.delete(notifId);
+                else App.selectedNotifications.add(notifId);
                 App.updateSelectAllUI();
             },
 
             toggleSelectAll: () => {
                 const checkboxes = document.querySelectorAll('.notif-checkbox');
                 const allSelected = checkboxes.length > 0 && checkboxes.length === App.selectedNotifications.size;
-                
                 checkboxes.forEach(cb => {
                     const id = cb.getAttribute('data-id');
-                    if (allSelected) {
-                        cb.checked = false;
-                        App.selectedNotifications.delete(id);
-                    } else {
-                        cb.checked = true;
-                        App.selectedNotifications.add(id);
-                    }
+                    if (allSelected) { cb.checked = false; App.selectedNotifications.delete(id); }
+                    else { cb.checked = true; App.selectedNotifications.add(id); }
                 });
-                
                 App.updateSelectAllUI();
             },
 
             updateSelectAllUI: () => {
                 const count = App.selectedNotifications.size;
                 document.getElementById('selected-count').textContent = count;
-                
                 const btnDelete = document.getElementById('btn-delete-selected');
                 const selectAllText = document.getElementById('select-all-text');
-                
-                if (count > 0) {
-                    btnDelete.classList.remove('hidden');
-                } else {
-                    btnDelete.classList.add('hidden');
-                }
+                if (count > 0) btnDelete.classList.remove('hidden');
+                else btnDelete.classList.add('hidden');
                 
                 const checkboxes = document.querySelectorAll('.notif-checkbox');
-                const allSelected = checkboxes.length > 0 && checkboxes.length === count;
-                selectAllText.textContent = allSelected ? 'ยกเลิกเลือกทั้งหมด' : 'เลือกทั้งหมด';
+                selectAllText.textContent = (checkboxes.length > 0 && checkboxes.length === count) ? 'ยกเลิกเลือกทั้งหมด' : 'เลือกทั้งหมด';
             },
 
             deleteNotification: async (notifId) => {
                 if (!confirm('ต้องการลบการแจ้งเตือนนี้?')) return;
-                
                 try {
                     const { error } = await sb.from('notifications').delete().eq('id', notifId);
                     if (error) throw error;
-                    
                     App.toast('success', 'ลบแล้ว', 'ลบการแจ้งเตือนเรียบร้อยแล้ว');
                     App.loadNotificationsPage();
                     App.loadUnreadNotifications();
-                } catch (err) {
-                    App.toast('error', 'ลบไม่สำเร็จ', err.message);
-                }
+                } catch (err) { App.toast('error', 'ลบไม่สำเร็จ', err.message); }
             },
 
             deleteSelectedNotifications: async () => {
-                if (App.selectedNotifications.size === 0) {
-                    App.toast('warning', 'ไม่มีรายการที่เลือก', 'กรุณาเลือกการแจ้งเตือนที่ต้องการลบ');
-                    return;
-                }
-                
+                if (App.selectedNotifications.size === 0) { App.toast('warning', 'ไม่มีรายการที่เลือก', 'กรุณาเลือกการแจ้งเตือนที่ต้องการลบ'); return; }
                 if (!confirm(`ต้องการลบการแจ้งเตือนที่เลือก ${App.selectedNotifications.size} รายการ?`)) return;
-                
                 try {
                     const { error } = await sb.from('notifications').delete().in('id', Array.from(App.selectedNotifications));
                     if (error) throw error;
-                    
                     App.toast('success', 'ลบแล้ว', `ลบการแจ้งเตือน ${App.selectedNotifications.size} รายการเรียบร้อยแล้ว`);
                     App.selectedNotifications.clear();
                     App.loadNotificationsPage();
                     App.loadUnreadNotifications();
-                } catch (err) {
-                    App.toast('error', 'ลบไม่สำเร็จ', err.message);
-                }
+                } catch (err) { App.toast('error', 'ลบไม่สำเร็จ', err.message); }
             },
 
             markAllAsRead: async () => {
                 try {
                     const { error } = await sb.from('notifications').update({ is_read: true }).eq('user_id', App.user.id).eq('is_read', false);
                     if (error) throw error;
-                    
                     App.toast('success', 'สำเร็จ', 'อ่านทั้งหมดแล้ว');
                     App.loadNotificationsPage();
                     App.loadUnreadNotifications();
-                } catch (err) {
-                    App.toast('error', 'เกิดข้อผิดพลาด', err.message);
-                }
+                } catch (err) { App.toast('error', 'เกิดข้อผิดพลาด', err.message); }
             },
 
-            openAdminReportModal: () => {
-                document.getElementById('admin-report-modal').classList.remove('hidden');
-            },
-
+            openAdminReportModal: () => { document.getElementById('admin-report-modal').classList.remove('hidden'); },
             closeAdminReportModal: (event) => {
                 if (!event || event.target === event.currentTarget) {
                     document.getElementById('admin-report-modal').classList.add('hidden');
@@ -2624,49 +1295,26 @@
                 e.preventDefault();
                 App.showLoading(true);
                 try {
-                    const subject = document.getElementById('admin-report-subject').value;
-                    const description = document.getElementById('admin-report-description').value;
-                    
                     let image_url = null;
-                    const fileInput = document.getElementById('admin-report-file');
-                    const file = fileInput.files[0];
-                    
+                    const file = document.getElementById('admin-report-file').files[0];
                     if (file) {
-                        const ext = file.name.split('.').pop();
-                        const fileName = `report_${App.user.id}_${Date.now()}.${ext}`;
+                        const fileName = `report_${App.user.id}_${Date.now()}.${file.name.split('.').pop()}`;
                         const { error: uploadError } = await sb.storage.from('item-images').upload(fileName, file);
                         if (uploadError) throw uploadError;
                         const { data: { publicUrl } } = sb.storage.from('item-images').getPublicUrl(fileName);
                         image_url = publicUrl;
                     }
-                    
-                    const { error } = await sb.from('admin_reports').insert({
-                        user_id: App.user.id,
-                        subject: subject,
-                        description: description,
-                        image_url: image_url,
-                        status: 'pending'
-                    });
-                    
+                    const { error } = await sb.from('admin_reports').insert({ user_id: App.user.id, subject: document.getElementById('admin-report-subject').value, description: document.getElementById('admin-report-description').value, image_url: image_url, status: 'pending' });
                     if (error) throw error;
-                    
                     App.toast('success', 'ส่งสำเร็จ', 'ผู้ดูแลระบบจะตรวจสอบและติดต่อกลับโดยเร็ว');
                     App.closeAdminReportModal();
                     App.loadDashboardStats();
-                } catch (err) {
-                    App.toast('error', 'ส่งไม่สำเร็จ', err.message);
-                } finally {
-                    App.showLoading(false);
-                }
+                } catch (err) { App.toast('error', 'ส่งไม่สำเร็จ', err.message); } 
+                finally { App.showLoading(false); }
             },
 
             loadAdminPanel: async () => {
-                if (App.profile.role !== 'admin') {
-                    App.toast('error', 'ไม่มีสิทธิ์', 'คุณไม่มีสิทธิ์เข้าถึงหน้านี้');
-                    App.nav('home');
-                    return;
-                }
-                
+                if (App.profile.role !== 'admin') { App.toast('error', 'ไม่มีสิทธิ์', 'คุณไม่มีสิทธิ์เข้าถึงหน้านี้'); App.nav('home'); return; }
                 await App.loadProfilesCache();
                 await App.loadAdminReports();
                 await App.loadAdminUsers();
@@ -2675,20 +1323,14 @@
             loadAdminReports: async () => {
                 const container = document.getElementById('admin-reports-list');
                 container.innerHTML = '<div style="text-align:center; padding:40px; grid-column: span 3;"><div class="spinner" style="margin:0 auto;"></div></div>';
-                
                 try {
                     const { data: reports, error } = await sb.from('admin_reports').select('*').order('created_at', { ascending: false });
                     if (error) throw error;
-                    
                     if (!reports || reports.length === 0) {
                         container.innerHTML = '<div style="text-align:center; padding:40px; color:var(--text-muted); grid-column: span 3;"><i class="fa-solid fa-inbox" style="font-size:48px; margin-bottom:16px; opacity:0.5;"></i><p>ไม่มีคำร้องขอ</p></div>';
                         return;
                     }
-                    
                     container.innerHTML = reports.map(report => {
-                        const authorName = App.getProfileName(report.user_id);
-                        const dateTime = App.formatDateTime(report.created_at);
-                        
                         let statusBadge = '';
                         if (report.status === 'pending') statusBadge = '<span class="status-badge pending">รอดำเนินการ</span>';
                         else if (report.status === 'resolved') statusBadge = '<span class="status-badge resolved">ได้รับการดำเนินการ</span>';
@@ -2700,8 +1342,8 @@
                                 <div class="admin-report-content">
                                     ${statusBadge}
                                     <h3 class="admin-report-subject">${report.subject}</h3>
-                                    <div class="admin-report-meta"><i class="fa-solid fa-user"></i> ${authorName}</div>
-                                    <div class="admin-report-meta"><i class="fa-regular fa-clock"></i> ${dateTime}</div>
+                                    <div class="admin-report-meta"><i class="fa-solid fa-user"></i> ${App.getProfileName(report.user_id)}</div>
+                                    <div class="admin-report-meta"><i class="fa-regular fa-clock"></i> ${App.formatDateTime(report.created_at)}</div>
                                     <p class="admin-report-desc">${report.description}</p>
                                     ${report.admin_response ? `<div class="admin-report-response"><strong><i class="fa-solid fa-check-circle"></i> ${report.admin_title || 'ตอบกลับ'}:</strong><br>${report.admin_response}</div>` : ''}
                                     <div class="admin-report-actions">
@@ -2709,11 +1351,9 @@
                                         ${report.status === 'pending' ? `<button class="btn btn-success btn-sm" onclick="App.openAdminAcceptModal('${report.id}')"><i class="fa-solid fa-hand-holding-heart"></i> รับเรื่อง</button>` : `<button class="btn btn-outline btn-sm" onclick="App.deleteAdminReportOwn('${report.id}')"><i class="fa-solid fa-trash"></i> ลบ</button><button class="btn btn-danger btn-sm" onclick="App.deleteAdminReportNotif('${report.id}')"><i class="fa-solid fa-bell-slash"></i> ลบแจ้งเตือน</button>`}
                                     </div>
                                 </div>
-                            </div>
-                        `;
+                            </div>`;
                     }).join('');
                 } catch (err) {
-                    console.error('Load admin reports error:', err);
                     container.innerHTML = '<div style="color:var(--danger); padding:20px; grid-column: span 3;">เกิดข้อผิดพลาดในการโหลดข้อมูล: ' + err.message + '</div>';
                 }
             },
@@ -2722,53 +1362,23 @@
                 try {
                     const { data: report, error } = await sb.from('admin_reports').select('*').eq('id', reportId).single();
                     if (error) throw error;
-                    
                     App.currentReportId = reportId;
-                    const authorName = App.getProfileName(report.user_id);
-                    const authorProfile = App.profilesCache[report.user_id];
-                    const dateTime = App.formatDateTime(report.created_at);
-                    
                     let statusBadge = '';
                     if (report.status === 'pending') statusBadge = '<span class="status-badge pending">รอดำเนินการ</span>';
                     else if (report.status === 'resolved') statusBadge = '<span class="status-badge resolved">ได้รับการดำเนินการ</span>';
                     else if (report.status === 'rejected') statusBadge = '<span class="status-badge rejected">ถูกปฏิเสธ</span>';
                     
                     document.getElementById('report-detail-content').innerHTML = `
-                        <div style="margin-bottom:20px;">
-                            <h4 style="margin-bottom:10px; color:var(--text-muted); font-size:14px;">ข้อมูลผู้ส่ง:</h4>
-                            <div style="background:#EEF2FF; padding:14px; border-radius:var(--radius); display:flex; align-items:center; gap:14px;">
-                                <img src="${authorProfile?.avatar_url || `https://ui-avatars.com/api/?name=${(authorName || 'U').charAt(0)}&background=6366F1&color=fff`}" style="width:55px; height:55px; border-radius:50%; object-fit:cover;">
-                                <div>
-                                    <div style="font-weight:600; font-size:15px;">${authorName}</div>
-                                    <div style="font-size:12px; color:var(--text-muted);">${authorProfile?.email || '-'}</div>
-                                    <div style="font-size:11px; color:var(--text-muted); margin-top:3px;"><i class="fa-regular fa-clock"></i> ${dateTime}</div>
-                                </div>
-                            </div>
-                        </div>
-                        <div style="margin-bottom:16px;">
-                            <h4 style="margin-bottom:8px; color:var(--text-muted); font-size:14px;">หัวข้อเรื่อง:</h4>
-                            <div style="background:#F9FAFB; padding:14px; border-radius:var(--radius); font-weight:600; font-size:15px;">${report.subject}</div>
-                        </div>
-                        ${report.image_url ? `<div style="margin-bottom:16px;"><h4 style="margin-bottom:8px; color:var(--text-muted); font-size:14px;">รูปภาพประกอบ:</h4><img src="${report.image_url}" style="max-width:100%; border-radius:var(--radius); border:2px solid var(--border);"></div>` : ''}
-                        <div style="margin-bottom:16px;">
-                            <h4 style="margin-bottom:8px; color:var(--text-muted); font-size:14px;">รายละเอียด:</h4>
-                            <div style="background:#F9FAFB; padding:14px; border-radius:var(--radius); white-space: pre-wrap; line-height:1.5; font-size:14px;">${report.description}</div>
-                        </div>
+                        <div style="margin-bottom:16px;"><h4 style="margin-bottom:8px; color:var(--text-muted); font-size:14px;">หัวข้อเรื่อง:</h4><div style="background:#F9FAFB; padding:14px; border-radius:var(--radius); font-weight:600; font-size:15px;">${report.subject}</div></div>
+                        <div style="margin-bottom:16px;"><h4 style="margin-bottom:8px; color:var(--text-muted); font-size:14px;">รายละเอียด:</h4><div style="background:#F9FAFB; padding:14px; border-radius:var(--radius); white-space: pre-wrap; line-height:1.5; font-size:14px;">${report.description}</div></div>
                         ${report.admin_response ? `<div style="margin-bottom:16px;"><h4 style="margin-bottom:8px; color:var(--success); font-size:14px;"><i class="fa-solid fa-check-circle"></i> ผลการดำเนินการ:</h4><div style="background:#D1FAE5; padding:14px; border-radius:var(--radius); white-space: pre-wrap; line-height:1.5; font-size:14px;"><strong>หัวข้อ:</strong> ${report.admin_title || '-'}<br><br>${report.admin_response}</div></div>` : ''}
-                        <div style="margin-bottom:16px;">
-                            <h4 style="margin-bottom:8px; color:var(--text-muted); font-size:14px;">สถานะ:</h4>
-                            ${statusBadge}
-                        </div>
+                        <div style="margin-bottom:16px;"><h4 style="margin-bottom:8px; color:var(--text-muted); font-size:14px;">สถานะ:</h4>${statusBadge}</div>
                         <div style="display:flex; gap:10px; margin-top:16px;">
                             ${report.status === 'pending' ? `<button class="btn btn-success" onclick="App.openAdminAcceptModal('${report.id}'); App.closeReportDetailModal();"><i class="fa-solid fa-hand-holding-heart"></i> รับเรื่อง</button>` : `<button class="btn btn-outline" onclick="App.deleteAdminReportOwn('${report.id}'); App.closeReportDetailModal();"><i class="fa-solid fa-trash"></i> ลบ (เฉพาะในแผงควบคุม)</button><button class="btn btn-danger" onclick="App.deleteAdminReportNotif('${report.id}'); App.closeReportDetailModal();"><i class="fa-solid fa-bell-slash"></i> ลบแจ้งเตือนของผู้ใช้</button>`}
                             <button class="btn btn-outline" onclick="App.closeReportDetailModal()"><i class="fa-solid fa-xmark"></i> ปิด</button>
-                        </div>
-                    `;
-                    
+                        </div>`;
                     document.getElementById('admin-report-detail-modal').classList.remove('hidden');
-                } catch (err) {
-                    App.toast('error', 'โหลดข้อมูลไม่สำเร็จ', err.message);
-                }
+                } catch (err) { App.toast('error', 'โหลดข้อมูลไม่สำเร็จ', err.message); }
             },
 
             closeReportDetailModal: (event) => {
@@ -2787,45 +1397,33 @@
             },
 
             closeAdminAcceptModal: (event) => {
-                if (!event || event.target === event.currentTarget) {
-                    document.getElementById('admin-accept-modal').classList.add('hidden');
-                }
+                if (!event || event.target === event.currentTarget) document.getElementById('admin-accept-modal').classList.add('hidden');
             },
 
             handleAdminAccept: async (e) => {
                 e.preventDefault();
-                
                 const reportId = document.getElementById('accept-report-id').value;
                 const status = document.getElementById('accept-status').value;
                 const title = document.getElementById('accept-title').value.trim();
                 const detail = document.getElementById('accept-detail').value.trim();
                 
-                if (!title || !detail) {
-                    App.toast('error', 'กรอกข้อมูลไม่ครบ', 'กรุณากรอกหัวข้อและรายละเอียด');
-                    return;
-                }
-                
+                if (!title || !detail) { App.toast('error', 'กรอกข้อมูลไม่ครบ', 'กรุณากรอกหัวข้อและรายละเอียด'); return; }
                 if (!confirm(`ยืนยันการส่งผลลัพธ์?`)) return;
                 
                 App.showLoading(true);
                 try {
+                    // สำคัญ: ต้อง select('user_id') เพื่อดึง ID ของผู้แจ้งมาสร้าง Notification
                     const { data: updatedReport, error: updateError } = await sb.from('admin_reports')
-                        .update({
-                            status: status,
-                            admin_title: title,
-                            admin_response: detail,
-                            resolved_at: new Date().toISOString()
-                        })
+                        .update({ status: status, admin_title: title, admin_response: detail, resolved_at: new Date().toISOString() })
                         .eq('id', reportId)
-                        .select()
+                        .select('user_id')
                         .single();
                     
                     if (updateError) throw updateError;
                     
-                    // สร้าง notification ให้ผู้ส่ง
                     const notifType = status === 'resolved' ? 'admin_response' : 'admin_reject';
                     const { error: notifError } = await sb.from('notifications').insert({
-                        user_id: updatedReport.user_id,
+                        user_id: updatedReport.user_id, // ใช้ user_id ของผู้แจ้ง
                         type: notifType,
                         admin_report_id: reportId,
                         title: title,
@@ -2833,70 +1431,49 @@
                         is_read: false
                     });
                     
-                    if (notifError) {
-                        console.error('Notification error:', notifError);
-                    }
+                    if (notifError) console.error('Notification error:', notifError);
                     
                     App.toast('success', 'สำเร็จ', 'ส่งผลลัพธ์ให้ผู้ใช้แล้ว');
                     App.closeAdminAcceptModal();
                     App.loadAdminReports();
                     App.loadDashboardStats();
-                } catch (err) {
-                    App.toast('error', 'เกิดข้อผิดพลาด', err.message);
-                    console.error('Admin accept error:', err);
-                } finally {
-                    App.showLoading(false);
-                }
+                } catch (err) { App.toast('error', 'เกิดข้อผิดพลาด', err.message); } 
+                finally { App.showLoading(false); }
             },
 
             deleteAdminReportOwn: async (reportId) => {
                 if (!confirm('ยืนยันการลบ? (ลบเฉพาะในแผงควบคุม ไม่ลบการแจ้งเตือนของผู้ใช้)')) return;
-                
                 App.showLoading(true);
                 try {
                     const { data: report } = await sb.from('admin_reports').select('image_url').eq('id', reportId).single();
-                    if (report && report.image_url) {
-                        const fileName = report.image_url.split('/').pop();
-                        await sb.storage.from('item-images').remove([fileName]);
-                    }
+                    if (report && report.image_url) await sb.storage.from('item-images').remove([report.image_url.split('/').pop()]);
                     const { error } = await sb.from('admin_reports').delete().eq('id', reportId);
                     if (error) throw error;
-                    
                     App.toast('success', 'สำเร็จ', 'ลบคำร้องแล้ว (การแจ้งเตือนของผู้ใช้ยังคงอยู่)');
                     App.loadAdminReports();
                     App.loadDashboardStats();
-                } catch (err) {
-                    App.toast('error', 'เกิดข้อผิดพลาด', err.message);
-                } finally {
-                    App.showLoading(false);
-                }
+                } catch (err) { App.toast('error', 'เกิดข้อผิดพลาด', err.message); } 
+                finally { App.showLoading(false); }
             },
 
             deleteAdminReportNotif: async (reportId) => {
                 if (!confirm('ยืนยันการลบการแจ้งเตือนของผู้ใช้?')) return;
-                
                 App.showLoading(true);
                 try {
                     const { error } = await sb.from('notifications').delete().eq('admin_report_id', reportId);
                     if (error) throw error;
-                    
                     App.toast('success', 'สำเร็จ', 'ลบการแจ้งเตือนของผู้ใช้แล้ว');
                     App.loadAdminReports();
-                } catch (err) {
-                    App.toast('error', 'เกิดข้อผิดพลาด', err.message);
-                } finally {
-                    App.showLoading(false);
-                }
+                } catch (err) { App.toast('error', 'เกิดข้อผิดพลาด', err.message); } 
+                finally { App.showLoading(false); }
             },
 
             loadAdminUsers: async () => {
                 const container = document.getElementById('admin-users-list');
                 container.innerHTML = '<div style="text-align:center; padding:40px;"><div class="spinner" style="margin:0 auto;"></div></div>';
-                
                 try {
                     const { data: users, error } = await sb.from('profiles').select('*').order('created_at', { ascending: false });
                     if (error) throw error;
-                    
                     container.innerHTML = `
                         <table class="admin-table">
                             <thead><tr><th>ชื่อ-นามสกุล</th><th>อีเมล</th><th>ยศ</th><th>สถานะ</th><th>จัดการ</th></tr></thead>
@@ -2906,7 +1483,6 @@
                                     if (user.role === 'admin') roleBadge = '<span class="role-badge admin">ผู้ดูแลระบบ</span>';
                                     else if (user.role === 'teacher') roleBadge = '<span class="role-badge teacher">ครู</span>';
                                     else roleBadge = '<span class="role-badge student">นักเรียน</span>';
-                                    
                                     return `
                                         <tr>
                                             <td>${user.full_name || '-'}</td>
@@ -2923,45 +1499,18 @@
                                                     ` : '<span style="color:var(--text-muted);">-</span>'}
                                                 </div>
                                             </td>
-                                        </tr>
-                                    `;
+                                        </tr>`;
                                 }).join('')}
                             </tbody>
-                        </table>
-                    `;
-                } catch (err) {
-                    console.error('Load users error:', err);
-                    container.innerHTML = '<div style="color:var(--danger); padding:20px;">เกิดข้อผิดพลาดในการโหลดข้อมูล: ' + err.message + '</div>';
-                }
+                        </table>`;
+                } catch (err) { container.innerHTML = '<div style="color:var(--danger); padding:20px;">เกิดข้อผิดพลาดในการโหลดข้อมูล: ' + err.message + '</div>'; }
             },
 
             openUserDetailModal: (userId) => {
                 const user = App.profilesCache[userId];
-                if (!user) {
-                    App.toast('error', 'ไม่พบข้อมูล', 'ไม่พบข้อมูลผู้ใช้');
-                    return;
-                }
-                
-                let roleText = '';
-                if (user.role === 'admin') roleText = 'ผู้ดูแลระบบ';
-                else if (user.role === 'teacher') roleText = 'ครู';
-                else roleText = 'นักเรียน';
-                
-                let createdText = '-';
-                if (user.created_at) {
-                    const date = new Date(user.created_at);
-                    const dateStr = date.toLocaleDateString('th-TH', {
-                        year: 'numeric',
-                        month: '2-digit',
-                        day: '2-digit'
-                    });
-                    const timeStr = date.toLocaleTimeString('th-TH', {
-                        hour: '2-digit',
-                        minute: '2-digit',
-                        second: '2-digit'
-                    });
-                    createdText = `${dateStr} - ${timeStr}`;
-                }
+                if (!user) { App.toast('error', 'ไม่พบข้อมูล', 'ไม่พบข้อมูลผู้ใช้'); return; }
+                let roleText = user.role === 'admin' ? 'ผู้ดูแลระบบ' : (user.role === 'teacher' ? 'ครู' : 'นักเรียน');
+                let createdText = user.created_at ? `${new Date(user.created_at).toLocaleDateString('th-TH')} - ${new Date(user.created_at).toLocaleTimeString('th-TH', {hour: '2-digit', minute: '2-digit', second: '2-digit'})}` : '-';
                 
                 document.getElementById('user-detail-content').innerHTML = `
                     <div style="text-align:center; margin-bottom:20px;">
@@ -2980,57 +1529,34 @@
                         <div class="user-detail-item"><div class="user-detail-label"><i class="fa-solid fa-clock"></i> สร้างเมื่อ</div><div class="user-detail-value">${createdText}</div></div>
                         <div class="user-detail-item"><div class="user-detail-label"><i class="fa-solid fa-ban"></i> สถานะ</div><div class="user-detail-value">${user.is_banned ? '<span style="color:var(--danger);">ถูกแบน</span>' : '<span style="color:var(--success);">ปกติ</span>'}</div></div>
                     </div>
-                    <div style="margin-top:20px; text-align:center;">
-                        <button class="btn btn-outline" onclick="App.closeUserDetailModal()"><i class="fa-solid fa-xmark"></i> ปิด</button>
-                    </div>
-                `;
-                
+                    <div style="margin-top:20px; text-align:center;"><button class="btn btn-outline" onclick="App.closeUserDetailModal()"><i class="fa-solid fa-xmark"></i> ปิด</button></div>`;
                 document.getElementById('user-detail-modal').classList.remove('hidden');
             },
 
-            closeUserDetailModal: (event) => {
-                if (!event || event.target === event.currentTarget) {
-                    document.getElementById('user-detail-modal').classList.add('hidden');
-                }
-            },
+            closeUserDetailModal: (event) => { if (!event || event.target === event.currentTarget) document.getElementById('user-detail-modal').classList.add('hidden'); },
 
             openChangeRoleModal: (userId, currentRole) => {
                 document.getElementById('change-role-user-id').value = userId;
                 document.getElementById('new-role').value = currentRole;
                 document.getElementById('change-role-modal').classList.remove('hidden');
             },
-
-            closeChangeRoleModal: (event) => {
-                if (!event || event.target === event.currentTarget) {
-                    document.getElementById('change-role-modal').classList.add('hidden');
-                }
-            },
+            closeChangeRoleModal: (event) => { if (!event || event.target === event.currentTarget) document.getElementById('change-role-modal').classList.add('hidden'); },
 
             handleChangeRole: async (e) => {
                 e.preventDefault();
                 const userId = document.getElementById('change-role-user-id').value;
                 const newRole = document.getElementById('new-role').value;
-                
-                if (!newRole || (newRole !== 'student' && newRole !== 'teacher')) {
-                    App.toast('error', 'ยศไม่ถูกต้อง', 'กรุณาเลือกยศ นักเรียน หรือ ครู');
-                    return;
-                }
-                
+                if (!newRole || (newRole !== 'student' && newRole !== 'teacher')) { App.toast('error', 'ยศไม่ถูกต้อง', 'กรุณาเลือกยศ นักเรียน หรือ ครู'); return; }
                 if (!confirm(`ยืนยันการเปลี่ยนยศเป็น ${newRole === 'student' ? 'นักเรียน' : 'ครู'}?`)) return;
-                
                 App.showLoading(true);
                 try {
                     const { error } = await sb.from('profiles').update({ role: newRole }).eq('id', userId);
                     if (error) throw error;
-                    
                     App.toast('success', 'สำเร็จ', `เปลี่ยนยศเป็น ${newRole === 'student' ? 'นักเรียน' : 'ครู'} แล้ว`);
                     App.closeChangeRoleModal();
                     App.loadAdminUsers();
-                } catch (err) {
-                    App.toast('error', 'เกิดข้อผิดพลาด', err.message);
-                } finally {
-                    App.showLoading(false);
-                }
+                } catch (err) { App.toast('error', 'เกิดข้อผิดพลาด', err.message); } 
+                finally { App.showLoading(false); }
             },
 
             openChangeNameModal: (userId, currentName) => {
@@ -3038,44 +1564,28 @@
                 document.getElementById('new-name').value = currentName || '';
                 document.getElementById('change-name-modal').classList.remove('hidden');
             },
-
-            closeChangeNameModal: (event) => {
-                if (!event || event.target === event.currentTarget) {
-                    document.getElementById('change-name-modal').classList.add('hidden');
-                }
-            },
+            closeChangeNameModal: (event) => { if (!event || event.target === event.currentTarget) document.getElementById('change-name-modal').classList.add('hidden'); },
 
             handleChangeName: async (e) => {
                 e.preventDefault();
                 const userId = document.getElementById('change-name-user-id').value;
                 const newName = document.getElementById('new-name').value.trim();
-                
-                if (!newName) {
-                    App.toast('error', 'กรอกข้อมูลไม่ครบ', 'กรุณากรอกชื่อ-นามสกุล');
-                    return;
-                }
-                
+                if (!newName) { App.toast('error', 'กรอกข้อมูลไม่ครบ', 'กรุณากรอกชื่อ-นามสกุล'); return; }
                 if (!confirm(`ยืนยันการเปลี่ยนชื่อเป็น "${newName}"?`)) return;
-                
                 App.showLoading(true);
                 try {
                     const { error } = await sb.from('profiles').update({ full_name: newName }).eq('id', userId);
                     if (error) throw error;
-                    
                     App.toast('success', 'สำเร็จ', 'เปลี่ยนชื่อ-นามสกุลแล้ว');
                     App.closeChangeNameModal();
                     App.loadAdminUsers();
-                } catch (err) {
-                    App.toast('error', 'เกิดข้อผิดพลาด', err.message);
-                } finally {
-                    App.showLoading(false);
-                }
+                } catch (err) { App.toast('error', 'เกิดข้อผิดพลาด', err.message); } 
+                finally { App.showLoading(false); }
             },
 
             toggleBanUser: async (userId, ban) => {
                 const reason = ban ? prompt('ระบุเหตุผลในการแบน:') : null;
                 if (ban && !reason) return;
-                
                 App.showLoading(true);
                 try {
                     if (ban) {
@@ -3088,78 +1598,49 @@
                         App.toast('success', 'สำเร็จ', 'ปลดแบนผู้ใช้เรียบร้อยแล้ว');
                     }
                     App.loadAdminUsers();
-                } catch (err) {
-                    App.toast('error', 'เกิดข้อผิดพลาด', err.message);
-                } finally {
-                    App.showLoading(false);
-                }
+                } catch (err) { App.toast('error', 'เกิดข้อผิดพลาด', err.message); } 
+                finally { App.showLoading(false); }
             },
 
-            loadSettingsData: () => {
-                App.updateProfileUI();
-            },
+            loadSettingsData: () => { App.updateProfileUI(); },
 
             handleAvatarUpload: async (e) => {
                 const file = e.target.files[0];
-                if (!file || !['image/png', 'image/jpeg'].includes(file.type)) { 
-                    App.toast('error', 'ไฟล์ไม่รองรับ', 'กรุณาใช้ไฟล์ PNG หรือ JPG เท่านั้น'); 
-                    return; 
-                }
+                if (!file || !['image/png', 'image/jpeg'].includes(file.type)) { App.toast('error', 'ไฟล์ไม่รองรับ', 'กรุณาใช้ไฟล์ PNG หรือ JPG เท่านั้น'); return; }
                 App.showLoading(true);
                 try {
-                    if (App.profile.avatar_url) {
-                        const oldFileName = App.profile.avatar_url.split('/').pop();
-                        await sb.storage.from('avatars').remove([oldFileName]);
-                    }
+                    if (App.profile.avatar_url) await sb.storage.from('avatars').remove([App.profile.avatar_url.split('/').pop()]);
                     const fileName = `${App.user.id}_${Date.now()}.png`;
                     const { error: uploadError } = await sb.storage.from('avatars').upload(fileName, file);
                     if (uploadError) throw uploadError;
-                    
                     const { data: { publicUrl } } = sb.storage.from('avatars').getPublicUrl(fileName);
                     const { error: updateError } = await sb.from('profiles').update({ avatar_url: publicUrl }).eq('id', App.user.id);
                     if (updateError) throw updateError;
-                    
                     App.profile.avatar_url = publicUrl;
                     App.updateProfileUI();
                     App.toast('success', 'สำเร็จ', 'อัปเดตรูปโปรไฟล์แล้ว');
-                } catch (err) {
-                    App.toast('error', 'อัปโหลดไม่สำเร็จ', err.message);
-                } finally {
-                    App.showLoading(false);
-                    e.target.value = '';
-                }
+                } catch (err) { App.toast('error', 'อัปโหลดไม่สำเร็จ', err.message); } 
+                finally { App.showLoading(false); e.target.value = ''; }
             },
 
             deleteAvatar: async () => {
-                if (!App.profile.avatar_url) {
-                    App.toast('error', 'ไม่มีรูป', 'คุณยังไม่ได้ตั้งรูปโปรไฟล์');
-                    return;
-                }
+                if (!App.profile.avatar_url) { App.toast('error', 'ไม่มีรูป', 'คุณยังไม่ได้ตั้งรูปโปรไฟล์'); return; }
                 if (!confirm('ต้องการลบรูปโปรไฟล์ใช่หรือไม่?')) return;
-                
                 App.showLoading(true);
                 try {
-                    const fileName = App.profile.avatar_url.split('/').pop();
-                    await sb.storage.from('avatars').remove([fileName]);
+                    await sb.storage.from('avatars').remove([App.profile.avatar_url.split('/').pop()]);
                     const { error } = await sb.from('profiles').update({ avatar_url: null }).eq('id', App.user.id);
                     if (error) throw error;
-                    
                     App.profile.avatar_url = null;
                     App.updateProfileUI();
                     App.toast('success', 'สำเร็จ', 'ลบรูปโปรไฟล์แล้ว');
-                } catch (err) {
-                    App.toast('error', 'ลบไม่สำเร็จ', err.message);
-                } finally {
-                    App.showLoading(false);
-                }
+                } catch (err) { App.toast('error', 'ลบไม่สำเร็จ', err.message); } 
+                finally { App.showLoading(false); }
             },
 
             updateUsername: async () => {
                 const newName = document.getElementById('settings-username').value.trim();
-                if (!newName) {
-                    App.toast('error', 'ไม่ถูกต้อง', 'กรุณากรอกชื่อ-นามสกุล');
-                    return;
-                }
+                if (!newName) { App.toast('error', 'ไม่ถูกต้อง', 'กรุณากรอกชื่อ-นามสกุล'); return; }
                 App.showLoading(true);
                 try {
                     const { error } = await sb.from('profiles').update({ full_name: newName }).eq('id', App.user.id);
@@ -3167,83 +1648,61 @@
                     App.profile.full_name = newName;
                     App.updateProfileUI();
                     App.toast('success', 'สำเร็จ', 'เปลี่ยนชื่อ-นามสกุลเรียบร้อยแล้ว');
-                } catch (err) {
-                    App.toast('error', 'เปลี่ยนไม่สำเร็จ', err.message);
-                } finally {
-                    App.showLoading(false);
-                }
+                } catch (err) { App.toast('error', 'เปลี่ยนไม่สำเร็จ', err.message); } 
+                finally { App.showLoading(false); }
             },
 
             updateBirthday: async () => {
-                const birthday = document.getElementById('settings-birthday').value;
                 App.showLoading(true);
                 try {
-                    const { error } = await sb.from('profiles').update({ birthday: birthday || null }).eq('id', App.user.id);
+                    const { error } = await sb.from('profiles').update({ birthday: document.getElementById('settings-birthday').value || null }).eq('id', App.user.id);
                     if (error) throw error;
-                    App.profile.birthday = birthday;
+                    App.profile.birthday = document.getElementById('settings-birthday').value;
                     App.toast('success', 'สำเร็จ', 'บันทึกวันเกิดแล้ว');
-                } catch (err) {
-                    App.toast('error', 'บันทึกไม่สำเร็จ', err.message);
-                } finally {
-                    App.showLoading(false);
-                }
+                } catch (err) { App.toast('error', 'บันทึกไม่สำเร็จ', err.message); } 
+                finally { App.showLoading(false); }
             },
 
             updateHomeroom: async () => {
-                const homeroom = document.getElementById('settings-homeroom').value.trim();
                 App.showLoading(true);
                 try {
-                    const { error } = await sb.from('profiles').update({ homeroom: homeroom || null }).eq('id', App.user.id);
+                    const val = document.getElementById('settings-homeroom').value.trim();
+                    const { error } = await sb.from('profiles').update({ homeroom: val || null }).eq('id', App.user.id);
                     if (error) throw error;
-                    App.profile.homeroom = homeroom;
+                    App.profile.homeroom = val;
                     App.toast('success', 'สำเร็จ', 'บันทึกห้อง Homeroom แล้ว');
-                } catch (err) {
-                    App.toast('error', 'บันทึกไม่สำเร็จ', err.message);
-                } finally {
-                    App.showLoading(false);
-                }
+                } catch (err) { App.toast('error', 'บันทึกไม่สำเร็จ', err.message); } 
+                finally { App.showLoading(false); }
             },
 
             updateGrade: async () => {
-                const grade = document.getElementById('settings-grade').value;
                 App.showLoading(true);
                 try {
-                    const { error } = await sb.from('profiles').update({ grade_level: grade || null }).eq('id', App.user.id);
+                    const val = document.getElementById('settings-grade').value;
+                    const { error } = await sb.from('profiles').update({ grade_level: val || null }).eq('id', App.user.id);
                     if (error) throw error;
-                    App.profile.grade_level = grade;
+                    App.profile.grade_level = val;
                     App.toast('success', 'สำเร็จ', 'บันทึกระดับชั้นแล้ว');
-                } catch (err) {
-                    App.toast('error', 'บันทึกไม่สำเร็จ', err.message);
-                } finally {
-                    App.showLoading(false);
-                }
+                } catch (err) { App.toast('error', 'บันทึกไม่สำเร็จ', err.message); } 
+                finally { App.showLoading(false); }
             },
 
             updatePhone: async () => {
-                const phone = document.getElementById('settings-phone').value.trim();
-                if (phone && !/^\d{3}-\d{3}-\d{4}$/.test(phone)) {
-                    App.toast('error', 'รูปแบบไม่ถูกต้อง', 'กรุณาใส่เบอร์โทรในรูปแบบ 000-000-0000');
-                    return;
-                }
                 App.showLoading(true);
                 try {
-                    const { error } = await sb.from('profiles').update({ phone: phone || null }).eq('id', App.user.id);
+                    const val = document.getElementById('settings-phone').value.trim();
+                    if (val && !/^\d{3}-\d{3}-\d{4}$/.test(val)) { App.toast('error', 'รูปแบบไม่ถูกต้อง', 'กรุณาใส่เบอร์โทรในรูปแบบ 000-000-0000'); App.showLoading(false); return; }
+                    const { error } = await sb.from('profiles').update({ phone: val || null }).eq('id', App.user.id);
                     if (error) throw error;
-                    App.profile.phone = phone;
+                    App.profile.phone = val;
                     App.toast('success', 'สำเร็จ', 'บันทึกเบอร์ติดต่อแล้ว');
-                } catch (err) {
-                    App.toast('error', 'บันทึกไม่สำเร็จ', err.message);
-                } finally {
-                    App.showLoading(false);
-                }
+                } catch (err) { App.toast('error', 'บันทึกไม่สำเร็จ', err.message); } 
+                finally { App.showLoading(false); }
             },
 
             updatePassword: async () => {
                 const newPass = document.getElementById('settings-password').value;
-                if (!newPass || newPass.length < 8) {
-                    App.toast('error', 'ไม่ปลอดภัย', 'รหัสผ่านต้องมีอย่างน้อย 8 ตัวอักษร');
-                    return;
-                }
+                if (!newPass || newPass.length < 8) { App.toast('error', 'ไม่ปลอดภัย', 'รหัสผ่านต้องมีอย่างน้อย 8 ตัวอักษร'); return; }
                 App.showLoading(true);
                 try {
                     const { error } = await sb.auth.updateUser({ password: newPass });
@@ -3251,49 +1710,28 @@
                     document.getElementById('settings-password').value = '';
                     document.getElementById('settings-password-strength').classList.add('hidden');
                     App.toast('success', 'สำเร็จ', 'เปลี่ยนรหัสผ่านเรียบร้อยแล้ว');
-                } catch (err) {
-                    App.toast('error', 'เปลี่ยนไม่สำเร็จ', err.message);
-                } finally {
-                    App.showLoading(false);
-                }
+                } catch (err) { App.toast('error', 'เปลี่ยนไม่สำเร็จ', err.message); } 
+                finally { App.showLoading(false); }
             },
 
             logout: async () => {
-                if (confirm('คุณแน่ใจว่าต้องการออกจากระบบ?')) { 
-                    await sb.auth.signOut(); 
-                    location.reload();
-                }
+                if (confirm('คุณแน่ใจว่าต้องการออกจากระบบ?')) { await sb.auth.signOut(); location.reload(); }
             },
 
-            showLoading: (show) => {
-                document.getElementById('loading-overlay').classList.toggle('hidden', !show);
-            },
+            showLoading: (show) => { document.getElementById('loading-overlay').classList.toggle('hidden', !show); },
             
             toast: (type, title, msg) => {
                 const container = document.getElementById('toast-container');
                 const toast = document.createElement('div');
                 toast.className = `toast ${type}`;
-                toast.innerHTML = `
-                    <i class="fa-solid ${type==='success'?'fa-circle-check':type==='warning'?'fa-triangle-exclamation':'fa-circle-xmark'}" style="font-size:22px; color:${type==='success'?'var(--success)':type==='warning'?'var(--warning)':'var(--danger)'}"></i>
-                    <div>
-                        <div style="font-weight:700; font-size:15px;">${title}</div>
-                        <div style="font-size:13px; color:var(--text-secondary);">${msg}</div>
-                    </div>
-                `;
+                toast.innerHTML = `<i class="fa-solid ${type==='success'?'fa-circle-check':type==='warning'?'fa-triangle-exclamation':'fa-circle-xmark'}" style="font-size:22px; color:${type==='success'?'var(--success)':type==='warning'?'var(--warning)':'var(--danger)'}"></i><div><div style="font-weight:700; font-size:15px;">${title}</div><div style="font-size:13px; color:var(--text-secondary);">${msg}</div></div>`;
                 container.appendChild(toast);
-                setTimeout(() => {
-                    toast.style.animation = 'slideIn 0.4s ease reverse';
-                    setTimeout(() => toast.remove(), 400);
-                }, 4000);
+                setTimeout(() => { toast.style.animation = 'slideIn 0.4s ease reverse'; setTimeout(() => toast.remove(), 400); }, 4000);
             }
         };
 
         // Event Listeners
-        const bindForm = (formId, handler) => {
-            const form = document.getElementById(formId);
-            if (form) form.addEventListener('submit', handler);
-        };
-
+        const bindForm = (formId, handler) => { const form = document.getElementById(formId); if (form) form.addEventListener('submit', handler); };
         bindForm('form-login', App.handleLogin);
         bindForm('form-register', App.handleRegister);
         bindForm('form-lost', App.handleLost);
@@ -3304,35 +1742,24 @@
         bindForm('form-change-name', App.handleChangeName);
         
         document.getElementById('settings-avatar-input').addEventListener('change', App.handleAvatarUpload);
-        
         document.getElementById('lost-file').addEventListener('change', (e) => {
             const file = e.target.files[0];
             const preview = document.getElementById('lost-preview');
             preview.innerHTML = '';
             if (file) {
                 const url = URL.createObjectURL(file);
-                if (file.type.startsWith('video/')) {
-                    preview.innerHTML = `<div class="preview-item"><video src="${url}" controls></video></div>`;
-                } else {
-                    preview.innerHTML = `<div class="preview-item"><img src="${url}"></div>`;
-                }
+                preview.innerHTML = file.type.startsWith('video/') ? `<div class="preview-item"><video src="${url}" controls></video></div>` : `<div class="preview-item"><img src="${url}"></div>`;
             }
         });
-        
         document.getElementById('found-file').addEventListener('change', (e) => {
             const file = e.target.files[0];
             const preview = document.getElementById('found-preview');
             preview.innerHTML = '';
             if (file) {
                 const url = URL.createObjectURL(file);
-                if (file.type.startsWith('video/')) {
-                    preview.innerHTML = `<div class="preview-item"><video src="${url}" controls></video></div>`;
-                } else {
-                    preview.innerHTML = `<div class="preview-item"><img src="${url}"></div>`;
-                }
+                preview.innerHTML = file.type.startsWith('video/') ? `<div class="preview-item"><video src="${url}" controls></video></div>` : `<div class="preview-item"><img src="${url}"></div>`;
             }
         });
-        
         document.getElementById('admin-report-file').addEventListener('change', (e) => {
             const file = e.target.files[0];
             const preview = document.getElementById('admin-report-preview');
