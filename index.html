@@ -74,8 +74,17 @@
         .btn-warning:hover { background: #D97706; transform: translateY(-2px); }
         .btn-success { background: var(--success); color: white; }
         .btn-success:hover { background: #059669; transform: translateY(-2px); }
-        .btn-info { background: var(--info-blue); color: white; }
-        .btn-info:hover { background: #2563EB; transform: translateY(-2px); }
+        .btn-info { 
+            background: linear-gradient(135deg, #3B82F6, #2563EB); 
+            color: white; 
+            box-shadow: 0 4px 12px rgba(59,130,246,0.3);
+        }
+        .btn-info:hover { 
+            background: linear-gradient(135deg, #2563EB, #1D4ED8); 
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(59,130,246,0.4);
+        }
+        
         .btn-teacher { background: linear-gradient(135deg, var(--teacher-red), #B91C1C); color: white; }
         .btn-teacher:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(220,38,38,0.4); }
         .btn-admin { background: linear-gradient(135deg, var(--admin-gold), #FFA500); color: #000; box-shadow: 0 4px 12px rgba(255,215,0,0.4); }
@@ -304,11 +313,53 @@
         }
         .admin-report-actions .btn { flex: 1; min-width: 80px; }
 
-        .settings-section { margin-bottom: 28px; padding-bottom: 28px; border-bottom: 1px solid var(--border); }
-        .settings-section:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
-        .settings-title { font-size: 18px; font-weight: 700; margin-bottom: 16px; color: var(--text); display: flex; align-items: center; gap: 8px; }
-        .settings-row { display: flex; align-items: center; gap: 16px; margin-bottom: 14px; flex-wrap: wrap; }
-        .settings-row .form-control { max-width: 350px; }
+        .settings-section { 
+            margin-bottom: 32px; 
+            padding-bottom: 32px; 
+            border-bottom: 1px solid var(--border);
+            background: linear-gradient(135deg, #F9FAFB 0%, #FFFFFF 100%);
+            padding: 24px;
+            border-radius: 16px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+        }
+        .settings-section:last-child { 
+            border-bottom: none; 
+            margin-bottom: 0; 
+            padding-bottom: 0; 
+        }
+        
+        .settings-title { 
+            font-size: 20px; 
+            font-weight: 700; 
+            margin-bottom: 20px; 
+            color: var(--text); 
+            display: flex; 
+            align-items: center; 
+            gap: 10px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid var(--primary);
+        }
+        
+        .settings-row { 
+            display: flex; 
+            align-items: center; 
+            gap: 16px; 
+            margin-bottom: 16px; 
+            flex-wrap: wrap;
+            padding: 12px;
+            background: white;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            transition: all 0.3s;
+        }
+        .settings-row:hover {
+            border-color: var(--primary);
+            box-shadow: 0 4px 12px rgba(99,102,241,0.1);
+        }
+        .settings-row .form-control { 
+            max-width: 350px;
+            flex: 1;
+        }
 
         #toast-container { position: fixed; top: 20px; right: 20px; z-index: 9999; display: flex; flex-direction: column; gap: 10px; }
         .toast { background: white; padding: 16px 20px; border-radius: var(--radius); box-shadow: 0 8px 24px rgba(0,0,0,0.2); display: flex; align-items: center; gap: 12px; min-width: 300px; border-left: 5px solid var(--primary); animation: slideIn 0.4s ease; }
@@ -660,14 +711,14 @@
                         <button class="back-btn" onclick="App.nav('home')"><i class="fa-solid fa-arrow-left"></i></button>
                         <h2 class="page-title">ตั้งค่าบัญชี</h2>
                     </div>
-                    <div class="card" style="max-width: 650px; margin: 0 auto;">
+                    <div class="card" style="max-width: 700px; margin: 0 auto;">
                         <div class="settings-section">
                             <h3 class="settings-title"><i class="fa-solid fa-image"></i> รูปโปรไฟล์</h3>
                             <div class="settings-row">
-                                <img src="" id="settings-avatar-preview" class="avatar-large" style="width: 90px; height: 90px; margin: 0;">
-                                <div style="flex: 1;">
+                                <img src="" id="settings-avatar-preview" class="avatar-large" style="width: 100px; height: 100px; margin: 0; border: 3px solid var(--primary);">
+                                <div style="flex: 1; display: flex; gap: 12px; flex-wrap: wrap;">
                                     <input type="file" id="settings-avatar-input" accept="image/png,image/jpeg" class="hidden">
-                                    <button class="btn btn-primary" style="width: auto; margin-bottom: 8px;" onclick="document.getElementById('settings-avatar-input').click()">
+                                    <button class="btn btn-primary" style="width: auto;" onclick="document.getElementById('settings-avatar-input').click()">
                                         <i class="fa-solid fa-upload"></i> เลือกรูปใหม่
                                     </button>
                                     <button class="btn btn-outline" style="width: auto;" onclick="App.deleteAvatar()">
@@ -699,7 +750,6 @@
                             <div class="settings-row">
                                 <select id="settings-grade" class="form-control">
                                     <option value="">เลือกระดับชั้น</option>
-                                    <!-- จะถูก generate โดย JS -->
                                 </select>
                                 <button class="btn btn-primary" style="width: auto;" onclick="App.updateGrade()">
                                     <i class="fa-solid fa-save"></i> บันทึกระดับชั้น
@@ -724,22 +774,19 @@
                                     <i class="fa-solid fa-save"></i> เปลี่ยนรหัสผ่าน
                                 </button>
                             </div>
-                            <small style="color: var(--text-muted); display: block; margin-top: 6px;">
+                            <small style="color: var(--text-muted); display: block; margin-top: 12px; padding: 12px; background: #F0F9FF; border-radius: 8px; border-left: 4px solid var(--primary);">
                                 <i class="fa-solid fa-shield-halved"></i> 
                                 ใช้รหัสผ่านที่ผสมตัวอักษรใหญ่, เล็ก, ตัวเลข และสัญลักษณ์ เพื่อความปลอดภัย
                             </small>
                         </div>
-                        <div class="settings-section" style="border-top: 2px solid var(--border); padding-top: 24px; margin-top: 24px;">
-                            <h3 class="settings-title" style="color: var(--danger);"><i class="fa-solid fa-right-from-bracket"></i> โซนอันตราย</h3>
-                            <button class="btn btn-danger" style="max-width: 280px;" onclick="App.logout()">
+                        <div class="settings-section" style="border-top: 2px solid var(--danger); padding-top: 24px; margin-top: 24px; background: linear-gradient(135deg, #FEF2F2 0%, #FFFFFF 100%);">
+                            <h3 class="settings-title" style="color: var(--danger); border-bottom-color: var(--danger);"><i class="fa-solid fa-right-from-bracket"></i> โซนอันตราย</h3>
+                            <button class="btn btn-danger" style="max-width: 300px;" onclick="App.logout()">
                                 <i class="fa-solid fa-power-off"></i> ออกจากระบบ
                             </button>
                         </div>
                     </div>
                 </div>
-            </main>
-        </div>
-    </div>
 
     <!-- Modal สำหรับแจ้งผู้ดูแลระบบ -->
     <div id="admin-report-modal" class="hidden">
@@ -898,6 +945,7 @@
             user: null, 
             profile: null,
             editingItemId: null,
+            editingOriginalUserId: null, // เพิ่มบรรทัดนี้
             currentReportId: null,
             previousPage: 'home',
             profilesCache: {},
@@ -1212,46 +1260,46 @@
                     const fileInput = document.getElementById('lost-file');
                     const file = fileInput.files[0];
 
-                    if (file) {
-                        const ext = file.name.split('.').pop();
-                        const fileName = `${App.user.id}_${Date.now()}.${ext}`;
-                        const { error: uploadError } = await sb.storage.from('item-images').upload(fileName, file);
-                        if (uploadError) throw uploadError;
-                        const { data: { publicUrl } } = sb.storage.from('item-images').getPublicUrl(fileName);
-                        media_url = publicUrl;
-                    }
-
-                    const itemData = {
-                        user_id: App.user.id,
-                        type: 'lost',
-                        status: 'active',
-                        title: document.getElementById('lost-title').value,
-                        category: document.getElementById('lost-category').value,
-                        location: document.getElementById('lost-location').value,
-                        description: document.getElementById('lost-desc').value,
-                        image_url: media_url
-                    };
-                    
-                    let error;
-                    if (App.editingItemId) {
-                        const { error: updateError } = await sb.from('items').update(itemData).eq('id', App.editingItemId);
-                        error = updateError;
-                    } else {
-                        const { error: insertError } = await sb.from('items').insert(itemData);
-                        error = insertError;
-                    }
-                    
-                    if (error) throw error;
-                    
-                    App.toast('success', 'สำเร็จ', App.editingItemId ? 'แก้ไขข้อมูลเรียบร้อยแล้ว' : 'ระบบบันทึกการแจ้งของหายแล้ว');
-                    App.cancelEdit();
-                    App.nav('home');
-                } catch (err) {
-                    App.toast('error', 'เกิดข้อผิดพลาด', err.message);
-                } finally {
-                    App.showLoading(false);
+                if (file) {
+                    const ext = file.name.split('.').pop();
+                    const fileName = `${App.user.id}_${Date.now()}.${ext}`;
+                    const { error: uploadError } = await sb.storage.from('item-images').upload(fileName, file);
+                    if (uploadError) throw uploadError;
+                    const { data: { publicUrl } } = sb.storage.from('item-images').getPublicUrl(fileName);
+                    media_url = publicUrl;
                 }
-            },
+
+                const itemData = {
+                    user_id: App.editingOriginalUserId || App.user.id, // ใช้ user_id เดิมถ้ามี
+                    type: 'lost',
+                    status: 'active',
+                    title: document.getElementById('lost-title').value,
+                    category: document.getElementById('lost-category').value,
+                    location: document.getElementById('lost-location').value,
+                    description: document.getElementById('lost-desc').value,
+                    image_url: media_url
+                };
+        
+                let error;
+                if (App.editingItemId) {
+                    const { error: updateError } = await sb.from('items').update(itemData).eq('id', App.editingItemId);
+                    error = updateError;
+                } else {
+                    const { error: insertError } = await sb.from('items').insert(itemData);
+                    error = insertError;
+                }
+        
+                if (error) throw error;
+                
+                App.toast('success', 'สำเร็จ', App.editingItemId ? 'แก้ไขข้อมูลเรียบร้อยแล้ว' : 'ระบบบันทึกการแจ้งของหายแล้ว');
+                App.cancelEdit();
+                App.nav('home');
+            } catch (err) {
+                App.toast('error', 'เกิดข้อผิดพลาด', err.message);
+            } finally {
+                App.showLoading(false);
+            }
+        },
 
             handleFound: async (e) => {
                 e.preventDefault();
@@ -1297,16 +1345,28 @@
                     const { data: item, error } = await sb.from('items').select('*').eq('id', itemId).single();
                     if (error || !item) throw error;
                     
+                    // ตรวจสอบว่าเป็นเจ้าของหรือ Admin
+                    const isOwner = item.user_id === App.user.id;
+                    const isAdmin = App.profile.role === 'admin';
+        
+                    if (!isOwner && !isAdmin) {
+                    App.toast('error', 'ไม่มีสิทธิ์', 'คุณไม่มีสิทธิ์แก้ไขโพสต์นี้');
+                    return;
+                    }
+                    
                     document.getElementById('lost-title').value = item.title;
                     document.getElementById('lost-category').value = item.category;
                     document.getElementById('lost-location').value = item.location || '';
                     document.getElementById('lost-desc').value = item.description;
                     
+                    // เก็บ user_id เดิมไว้ (สำคัญ!)
                     App.editingItemId = itemId;
+                    App.editingOriginalUserId = item.user_id; // เก็บ user_id เดิม
+                    
                     document.getElementById('report-lost-title').textContent = 'แก้ไขรายการของหาย';
                     document.getElementById('btn-submit-lost').innerHTML = '<i class="fa-solid fa-save"></i> บันทึกการแก้ไข';
                     document.getElementById('btn-cancel-edit').classList.remove('hidden');
-                    
+        
                     App.nav('report-lost');
                     App.toast('success', 'โหมดแก้ไข', 'แก้ไขข้อมูลแล้วกดบันทึก');
                 } catch (err) {
@@ -1316,6 +1376,7 @@
 
             cancelEdit: () => {
                 App.editingItemId = null;
+                App.editingOriginalUserId = null; // ล้าง user_id เดิม
                 document.getElementById('form-lost').reset();
                 document.getElementById('lost-preview').innerHTML = '';
                 document.getElementById('report-lost-title').textContent = 'แจ้งของหาย';
