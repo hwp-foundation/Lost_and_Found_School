@@ -11,40 +11,134 @@
 
     <style>
         :root {
-            --primary: #6366F1; --primary-dark: #4F46E5;
-            --success: #10B981; --danger: #EF4444; --warning: #F59E0B;
-            --admin-gold: #FFD700; --student-blue: #3B82F6;
+            --primary: #6366F1;
+            --primary-dark: #4F46E5;
+            --primary-light: #818CF8;
+            --success: #10B981;
+            --success-dark: #059669;
+            --danger: #EF4444;
+            --danger-dark: #DC2626;
+            --warning: #F59E0B;
+            --warning-dark: #D97706;
+            --admin-gold: #FFD700;
+            --student-blue: #3B82F6;
             --teacher-red: #DC2626;
-            --bg: #F3F4F6; --sidebar-bg: #FFFFFF; --card: #FFFFFF;
-            --text: #1F2937; --text-muted: #6B7280; --border: #E5E7EB;
-            --shadow: 0 4px 6px rgba(0,0,0,0.1); --shadow-lg: 0 10px 25px rgba(0,0,0,0.15);
+            --bg: #F8FAFC;
+            --card: #FFFFFF;
+            --text: #0F172A;
+            --text-secondary: #475569;
+            --text-muted: #94A3B8;
+            --border: #E2E8F0;
+            --border-light: #F1F5F9;
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-md: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            --shadow-xl: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
             --radius: 12px;
+            --radius-lg: 16px;
+            --radius-xl: 24px;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
+
         * { margin: 0; padding: 0; box-sizing: border-box; }
+        
         body { 
-            font-family: 'Prompt', sans-serif; 
+            font-family: 'Prompt', -apple-system, BlinkMacSystemFont, sans-serif; 
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); 
             color: var(--text); 
             min-height: 100vh;
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
-            user-select: none;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
+        
         .hidden { display: none !important; }
-        .fade-in { animation: fadeIn 0.4s ease-out; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        .fade-in { animation: fadeIn 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
+        
+        @keyframes fadeIn { 
+            from { opacity: 0; transform: translateY(20px); } 
+            to { opacity: 1; transform: translateY(0); } 
+        }
+        
+        @keyframes slideIn { 
+            from { transform: translateX(100%); opacity: 0; } 
+            to { transform: translateX(0); opacity: 1; } 
+        }
+        
+        @keyframes pulse { 
+            0%, 100% { transform: scale(1); } 
+            50% { transform: scale(1.1); } 
+        }
+        
+        @keyframes spin { 
+            to { transform: rotate(360deg); } 
+        }
+
+        /* Scrollbar Styling */
+        ::-webkit-scrollbar { width: 8px; height: 8px; }
+        ::-webkit-scrollbar-track { background: var(--border-light); }
+        ::-webkit-scrollbar-thumb { background: var(--primary-light); border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--primary); }
 
         /* Auth Page */
-        #page-auth { display: flex; align-items: center; justify-content: center; min-height: 100vh; padding: 20px; }
-        .auth-box { width: 100%; max-width: 450px; background: white; padding: 40px; border-radius: 24px; box-shadow: 0 20px 60px rgba(0,0,0,0.3); }
-        .auth-header { text-align: center; margin-bottom: 32px; }
-        .auth-logo { width: 100px; height: 100px; border-radius: 50%; object-fit: contain; margin-bottom: 20px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); padding: 10px; background: white; }
-        .auth-header h1 { font-size: 26px; font-weight: 700; margin-bottom: 8px; color: var(--text); }
-        .auth-header p { color: var(--text-muted); font-size: 14px; }
+        #page-auth { 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            min-height: 100vh; 
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        
+        .auth-box { 
+            width: 100%; 
+            max-width: 460px; 
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(20px);
+            padding: 48px; 
+            border-radius: var(--radius-xl); 
+            box-shadow: var(--shadow-xl);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .auth-header { text-align: center; margin-bottom: 36px; }
+        
+        .auth-logo { 
+            width: 110px; 
+            height: 110px; 
+            border-radius: 50%; 
+            object-fit: contain; 
+            margin-bottom: 24px; 
+            box-shadow: var(--shadow-lg);
+            padding: 12px; 
+            background: white;
+            border: 3px solid var(--primary-light);
+        }
+        
+        .auth-header h1 { 
+            font-size: 28px; 
+            font-weight: 700; 
+            margin-bottom: 8px; 
+            color: var(--text);
+            letter-spacing: -0.5px;
+        }
+        
+        .auth-header p { 
+            color: var(--text-secondary); 
+            font-size: 14px;
+            font-weight: 400;
+        }
         
         .form-group { margin-bottom: 20px; }
-        .form-group label { display: block; font-weight: 600; margin-bottom: 8px; color: var(--text); font-size: 14px; }
+        
+        .form-group label { 
+            display: block; 
+            font-weight: 600; 
+            margin-bottom: 8px; 
+            color: var(--text); 
+            font-size: 14px;
+        }
+        
         .form-control { 
             width: 100%; 
             padding: 14px 18px; 
@@ -52,11 +146,20 @@
             border-radius: var(--radius); 
             font-family: inherit; 
             font-size: 15px; 
-            transition: all 0.3s; 
+            transition: var(--transition); 
             background: white;
             resize: none;
         }
-        .form-control:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 4px rgba(99,102,241,0.1); }
+        
+        .form-control:focus { 
+            outline: none; 
+            border-color: var(--primary); 
+            box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1);
+        }
+        
+        .form-control::placeholder {
+            color: var(--text-muted);
+        }
         
         textarea.form-control {
             resize: none;
@@ -65,48 +168,140 @@
             overflow-y: auto;
         }
         
-        .btn { padding: 14px 24px; border: none; border-radius: var(--radius); font-family: inherit; font-weight: 600; font-size: 15px; cursor: pointer; transition: all 0.3s; display: inline-flex; align-items: center; justify-content: center; gap: 8px; width: 100%; }
-        .btn-primary { background: linear-gradient(135deg, var(--primary), var(--primary-dark)); color: white; box-shadow: 0 4px 12px rgba(99,102,241,0.4); }
-        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(99,102,241,0.5); }
-        .btn-danger { background: var(--danger); color: white; }
-        .btn-danger:hover { background: #DC2626; transform: translateY(-2px); }
-        .btn-warning { background: var(--warning); color: white; }
-        .btn-warning:hover { background: #D97706; transform: translateY(-2px); }
-        .btn-success { background: var(--success); color: white; }
-        .btn-success:hover { background: #059669; transform: translateY(-2px); }
-        .btn-info { 
-            background: linear-gradient(135deg, #3B82F6, #2563EB); 
+        /* Buttons */
+        .btn { 
+            padding: 14px 24px; 
+            border: none; 
+            border-radius: var(--radius); 
+            font-family: inherit; 
+            font-weight: 600; 
+            font-size: 15px; 
+            cursor: pointer; 
+            transition: var(--transition); 
+            display: inline-flex; 
+            align-items: center; 
+            justify-content: center; 
+            gap: 8px; 
+            width: 100%;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+        
+        .btn:active::before {
+            width: 300px;
+            height: 300px;
+        }
+        
+        .btn-primary { 
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark)); 
             color: white; 
-            box-shadow: 0 4px 12px rgba(59,130,246,0.3);
+            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
         }
-        .btn-info:hover { 
-            background: linear-gradient(135deg, #2563EB, #1D4ED8); 
+        
+        .btn-primary:hover { 
             transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(59,130,246,0.4);
+            box-shadow: 0 8px 20px rgba(99, 102, 241, 0.4);
         }
         
-        .btn-teacher { background: linear-gradient(135deg, var(--teacher-red), #B91C1C); color: white; }
-        .btn-teacher:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(220,38,38,0.4); }
-        .btn-admin { background: linear-gradient(135deg, var(--admin-gold), #FFA500); color: #000; box-shadow: 0 4px 12px rgba(255,215,0,0.4); }
-        .btn-admin:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(255,215,0,0.6); }
-        .btn-outline { background: transparent; border: 2px solid var(--border); color: var(--text); }
-        .btn-outline:hover { border-color: var(--danger); color: var(--danger); background: #FEE2E2; }
-        .btn-lg { padding: 18px 32px; font-size: 16px; }
-        .btn-sm { padding: 10px 16px; font-size: 13px; width: auto; }
+        .btn-success { 
+            background: linear-gradient(135deg, var(--success), var(--success-dark)); 
+            color: white;
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+        }
         
-        .auth-switch { text-align: center; margin-top: 24px; font-size: 14px; color: var(--text-muted); }
-        .auth-switch a { color: var(--primary); font-weight: 600; cursor: pointer; text-decoration: none; }
-        .auth-switch a:hover { text-decoration: underline; }
-
-        .password-strength { margin-top: 8px; font-size: 12px; }
-        .strength-bar { height: 4px; background: var(--border); border-radius: 2px; margin-top: 4px; overflow: hidden; }
-        .strength-fill { height: 100%; transition: all 0.3s; border-radius: 2px; }
-        .strength-weak { background: var(--danger); width: 33%; }
-        .strength-medium { background: var(--warning); width: 66%; }
-        .strength-strong { background: var(--success); width: 100%; }
+        .btn-success:hover { 
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(16, 185, 129, 0.4);
+        }
+        
+        .btn-danger { 
+            background: linear-gradient(135deg, var(--danger), var(--danger-dark)); 
+            color: white;
+            box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+        }
+        
+        .btn-danger:hover { 
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(239, 68, 68, 0.4);
+        }
+        
+        .btn-warning { 
+            background: linear-gradient(135deg, var(--warning), var(--warning-dark)); 
+            color: white;
+            box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
+        }
+        
+        .btn-warning:hover { 
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(245, 158, 11, 0.4);
+        }
+        
+        .btn-info { 
+            background: linear-gradient(135deg, var(--student-blue), #2563EB); 
+            color: white;
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+        }
+        
+        .btn-info:hover { 
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(59, 130, 246, 0.4);
+        }
+        
+        .btn-outline { 
+            background: transparent; 
+            border: 2px solid var(--border); 
+            color: var(--text);
+        }
+        
+        .btn-outline:hover { 
+            border-color: var(--primary);
+            color: var(--primary);
+            background: rgba(99, 102, 241, 0.05);
+        }
+        
+        .btn-sm { padding: 10px 16px; font-size: 13px; width: auto; }
+        .btn-lg { padding: 16px 32px; font-size: 16px; }
+        
+        .auth-switch { 
+            text-align: center; 
+            margin-top: 24px; 
+            font-size: 14px; 
+            color: var(--text-secondary);
+        }
+        
+        .auth-switch a { 
+            color: var(--primary); 
+            font-weight: 600; 
+            cursor: pointer; 
+            text-decoration: none;
+            transition: var(--transition);
+        }
+        
+        .auth-switch a:hover { 
+            text-decoration: underline;
+            color: var(--primary-dark);
+        }
 
         /* App Layout */
-        #app-container { display: flex; flex-direction: column; min-height: 100vh; }
+        #app-container { 
+            display: flex; 
+            flex-direction: column; 
+            min-height: 100vh;
+        }
+        
         .top-header { 
             background: linear-gradient(135deg, #D4A373 0%, #BC8A5F 100%); 
             padding: 16px 32px; 
@@ -118,33 +313,61 @@
             position: sticky;
             top: 0;
             z-index: 100;
+            backdrop-filter: blur(10px);
         }
+        
         .header-left { display: flex; align-items: center; gap: 16px; }
         .header-right { display: flex; align-items: center; gap: 12px; }
-        .school-logo { width: 50px; height: 50px; object-fit: contain; background: white; border-radius: 50%; padding: 5px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
-        .school-info h1 { color: white; font-size: 22px; font-weight: 700; margin-bottom: 2px; text-shadow: 0 2px 4px rgba(0,0,0,0.2); }
-        .school-info p { color: rgba(255,255,255,0.95); font-size: 13px; }
+        
+        .school-logo { 
+            width: 52px; 
+            height: 52px; 
+            object-fit: contain; 
+            background: white; 
+            border-radius: 50%; 
+            padding: 6px; 
+            box-shadow: var(--shadow-md);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+        
+        .school-info h1 { 
+            color: white; 
+            font-size: 22px; 
+            font-weight: 700; 
+            margin-bottom: 2px; 
+            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            letter-spacing: -0.3px;
+        }
+        
+        .school-info p { 
+            color: rgba(255,255,255,0.95); 
+            font-size: 13px;
+            font-weight: 400;
+        }
 
-        /* Notification Button in Header */
+        /* Notification Button */
         .header-notification-btn {
             position: relative;
             background: rgba(255,255,255,0.2);
             border: 2px solid rgba(255,255,255,0.3);
-            width: 46px;
-            height: 46px;
+            width: 48px;
+            height: 48px;
             border-radius: 50%;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: all 0.3s;
+            transition: var(--transition);
             color: white;
             font-size: 20px;
+            backdrop-filter: blur(10px);
         }
+        
         .header-notification-btn:hover {
             background: rgba(255,255,255,0.3);
             transform: scale(1.1);
         }
+        
         .notification-dot { 
             position: absolute; 
             top: -2px; 
@@ -157,175 +380,643 @@
             animation: pulse 1.5s infinite;
             display: none;
         }
+        
         .notification-dot.active { display: block; }
-        @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.2); } }
 
         .app-layout { display: flex; flex: 1; }
-        .sidebar { width: 260px; background: white; border-right: 1px solid var(--border); padding: 24px 16px; display: flex; flex-direction: column; gap: 8px; box-shadow: 4px 0 12px rgba(0,0,0,0.05); }
-        .nav-btn { padding: 14px 18px; border: none; background: transparent; color: var(--text); border-radius: var(--radius); font-family: inherit; font-weight: 500; font-size: 14px; cursor: pointer; transition: all 0.3s; display: flex; align-items: center; gap: 12px; text-align: left; position: relative; }
-        .nav-btn:hover { background: linear-gradient(135deg, #EEF2FF, #E0E7FF); transform: translateX(4px); }
-        .nav-btn.active { background: linear-gradient(135deg, var(--primary), var(--primary-dark)); color: white; box-shadow: 0 4px 12px rgba(99,102,241,0.4); }
+        
+        .sidebar { 
+            width: 280px; 
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(20px);
+            border-right: 1px solid var(--border);
+            padding: 24px 16px; 
+            display: flex; 
+            flex-direction: column; 
+            gap: 8px;
+            box-shadow: var(--shadow-md);
+        }
+        
+        .nav-btn { 
+            padding: 14px 18px; 
+            border: none; 
+            background: transparent; 
+            color: var(--text-secondary); 
+            border-radius: var(--radius); 
+            font-family: inherit; 
+            font-weight: 500; 
+            font-size: 14px; 
+            cursor: pointer; 
+            transition: var(--transition); 
+            display: flex; 
+            align-items: center; 
+            gap: 12px; 
+            text-align: left; 
+            position: relative;
+        }
+        
+        .nav-btn:hover { 
+            background: linear-gradient(135deg, #EEF2FF, #E0E7FF); 
+            transform: translateX(4px);
+            color: var(--primary);
+        }
+        
+        .nav-btn.active { 
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark)); 
+            color: white; 
+            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+        }
+        
         .nav-btn i { font-size: 18px; width: 24px; }
 
-        .main-content { flex: 1; padding: 32px; overflow-y: auto; }
-        .page-header { display: flex; align-items: center; gap: 16px; margin-bottom: 32px; }
-        .back-btn { background: white; border: 2px solid var(--border); width: 44px; height: 44px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.3s; box-shadow: var(--shadow); }
-        .back-btn:hover { border-color: var(--primary); color: var(--primary); transform: translateX(-4px); box-shadow: var(--shadow-lg); }
-        .page-title { font-size: 28px; font-weight: 700; color: white; text-shadow: 0 2px 8px rgba(0,0,0,0.2); }
-
-        .card { background: white; border-radius: 20px; padding: 32px; box-shadow: var(--shadow-lg); margin-bottom: 24px; }
-        .profile-card { text-align: center; max-width: 650px; margin: 0 auto; background: linear-gradient(135deg, white, #F9FAFB); }
-        .avatar-large { width: 130px; height: 130px; border-radius: 50%; object-fit: cover; border: 5px solid var(--primary); margin-bottom: 16px; box-shadow: 0 8px 24px rgba(99,102,241,0.3); }
-        .user-name { font-size: 26px; font-weight: 700; margin-bottom: 8px; color: var(--text); }
-        .user-email { color: var(--text-muted); font-size: 14px; margin-bottom: 6px; }
+        .main-content { 
+            flex: 1; 
+            padding: 32px; 
+            overflow-y: auto;
+        }
         
-        .role-badge { display: inline-block; padding: 5px 14px; border-radius: 18px; font-size: 12px; font-weight: 600; margin-bottom: 16px; }
-        .role-badge.student { background: linear-gradient(135deg, #3B82F6, #2563EB); color: white; }
-        .role-badge.teacher { background: linear-gradient(135deg, var(--teacher-red), #B91C1C); color: white; }
-        .role-badge.admin { background: linear-gradient(135deg, #FFD700, #FFA500); color: #000; }
+        .page-header { 
+            display: flex; 
+            align-items: center; 
+            gap: 16px; 
+            margin-bottom: 32px;
+        }
         
-        .stats-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 24px; }
-        .stat-card { background: linear-gradient(135deg, #EEF2FF, #E0E7FF); padding: 24px; border-radius: var(--radius); border: 2px solid var(--border); box-shadow: 0 4px 12px rgba(0,0,0,0.05); transition: transform 0.3s; cursor: pointer; }
-        .stat-card:hover { transform: translateY(-4px); }
-        .stat-value { font-size: 32px; font-weight: 700; color: var(--primary); margin-bottom: 4px; }
-        .stat-label { font-size: 13px; color: var(--text-muted); }
+        .back-btn { 
+            background: white; 
+            border: 2px solid var(--border); 
+            width: 46px; 
+            height: 46px; 
+            border-radius: 50%; 
+            cursor: pointer; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            transition: var(--transition); 
+            box-shadow: var(--shadow);
+            color: var(--text);
+        }
+        
+        .back-btn:hover { 
+            border-color: var(--primary); 
+            color: var(--primary); 
+            transform: translateX(-4px);
+            box-shadow: var(--shadow-md);
+        }
+        
+        .page-title { 
+            font-size: 30px; 
+            font-weight: 700; 
+            color: white; 
+            text-shadow: 0 2px 8px rgba(0,0,0,0.2);
+            letter-spacing: -0.5px;
+        }
 
-        .items-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; }
-        .item-card { background: white; border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow-lg); transition: all 0.3s; display: flex; flex-direction: column; }
-        .item-card:hover { transform: translateY(-6px); box-shadow: 0 16px 32px rgba(0,0,0,0.15); }
-        .item-image { width: 100%; height: 200px; object-fit: cover; background: linear-gradient(135deg, #F3F4F6, #E5E7EB); }
-        .item-content { padding: 20px; flex: 1; display: flex; flex-direction: column; }
-        .item-badge { display: inline-block; padding: 5px 14px; border-radius: 20px; font-size: 11px; font-weight: 600; margin-bottom: 12px; background: #FEE2E2; color: var(--danger); width: fit-content; }
-        .item-badge.found { background: #D1FAE5; color: var(--success); }
-        .item-title { font-size: 18px; font-weight: 600; margin-bottom: 8px; color: var(--text); }
-        .item-info { font-size: 13px; color: var(--text-muted); margin-bottom: 6px; display: flex; align-items: center; gap: 6px; }
-        .item-author { font-size: 12px; color: var(--primary); font-weight: 500; margin-bottom: 6px; display: flex; align-items: center; gap: 5px; }
-        .item-actions { display: flex; gap: 8px; margin-top: auto; padding-top: 12px; flex-wrap: wrap; }
+        /* Cards */
+        .card { 
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(20px);
+            border-radius: var(--radius-xl); 
+            padding: 36px; 
+            box-shadow: var(--shadow-lg); 
+            margin-bottom: 24px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .profile-card { 
+            text-align: center; 
+            max-width: 680px; 
+            margin: 0 auto; 
+            background: linear-gradient(135deg, rgba(255,255,255,0.98) 0%, rgba(248,250,252,0.98) 100%);
+        }
+        
+        .avatar-large { 
+            width: 140px; 
+            height: 140px; 
+            border-radius: 50%; 
+            object-fit: cover; 
+            border: 5px solid var(--primary); 
+            margin-bottom: 20px; 
+            box-shadow: 0 8px 24px rgba(99, 102, 241, 0.3);
+        }
+        
+        .user-name { 
+            font-size: 28px; 
+            font-weight: 700; 
+            margin-bottom: 8px; 
+            color: var(--text);
+            letter-spacing: -0.5px;
+        }
+        
+        .user-email { 
+            color: var(--text-secondary); 
+            font-size: 14px; 
+            margin-bottom: 8px;
+        }
+        
+        .role-badge { 
+            display: inline-block; 
+            padding: 6px 16px; 
+            border-radius: 20px; 
+            font-size: 12px; 
+            font-weight: 600; 
+            margin-bottom: 20px;
+            box-shadow: var(--shadow-sm);
+        }
+        
+        .role-badge.student { 
+            background: linear-gradient(135deg, var(--student-blue), #2563EB); 
+            color: white;
+        }
+        
+        .role-badge.teacher { 
+            background: linear-gradient(135deg, var(--teacher-red), #B91C1C); 
+            color: white;
+        }
+        
+        .role-badge.admin { 
+            background: linear-gradient(135deg, var(--admin-gold), #F59E0B); 
+            color: #000;
+        }
+        
+        .stats-row { 
+            display: grid; 
+            grid-template-columns: repeat(3, 1fr); 
+            gap: 16px; 
+            margin-top: 28px;
+        }
+        
+        .stat-card { 
+            background: linear-gradient(135deg, #EEF2FF, #E0E7FF); 
+            padding: 24px; 
+            border-radius: var(--radius-lg); 
+            border: 2px solid var(--border); 
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+            cursor: pointer;
+        }
+        
+        .stat-card:hover { 
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-md);
+        }
+        
+        .stat-value { 
+            font-size: 34px; 
+            font-weight: 700; 
+            color: var(--primary); 
+            margin-bottom: 6px;
+            letter-spacing: -1px;
+        }
+        
+        .stat-label { 
+            font-size: 13px; 
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
 
-        .report-type-selection { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; max-width: 850px; margin: 0 auto; }
-        .report-type-card { background: white; border-radius: 20px; padding: 40px 28px; text-align: center; cursor: pointer; transition: all 0.3s; box-shadow: var(--shadow-lg); border: 3px solid transparent; }
-        .report-type-card:hover { transform: translateY(-6px); box-shadow: 0 16px 32px rgba(0,0,0,0.2); }
+        /* Items Grid */
+        .items-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); 
+            gap: 24px;
+        }
+        
+        .item-card { 
+            background: white; 
+            border-radius: var(--radius-lg); 
+            overflow: hidden; 
+            box-shadow: var(--shadow-md); 
+            transition: var(--transition); 
+            display: flex; 
+            flex-direction: column;
+            border: 1px solid var(--border-light);
+        }
+        
+        .item-card:hover { 
+            transform: translateY(-6px); 
+            box-shadow: var(--shadow-xl);
+        }
+        
+        .item-image { 
+            width: 100%; 
+            height: 220px; 
+            object-fit: cover; 
+            background: linear-gradient(135deg, #F3F4F6, #E5E7EB);
+        }
+        
+        .item-content { 
+            padding: 24px; 
+            flex: 1; 
+            display: flex; 
+            flex-direction: column;
+        }
+        
+        .item-badge { 
+            display: inline-block; 
+            padding: 6px 14px; 
+            border-radius: 20px; 
+            font-size: 11px; 
+            font-weight: 600; 
+            margin-bottom: 12px; 
+            background: #FEE2E2; 
+            color: var(--danger);
+            width: fit-content;
+        }
+        
+        .item-badge.found { 
+            background: #D1FAE5; 
+            color: var(--success-dark);
+        }
+        
+        .item-title { 
+            font-size: 20px; 
+            font-weight: 700; 
+            margin-bottom: 10px; 
+            color: var(--text);
+            letter-spacing: -0.3px;
+        }
+        
+        .item-info { 
+            font-size: 13px; 
+            color: var(--text-secondary); 
+            margin-bottom: 8px; 
+            display: flex; 
+            align-items: center; 
+            gap: 8px;
+        }
+        
+        .item-author { 
+            font-size: 12px; 
+            color: var(--primary); 
+            font-weight: 600; 
+            margin-bottom: 8px; 
+            display: flex; 
+            align-items: center; 
+            gap: 6px;
+        }
+        
+        .item-actions { 
+            display: flex; 
+            gap: 10px; 
+            margin-top: auto; 
+            padding-top: 16px; 
+            flex-wrap: wrap;
+        }
+
+        /* Report Type Selection */
+        .report-type-selection { 
+            display: grid; 
+            grid-template-columns: repeat(3, 1fr); 
+            gap: 24px; 
+            max-width: 900px; 
+            margin: 0 auto;
+        }
+        
+        .report-type-card { 
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(20px);
+            border-radius: var(--radius-xl); 
+            padding: 48px 32px; 
+            text-align: center; 
+            cursor: pointer; 
+            transition: var(--transition); 
+            box-shadow: var(--shadow-lg); 
+            border: 3px solid transparent;
+        }
+        
+        .report-type-card:hover { 
+            transform: translateY(-8px); 
+            box-shadow: var(--shadow-xl);
+        }
+        
         .report-type-card.lost:hover { border-color: var(--danger); }
         .report-type-card.found:hover { border-color: var(--success); }
         .report-type-card.admin:hover { border-color: var(--admin-gold); }
-        .report-type-icon { width: 90px; height: 90px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; font-size: 42px; color: white; }
-        .report-type-card.lost .report-type-icon { background: linear-gradient(135deg, var(--danger), #DC2626); }
-        .report-type-card.found .report-type-icon { background: linear-gradient(135deg, var(--success), #059669); }
-        .report-type-card.admin .report-type-icon { background: linear-gradient(135deg, var(--admin-gold), #FFA500); }
-        .report-type-icon img { width: 55px; height: 55px; object-fit: contain; }
-        .report-type-title { font-size: 22px; font-weight: 700; margin-bottom: 10px; color: var(--text); }
-        .report-type-desc { font-size: 13px; color: var(--text-muted); line-height: 1.5; }
+        
+        .report-type-icon { 
+            width: 100px; 
+            height: 100px; 
+            border-radius: 50%; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            margin: 0 auto 24px; 
+            font-size: 44px; 
+            color: white;
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .report-type-card.lost .report-type-icon { 
+            background: linear-gradient(135deg, var(--danger), var(--danger-dark));
+        }
+        
+        .report-type-card.found .report-type-icon { 
+            background: linear-gradient(135deg, var(--success), var(--success-dark));
+        }
+        
+        .report-type-card.admin .report-type-icon { 
+            background: linear-gradient(135deg, var(--admin-gold), var(--warning));
+        }
+        
+        .report-type-icon img { 
+            width: 60px; 
+            height: 60px; 
+            object-fit: contain;
+        }
+        
+        .report-type-title { 
+            font-size: 24px; 
+            font-weight: 700; 
+            margin-bottom: 12px; 
+            color: var(--text);
+            letter-spacing: -0.5px;
+        }
+        
+        .report-type-desc { 
+            font-size: 14px; 
+            color: var(--text-secondary); 
+            line-height: 1.6;
+        }
 
-        .file-upload-box { border: 2px dashed var(--border); border-radius: var(--radius); padding: 20px; text-align: center; cursor: pointer; transition: all 0.3s; background: #F9FAFB; }
-        .file-upload-box:hover { border-color: var(--primary); background: #EEF2FF; }
-        .file-upload-box i { font-size: 28px; color: var(--text-muted); margin-bottom: 6px; }
-        .preview-container { margin-top: 10px; display: flex; gap: 8px; flex-wrap: wrap; }
-        .preview-item { position: relative; width: 90px; height: 90px; border-radius: 8px; overflow: hidden; border: 2px solid var(--border); }
-        .preview-item img, .preview-item video { width: 100%; height: 100%; object-fit: cover; }
+        /* File Upload */
+        .file-upload-box { 
+            border: 2px dashed var(--border); 
+            border-radius: var(--radius); 
+            padding: 32px; 
+            text-align: center; 
+            cursor: pointer; 
+            transition: var(--transition); 
+            background: var(--border-light);
+        }
+        
+        .file-upload-box:hover { 
+            border-color: var(--primary); 
+            background: rgba(99, 102, 241, 0.05);
+        }
+        
+        .file-upload-box i { 
+            font-size: 36px; 
+            color: var(--text-muted); 
+            margin-bottom: 12px;
+        }
+        
+        .preview-container { 
+            margin-top: 16px; 
+            display: flex; 
+            gap: 12px; 
+            flex-wrap: wrap;
+        }
+        
+        .preview-item { 
+            position: relative; 
+            width: 100px; 
+            height: 100px; 
+            border-radius: var(--radius); 
+            overflow: hidden; 
+            border: 2px solid var(--border);
+            box-shadow: var(--shadow-sm);
+        }
+        
+        .preview-item img, .preview-item video { 
+            width: 100%; 
+            height: 100%; 
+            object-fit: cover;
+        }
 
-        .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.6); backdrop-filter: blur(4px); display: flex; align-items: center; justify-content: center; z-index: 10000; animation: fadeIn 0.3s ease; }
-        .modal-content { background: white; border-radius: 20px; padding: 32px; max-width: 550px; width: 90%; max-height: 90vh; overflow-y: auto; box-shadow: 0 20px 60px rgba(0,0,0,0.3); }
-        .modal-content.large { max-width: 850px; }
-        .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; padding-bottom: 14px; border-bottom: 2px solid var(--border); }
-        .modal-title { font-size: 20px; font-weight: 700; color: var(--text); }
-        .modal-close { background: none; border: none; font-size: 22px; cursor: pointer; color: var(--text-muted); transition: color 0.3s; }
-        .modal-close:hover { color: var(--danger); }
+        /* Modal */
+        .modal-overlay { 
+            position: fixed; 
+            inset: 0; 
+            background: rgba(15, 23, 42, 0.7); 
+            backdrop-filter: blur(8px);
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            z-index: 10000; 
+            animation: fadeIn 0.3s ease;
+        }
+        
+        .modal-content { 
+            background: white; 
+            border-radius: var(--radius-xl); 
+            padding: 36px; 
+            max-width: 580px; 
+            width: 90%; 
+            max-height: 90vh; 
+            overflow-y: auto; 
+            box-shadow: var(--shadow-xl);
+        }
+        
+        .modal-content.large { max-width: 900px; }
+        
+        .modal-header { 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            margin-bottom: 24px; 
+            padding-bottom: 16px; 
+            border-bottom: 2px solid var(--border-light);
+        }
+        
+        .modal-title { 
+            font-size: 22px; 
+            font-weight: 700; 
+            color: var(--text);
+            letter-spacing: -0.5px;
+        }
+        
+        .modal-close { 
+            background: none; 
+            border: none; 
+            font-size: 24px; 
+            cursor: pointer; 
+            color: var(--text-muted); 
+            transition: var(--transition);
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+        }
+        
+        .modal-close:hover { 
+            color: var(--danger);
+            background: rgba(239, 68, 68, 0.1);
+        }
 
-        .admin-section { background: #F9FAFB; padding: 20px; border-radius: var(--radius); margin-bottom: 20px; }
-        .admin-section h3 { margin-bottom: 16px; display: flex; align-items: center; gap: 10px; }
-        .admin-table { width: 100%; border-collapse: collapse; background: white; border-radius: var(--radius); overflow: hidden; }
-        .admin-table th, .admin-table td { padding: 10px; text-align: left; border-bottom: 1px solid var(--border); font-size: 13px; }
-        .admin-table th { background: var(--primary); color: white; font-weight: 600; }
-        .admin-table tr:hover { background: #F3F4F6; }
-        .banned-badge { background: var(--danger); color: white; padding: 3px 7px; border-radius: 10px; font-size: 10px; font-weight: 600; }
-        .status-badge { padding: 4px 10px; border-radius: 10px; font-size: 11px; font-weight: 600; }
-        .status-badge.pending { background: #FEF3C7; color: var(--warning); }
-        .status-badge.resolved { background: #D1FAE5; color: var(--success); }
-        .status-badge.rejected { background: #FEE2E2; color: var(--danger); }
+        /* Admin Section */
+        .admin-section { 
+            background: var(--border-light); 
+            padding: 24px; 
+            border-radius: var(--radius-lg); 
+            margin-bottom: 24px;
+        }
+        
+        .admin-section h3 { 
+            margin-bottom: 20px; 
+            display: flex; 
+            align-items: center; 
+            gap: 10px;
+            font-size: 18px;
+            font-weight: 700;
+        }
+        
+        .admin-table { 
+            width: 100%; 
+            border-collapse: collapse; 
+            background: white; 
+            border-radius: var(--radius); 
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+        }
+        
+        .admin-table th, .admin-table td { 
+            padding: 14px; 
+            text-align: left; 
+            border-bottom: 1px solid var(--border-light); 
+            font-size: 14px;
+        }
+        
+        .admin-table th { 
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark)); 
+            color: white; 
+            font-weight: 600;
+        }
+        
+        .admin-table tr:hover { 
+            background: var(--border-light);
+        }
+        
+        .banned-badge { 
+            background: var(--danger); 
+            color: white; 
+            padding: 4px 10px; 
+            border-radius: 12px; 
+            font-size: 11px; 
+            font-weight: 600;
+        }
+        
+        .status-badge { 
+            padding: 5px 12px; 
+            border-radius: 12px; 
+            font-size: 11px; 
+            font-weight: 600;
+        }
+        
+        .status-badge.pending { 
+            background: #FEF3C7; 
+            color: var(--warning-dark);
+        }
+        
+        .status-badge.resolved { 
+            background: #D1FAE5; 
+            color: var(--success-dark);
+        }
+        
+        .status-badge.rejected { 
+            background: #FEE2E2; 
+            color: var(--danger-dark);
+        }
 
         /* Admin Report Card */
         .admin-report-card { 
             background: white; 
-            border-radius: 16px; 
+            border-radius: var(--radius-lg); 
             overflow: hidden; 
-            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-            transition: all 0.3s; 
+            box-shadow: var(--shadow-md);
+            transition: var(--transition); 
             display: flex; 
             flex-direction: column;
-            border: 1px solid var(--border);
+            border: 1px solid var(--border-light);
         }
+        
         .admin-report-card:hover { 
             transform: translateY(-4px); 
-            box-shadow: 0 12px 24px rgba(0,0,0,0.12);
+            box-shadow: var(--shadow-lg);
         }
+        
         .admin-report-image { 
             width: 100%; 
-            height: 180px; 
+            height: 200px; 
             object-fit: cover; 
-            border-bottom: 1px solid var(--border);
+            border-bottom: 1px solid var(--border-light);
         }
+        
         .admin-report-content { 
-            padding: 20px; 
+            padding: 24px; 
             flex: 1; 
             display: flex; 
-            flex-direction: column; 
+            flex-direction: column;
         }
+        
         .admin-report-subject { 
-            font-size: 17px; 
+            font-size: 18px; 
             font-weight: 700; 
-            margin-bottom: 8px; 
+            margin-bottom: 10px; 
             color: var(--text);
             line-height: 1.4;
+            letter-spacing: -0.3px;
         }
+        
         .admin-report-meta { 
             display: flex; 
             align-items: center; 
-            gap: 6px; 
-            font-size: 12px; 
-            color: var(--text-muted); 
-            margin-bottom: 4px; 
-        }
-        .admin-report-desc { 
+            gap: 8px; 
             font-size: 13px; 
-            color: var(--text-muted); 
+            color: var(--text-secondary); 
+            margin-bottom: 6px;
+        }
+        
+        .admin-report-desc { 
+            font-size: 14px; 
+            color: var(--text-secondary); 
             flex: 1; 
-            margin: 10px 0; 
-            line-height: 1.5;
+            margin: 12px 0; 
+            line-height: 1.6;
             display: -webkit-box;
             -webkit-line-clamp: 3;
             -webkit-box-orient: vertical;
             overflow: hidden;
         }
+        
         .admin-report-response { 
             background: #D1FAE5; 
-            padding: 10px 12px; 
-            border-radius: 8px; 
-            margin-top: 10px; 
-            font-size: 12px;
-            border-left: 3px solid var(--success);
+            padding: 12px 14px; 
+            border-radius: var(--radius); 
+            margin-top: 12px; 
+            font-size: 13px;
+            border-left: 4px solid var(--success);
         }
-        .admin-report-response strong { color: var(--success); }
+        
+        .admin-report-response strong { 
+            color: var(--success-dark);
+        }
+        
         .admin-report-actions { 
             display: flex; 
-            gap: 8px; 
-            margin-top: 14px; 
+            gap: 10px; 
+            margin-top: 16px; 
             flex-wrap: wrap;
         }
-        .admin-report-actions .btn { flex: 1; min-width: 80px; }
+        
+        .admin-report-actions .btn { 
+            flex: 1; 
+            min-width: 100px;
+        }
 
+        /* Settings */
         .settings-section { 
             margin-bottom: 32px; 
             padding-bottom: 32px; 
             border-bottom: 1px solid var(--border);
-            background: linear-gradient(135deg, #F9FAFB 0%, #FFFFFF 100%);
-            padding: 24px;
-            border-radius: 16px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
         }
+        
         .settings-section:last-child { 
             border-bottom: none; 
             margin-bottom: 0; 
-            padding-bottom: 0; 
+            padding-bottom: 0;
         }
         
         .settings-title { 
@@ -336,8 +1027,7 @@
             display: flex; 
             align-items: center; 
             gap: 10px;
-            padding-bottom: 12px;
-            border-bottom: 2px solid var(--primary);
+            letter-spacing: -0.3px;
         }
         
         .settings-row { 
@@ -346,92 +1036,220 @@
             gap: 16px; 
             margin-bottom: 16px; 
             flex-wrap: wrap;
-            padding: 12px;
-            background: white;
-            border-radius: 12px;
-            border: 1px solid var(--border);
-            transition: all 0.3s;
         }
-        .settings-row:hover {
-            border-color: var(--primary);
-            box-shadow: 0 4px 12px rgba(99,102,241,0.1);
-        }
+        
         .settings-row .form-control { 
-            max-width: 350px;
+            max-width: 380px;
             flex: 1;
         }
 
-        #toast-container { position: fixed; top: 20px; right: 20px; z-index: 9999; display: flex; flex-direction: column; gap: 10px; }
-        .toast { background: white; padding: 16px 20px; border-radius: var(--radius); box-shadow: 0 8px 24px rgba(0,0,0,0.2); display: flex; align-items: center; gap: 12px; min-width: 300px; border-left: 5px solid var(--primary); animation: slideIn 0.4s ease; }
+        /* Toast & Loading */
+        #toast-container { 
+            position: fixed; 
+            top: 20px; 
+            right: 20px; 
+            z-index: 9999; 
+            display: flex; 
+            flex-direction: column; 
+            gap: 12px;
+        }
+        
+        .toast { 
+            background: white; 
+            padding: 18px 24px; 
+            border-radius: var(--radius); 
+            box-shadow: var(--shadow-lg); 
+            display: flex; 
+            align-items: center; 
+            gap: 14px; 
+            min-width: 320px; 
+            border-left: 5px solid var(--primary); 
+            animation: slideIn 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
         .toast.success { border-left-color: var(--success); }
         .toast.error { border-left-color: var(--danger); }
         .toast.warning { border-left-color: var(--warning); }
-        @keyframes slideIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
 
-        #loading-overlay { position: fixed; inset: 0; background: rgba(255,255,255,0.95); backdrop-filter: blur(8px); display: flex; align-items: center; justify-content: center; z-index: 9998; }
-        .spinner { width: 50px; height: 50px; border: 5px solid var(--border); border-top-color: var(--primary); border-radius: 50%; animation: spin 1s linear infinite; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
-        @keyframes spin { to { transform: rotate(360deg); } }
+        #loading-overlay { 
+            position: fixed; 
+            inset: 0; 
+            background: rgba(255,255,255,0.95); 
+            backdrop-filter: blur(8px); 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            z-index: 9998;
+        }
+        
+        .spinner { 
+            width: 56px; 
+            height: 56px; 
+            border: 5px solid var(--border); 
+            border-top-color: var(--primary); 
+            border-radius: 50%; 
+            animation: spin 1s linear infinite;
+            box-shadow: var(--shadow-md);
+        }
 
-        /* Notification Page Styles */
+        /* Notification Page */
         .notification-page-header { 
             display: flex; 
             justify-content: space-between; 
             align-items: center; 
             margin-bottom: 24px;
             flex-wrap: wrap;
-            gap: 12px;
+            gap: 16px;
         }
+        
         .notification-actions-bar {
             display: flex;
-            gap: 10px;
+            gap: 12px;
             flex-wrap: wrap;
         }
+        
         .notification-card { 
             background: white; 
             border-radius: var(--radius); 
-            padding: 18px 20px; 
-            margin-bottom: 14px; 
+            padding: 20px 24px; 
+            margin-bottom: 16px; 
             box-shadow: var(--shadow);
             border-left: 5px solid var(--primary);
-            transition: all 0.3s;
-            position: relative;
+            transition: var(--transition);
         }
-        .notification-card:hover { transform: translateX(4px); box-shadow: var(--shadow-lg); }
+        
+        .notification-card:hover { 
+            transform: translateX(4px); 
+            box-shadow: var(--shadow-md);
+        }
+        
         .notification-card.type-admin_response { border-left-color: var(--success); }
         .notification-card.type-admin_reject { border-left-color: var(--danger); }
         .notification-card.unread { background: #F0F9FF; }
         
-        .notification-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px; flex-wrap: wrap; gap: 8px; }
-        .notification-title-text { font-weight: 600; font-size: 14px; color: var(--text); display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
-        .notification-time { font-size: 11px; color: var(--text-muted); white-space: nowrap; }
-        .notification-message { font-size: 13px; color: var(--text-muted); line-height: 1.5; white-space: pre-wrap; margin-bottom: 10px; }
-        .notification-actions { display: flex; justify-content: flex-end; gap: 8px; }
+        .notification-header { 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: flex-start; 
+            margin-bottom: 12px; 
+            flex-wrap: wrap; 
+            gap: 10px;
+        }
+        
+        .notification-title-text { 
+            font-weight: 600; 
+            font-size: 15px; 
+            color: var(--text); 
+            display: flex; 
+            align-items: center; 
+            gap: 10px; 
+            flex-wrap: wrap;
+        }
+        
+        .notification-time { 
+            font-size: 12px; 
+            color: var(--text-muted); 
+            white-space: nowrap;
+        }
+        
+        .notification-message { 
+            font-size: 14px; 
+            color: var(--text-secondary); 
+            line-height: 1.6; 
+            white-space: pre-wrap; 
+            margin-bottom: 12px;
+        }
+        
+        .notification-actions { 
+            display: flex; 
+            justify-content: flex-end; 
+            gap: 10px;
+        }
 
-        .alert-box { padding: 10px 14px; border-radius: 8px; margin-bottom: 16px; font-size: 13px; display: flex; align-items: flex-start; gap: 8px; }
-        .alert-box.warning { background: #FEF3C7; border-left: 4px solid var(--warning); color: #92400E; }
-        .alert-box.info { background: #D1FAE5; border-left: 4px solid var(--success); color: #065F46; }
-        .alert-box.danger { background: #FEE2E2; border-left: 4px solid var(--danger); color: #991B1B; }
+        .alert-box { 
+            padding: 12px 16px; 
+            border-radius: var(--radius); 
+            margin-bottom: 20px; 
+            font-size: 14px; 
+            display: flex; 
+            align-items: flex-start; 
+            gap: 10px;
+        }
+        
+        .alert-box.warning { 
+            background: #FEF3C7; 
+            border-left: 4px solid var(--warning); 
+            color: #92400E;
+        }
+        
+        .alert-box.info { 
+            background: #D1FAE5; 
+            border-left: 4px solid var(--success); 
+            color: #065F46;
+        }
+        
+        .alert-box.danger { 
+            background: #FEE2E2; 
+            border-left: 4px solid var(--danger); 
+            color: #991B1B;
+        }
 
         /* User Detail Modal */
-        .user-detail-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
-        .user-detail-item { background: #F9FAFB; padding: 14px; border-radius: 8px; }
-        .user-detail-label { font-size: 12px; color: var(--text-muted); margin-bottom: 4px; }
-        .user-detail-value { font-size: 14px; font-weight: 600; color: var(--text); word-break: break-all; }
+        .user-detail-grid { 
+            display: grid; 
+            grid-template-columns: repeat(2, 1fr); 
+            gap: 16px;
+        }
+        
+        .user-detail-item { 
+            background: var(--border-light); 
+            padding: 16px; 
+            border-radius: var(--radius);
+        }
+        
+        .user-detail-label { 
+            font-size: 12px; 
+            color: var(--text-muted); 
+            margin-bottom: 6px;
+            font-weight: 500;
+        }
+        
+        .user-detail-value { 
+            font-size: 14px; 
+            font-weight: 600; 
+            color: var(--text); 
+            word-break: break-all;
+        }
 
+        /* Responsive */
         @media (max-width: 768px) {
             .app-layout { flex-direction: column; }
-            .sidebar { width: 100%; border-right: none; border-bottom: 1px solid var(--border); flex-direction: row; flex-wrap: wrap; padding: 12px; gap: 8px; }
-            .nav-btn { flex: 1; min-width: 120px; padding: 10px 14px; font-size: 12px; justify-content: center; }
+            .sidebar { 
+                width: 100%; 
+                border-right: none; 
+                border-bottom: 1px solid var(--border); 
+                flex-direction: row; 
+                flex-wrap: wrap; 
+                padding: 12px; 
+                gap: 8px;
+            }
+            .nav-btn { 
+                flex: 1; 
+                min-width: 120px; 
+                padding: 10px 14px; 
+                font-size: 13px; 
+                justify-content: center;
+            }
             .main-content { padding: 20px; }
             .stats-row { grid-template-columns: 1fr; }
             .items-grid { grid-template-columns: 1fr; }
             .settings-row { flex-direction: column; align-items: stretch; }
             .settings-row .form-control { max-width: 100%; }
             .report-type-selection { grid-template-columns: 1fr; }
-            .modal-content { padding: 20px; }
+            .modal-content { padding: 24px; }
             .top-header { padding: 12px 16px; }
-            .school-info h1 { font-size: 16px; }
-            .page-title { font-size: 22px; }
+            .school-info h1 { font-size: 18px; }
+            .page-title { font-size: 24px; }
             .admin-report-actions { flex-direction: column; }
             .notification-page-header { flex-direction: column; align-items: flex-start; }
             .user-detail-grid { grid-template-columns: 1fr; }
@@ -505,12 +1323,8 @@
             <nav class="sidebar">
                 <button class="nav-btn active" onclick="App.nav('home')"><i class="fa-solid fa-house"></i><span>หน้าหลัก</span></button>
                 <button class="nav-btn" onclick="App.nav('report')"><i class="fa-solid fa-circle-exclamation"></i><span>หน้าแจ้งเหตุ</span></button>
-                <button class="nav-btn" onclick="App.nav('view-lost')">
-                    <i class="fa-solid fa-magnifying-glass"></i><span>รายการแจ้งเหตุ</span>
-                </button>
-                <button class="nav-btn hidden" id="admin-nav-btn" onclick="App.nav('admin')">
-                    <i class="fa-solid fa-shield-halved"></i><span>แผงควบคุม Admin</span>
-                </button>
+                <button class="nav-btn" onclick="App.nav('view-lost')"><i class="fa-solid fa-magnifying-glass"></i><span>รายการแจ้งเหตุ</span></button>
+                <button class="nav-btn hidden" id="admin-nav-btn" onclick="App.nav('admin')"><i class="fa-solid fa-shield-halved"></i><span>แผงควบคุม Admin</span></button>
                 <div style="flex: 1;"></div>
                 <button class="nav-btn" onclick="App.nav('settings')"><i class="fa-solid fa-gear"></i><span>ตั้งค่าบัญชี</span></button>
             </nav>
@@ -561,7 +1375,7 @@
                         <button class="back-btn" onclick="App.nav('report')"><i class="fa-solid fa-arrow-left"></i></button>
                         <h2 class="page-title" id="report-lost-title">แจ้งของหาย</h2>
                     </div>
-                    <div class="card" style="max-width: 650px; margin: 0 auto;">
+                    <div class="card" style="max-width: 680px; margin: 0 auto;">
                         <form id="form-lost">
                             <div class="form-group">
                                 <label>ชื่อสิ่งของ <span style="color:var(--danger)">*</span></label>
@@ -609,7 +1423,7 @@
                         <button class="back-btn" onclick="App.nav('report')"><i class="fa-solid fa-arrow-left"></i></button>
                         <h2 class="page-title">แจ้งเก็บของได้</h2>
                     </div>
-                    <div class="card" style="max-width: 650px; margin: 0 auto;">
+                    <div class="card" style="max-width: 680px; margin: 0 auto;">
                         <form id="form-found">
                             <div class="form-group">
                                 <label>ชื่อสิ่งของ <span style="color:var(--danger)">*</span></label>
@@ -657,7 +1471,7 @@
                     <div id="lost-list" class="items-grid"></div>
                 </div>
 
-                <!-- NOTIFICATIONS PAGE -->
+                <!-- NOTIFICATIONS -->
                 <div id="page-notifications" class="page-section hidden fade-in">
                     <div class="notification-page-header">
                         <div style="display:flex; align-items:center; gap:16px;">
@@ -665,18 +1479,12 @@
                             <h2 class="page-title" style="margin:0;">การแจ้งเตือน</h2>
                         </div>
                         <div class="notification-actions-bar">
-                            <button class="btn btn-outline btn-sm" onclick="App.markAllAsRead()">
-                                <i class="fa-solid fa-check-double"></i> อ่านทั้งหมด
-                            </button>
-                            <button class="btn btn-primary btn-sm" onclick="App.toggleSelectAll()">
-                                <i class="fa-solid fa-check-square"></i> <span id="select-all-text">เลือกทั้งหมด</span>
-                            </button>
-                            <button class="btn btn-danger btn-sm hidden" id="btn-delete-selected" onclick="App.deleteSelectedNotifications()">
-                                <i class="fa-solid fa-trash"></i> ลบที่เลือก (<span id="selected-count">0</span>)
-                            </button>
+                            <button class="btn btn-outline btn-sm" onclick="App.markAllAsRead()"><i class="fa-solid fa-check-double"></i> อ่านทั้งหมด</button>
+                            <button class="btn btn-primary btn-sm" onclick="App.toggleSelectAll()"><i class="fa-solid fa-check-square"></i> <span id="select-all-text">เลือกทั้งหมด</span></button>
+                            <button class="btn btn-danger btn-sm hidden" id="btn-delete-selected" onclick="App.deleteSelectedNotifications()"><i class="fa-solid fa-trash"></i> ลบที่เลือก (<span id="selected-count">0</span>)</button>
                         </div>
                     </div>
-                    <div style="margin-bottom: 16px; display: flex; gap: 16px; flex-wrap: wrap; font-size: 13px; color: var(--text-muted);">
+                    <div style="margin-bottom: 16px; display: flex; gap: 16px; flex-wrap: wrap; font-size: 13px; color: var(--text-secondary);">
                         <span><i class="fa-solid fa-circle" style="color: var(--success);"></i> คำร้องได้รับการดำเนินการ</span>
                         <span><i class="fa-solid fa-circle" style="color: var(--danger);"></i> คำร้องถูกปฏิเสธ</span>
                     </div>
@@ -689,14 +1497,12 @@
                         <button class="back-btn" onclick="App.nav('home')"><i class="fa-solid fa-arrow-left"></i></button>
                         <h2 class="page-title">แผงควบคุม Admin</h2>
                     </div>
-                    
                     <div class="card">
                         <div class="admin-section">
                             <h3><i class="fa-solid fa-bell" style="color: var(--warning);"></i> คำร้องขอจากผู้ใช้งาน</h3>
                             <div id="admin-reports-list" class="items-grid"></div>
                         </div>
                     </div>
-
                     <div class="card">
                         <div class="admin-section">
                             <h3><i class="fa-solid fa-users" style="color: var(--primary);"></i> จัดการสมาชิก</h3>
@@ -718,12 +1524,8 @@
                                 <img src="" id="settings-avatar-preview" class="avatar-large" style="width: 100px; height: 100px; margin: 0; border: 3px solid var(--primary);">
                                 <div style="flex: 1; display: flex; gap: 12px; flex-wrap: wrap;">
                                     <input type="file" id="settings-avatar-input" accept="image/png,image/jpeg" class="hidden">
-                                    <button class="btn btn-primary" style="width: auto;" onclick="document.getElementById('settings-avatar-input').click()">
-                                        <i class="fa-solid fa-upload"></i> เลือกรูปใหม่
-                                    </button>
-                                    <button class="btn btn-outline" style="width: auto;" onclick="App.deleteAvatar()">
-                                        <i class="fa-solid fa-trash"></i> ลบรูปโปรไฟล์
-                                    </button>
+                                    <button class="btn btn-primary" style="width: auto;" onclick="document.getElementById('settings-avatar-input').click()"><i class="fa-solid fa-upload"></i> เลือกรูปใหม่</button>
+                                    <button class="btn btn-outline" style="width: auto;" onclick="App.deleteAvatar()"><i class="fa-solid fa-trash"></i> ลบรูปโปรไฟล์</button>
                                 </div>
                             </div>
                         </div>
@@ -731,35 +1533,23 @@
                             <h3 class="settings-title"><i class="fa-solid fa-user-pen"></i> ข้อมูลส่วนตัว</h3>
                             <div class="settings-row">
                                 <input type="text" id="settings-username" class="form-control" placeholder="ชื่อ-นามสกุล">
-                                <button class="btn btn-primary" style="width: auto;" onclick="App.updateUsername()">
-                                    <i class="fa-solid fa-save"></i> บันทึกชื่อ
-                                </button>
+                                <button class="btn btn-primary" style="width: auto;" onclick="App.updateUsername()"><i class="fa-solid fa-save"></i> บันทึกชื่อ</button>
                             </div>
                             <div class="settings-row">
-                                <input type="date" id="settings-birthday" class="form-control" placeholder="วัน/เดือน/ปีเกิด">
-                                <button class="btn btn-primary" style="width: auto;" onclick="App.updateBirthday()">
-                                    <i class="fa-solid fa-save"></i> บันทึกวันเกิด
-                                </button>
+                                <input type="date" id="settings-birthday" class="form-control">
+                                <button class="btn btn-primary" style="width: auto;" onclick="App.updateBirthday()"><i class="fa-solid fa-save"></i> บันทึกวันเกิด</button>
                             </div>
                             <div class="settings-row">
                                 <input type="text" id="settings-homeroom" class="form-control" placeholder="ห้อง Homeroom (เช่น 101, 205)">
-                                <button class="btn btn-primary" style="width: auto;" onclick="App.updateHomeroom()">
-                                    <i class="fa-solid fa-save"></i> บันทึกห้อง
-                                </button>
+                                <button class="btn btn-primary" style="width: auto;" onclick="App.updateHomeroom()"><i class="fa-solid fa-save"></i> บันทึกห้อง</button>
                             </div>
                             <div class="settings-row">
-                                <select id="settings-grade" class="form-control">
-                                    <option value="">เลือกระดับชั้น</option>
-                                </select>
-                                <button class="btn btn-primary" style="width: auto;" onclick="App.updateGrade()">
-                                    <i class="fa-solid fa-save"></i> บันทึกระดับชั้น
-                                </button>
+                                <select id="settings-grade" class="form-control"><option value="">เลือกระดับชั้น</option></select>
+                                <button class="btn btn-primary" style="width: auto;" onclick="App.updateGrade()"><i class="fa-solid fa-save"></i> บันทึกระดับชั้น</button>
                             </div>
                             <div class="settings-row">
                                 <input type="tel" id="settings-phone" class="form-control" placeholder="เบอร์ติดต่อ (เช่น 0812345678)">
-                                <button class="btn btn-primary" style="width: auto;" onclick="App.updatePhone()">
-                                    <i class="fa-solid fa-save"></i> บันทึกเบอร์
-                                </button>
+                                <button class="btn btn-primary" style="width: auto;" onclick="App.updatePhone()"><i class="fa-solid fa-save"></i> บันทึกเบอร์</button>
                             </div>
                         </div>
                         <div class="settings-section">
@@ -770,25 +1560,23 @@
                                     <div>ความแข็งแรง: <span id="settings-strength-text">-</span></div>
                                     <div class="strength-bar"><div class="strength-fill" id="settings-strength-fill"></div></div>
                                 </div>
-                                <button class="btn btn-primary" style="width: auto;" onclick="App.updatePassword()">
-                                    <i class="fa-solid fa-save"></i> เปลี่ยนรหัสผ่าน
-                                </button>
+                                <button class="btn btn-primary" style="width: auto;" onclick="App.updatePassword()"><i class="fa-solid fa-save"></i> เปลี่ยนรหัสผ่าน</button>
                             </div>
-                            <small style="color: var(--text-muted); display: block; margin-top: 12px; padding: 12px; background: #F0F9FF; border-radius: 8px; border-left: 4px solid var(--primary);">
-                                <i class="fa-solid fa-shield-halved"></i> 
-                                ใช้รหัสผ่านที่ผสมตัวอักษรใหญ่, เล็ก, ตัวเลข และสัญลักษณ์ เพื่อความปลอดภัย
+                            <small style="color: var(--text-secondary); display: block; margin-top: 12px; padding: 12px; background: #F0F9FF; border-radius: 8px; border-left: 4px solid var(--primary);">
+                                <i class="fa-solid fa-shield-halved"></i> ใช้รหัสผ่านที่ผสมตัวอักษรใหญ่, เล็ก, ตัวเลข และสัญลักษณ์ เพื่อความปลอดภัย
                             </small>
                         </div>
                         <div class="settings-section" style="border-top: 2px solid var(--danger); padding-top: 24px; margin-top: 24px; background: linear-gradient(135deg, #FEF2F2 0%, #FFFFFF 100%);">
-                            <h3 class="settings-title" style="color: var(--danger); border-bottom-color: var(--danger);"><i class="fa-solid fa-right-from-bracket"></i> โซนอันตราย</h3>
-                            <button class="btn btn-danger" style="max-width: 300px;" onclick="App.logout()">
-                                <i class="fa-solid fa-power-off"></i> ออกจากระบบ
-                            </button>
+                            <h3 class="settings-title" style="color: var(--danger);"><i class="fa-solid fa-right-from-bracket"></i> โซนอันตราย</h3>
+                            <button class="btn btn-danger" style="max-width: 300px;" onclick="App.logout()"><i class="fa-solid fa-power-off"></i> ออกจากระบบ</button>
                         </div>
                     </div>
                 </div>
+            </main>
+        </div>
+    </div>
 
-    <!-- Modal สำหรับแจ้งผู้ดูแลระบบ -->
+    <!-- Modals -->
     <div id="admin-report-modal" class="hidden">
         <div class="modal-overlay" onclick="App.closeAdminReportModal(event)">
             <div class="modal-content" onclick="event.stopPropagation()">
@@ -815,15 +1603,12 @@
                         <input type="file" id="admin-report-file" accept="image/png,image/jpeg" class="hidden">
                         <div id="admin-report-preview" class="preview-container"></div>
                     </div>
-                    <button type="submit" class="btn btn-admin">
-                        <i class="fa-solid fa-paper-plane"></i> ส่งแจ้งผู้ดูแลระบบ
-                    </button>
+                    <button type="submit" class="btn btn-admin"><i class="fa-solid fa-paper-plane"></i> ส่งแจ้งผู้ดูแลระบบ</button>
                 </form>
             </div>
         </div>
     </div>
 
-    <!-- Modal สำหรับดูรายละเอียด Admin Report -->
     <div id="admin-report-detail-modal" class="hidden">
         <div class="modal-overlay" onclick="App.closeReportDetailModal(event)">
             <div class="modal-content large" onclick="event.stopPropagation()">
@@ -836,7 +1621,6 @@
         </div>
     </div>
 
-    <!-- Modal สำหรับ Admin รับเรื่อง -->
     <div id="admin-accept-modal" class="hidden">
         <div class="modal-overlay" onclick="App.closeAdminAcceptModal(event)">
             <div class="modal-content" onclick="event.stopPropagation()">
@@ -846,10 +1630,7 @@
                 </div>
                 <form id="form-admin-accept">
                     <input type="hidden" id="accept-report-id">
-                    <div class="alert-box info">
-                        <i class="fa-solid fa-circle-info"></i>
-                        <span>กรอกผลลัพธ์การดำเนินการ เมื่อส่งแล้วข้อมูลจะเปลี่ยนเป็นสำเนาใหม่</span>
-                    </div>
+                    <div class="alert-box info"><i class="fa-solid fa-circle-info"></i><span>กรอกผลลัพธ์การดำเนินการ เมื่อส่งแล้วข้อมูลจะเปลี่ยนเป็นสำเนาใหม่</span></div>
                     <div class="form-group">
                         <label>สถานะ <span style="color:var(--danger)">*</span></label>
                         <select id="accept-status" class="form-control" required>
@@ -865,15 +1646,12 @@
                         <label>รายละเอียด <span style="color:var(--danger)">*</span></label>
                         <textarea id="accept-detail" class="form-control" placeholder="กรอกรายละเอียดผลการดำเนินการ" required></textarea>
                     </div>
-                    <button type="submit" class="btn btn-success">
-                        <i class="fa-solid fa-check"></i> ส่งผลลัพธ์ให้ผู้ใช้ทราบ
-                    </button>
+                    <button type="submit" class="btn btn-success"><i class="fa-solid fa-check"></i> ส่งผลลัพธ์ให้ผู้ใช้ทราบ</button>
                 </form>
             </div>
         </div>
     </div>
 
-    <!-- Modal สำหรับดูรายละเอียดผู้ใช้ -->
     <div id="user-detail-modal" class="hidden">
         <div class="modal-overlay" onclick="App.closeUserDetailModal(event)">
             <div class="modal-content large" onclick="event.stopPropagation()">
@@ -886,7 +1664,6 @@
         </div>
     </div>
 
-    <!-- Modal สำหรับเปลี่ยนยศ -->
     <div id="change-role-modal" class="hidden">
         <div class="modal-overlay" onclick="App.closeChangeRoleModal(event)">
             <div class="modal-content" onclick="event.stopPropagation()">
@@ -903,15 +1680,12 @@
                             <option value="teacher">ครู</option>
                         </select>
                     </div>
-                    <button type="submit" class="btn btn-primary">
-                        <i class="fa-solid fa-save"></i> บันทึก
-                    </button>
+                    <button type="submit" class="btn btn-primary"><i class="fa-solid fa-save"></i> บันทึก</button>
                 </form>
             </div>
         </div>
     </div>
 
-    <!-- Modal สำหรับเปลี่ยนชื่อ -->
     <div id="change-name-modal" class="hidden">
         <div class="modal-overlay" onclick="App.closeChangeNameModal(event)">
             <div class="modal-content" onclick="event.stopPropagation()">
@@ -925,9 +1699,7 @@
                         <label>ชื่อ-นามสกุลใหม่ <span style="color:var(--danger)">*</span></label>
                         <input type="text" id="new-name" class="form-control" required>
                     </div>
-                    <button type="submit" class="btn btn-primary">
-                        <i class="fa-solid fa-save"></i> บันทึก
-                    </button>
+                    <button type="submit" class="btn btn-primary"><i class="fa-solid fa-save"></i> บันทึก</button>
                 </form>
             </div>
         </div>
@@ -945,7 +1717,7 @@
             user: null, 
             profile: null,
             editingItemId: null,
-            editingOriginalUserId: null, // เพิ่มบรรทัดนี้
+            editingOriginalUserId: null,
             currentReportId: null,
             previousPage: 'home',
             profilesCache: {},
@@ -978,14 +1750,12 @@
                     }
                 });
 
-                // Generate grade options
                 App.generateGradeOptions();
             },
 
             generateGradeOptions: () => {
                 const select = document.getElementById('settings-grade');
                 if (!select) return;
-                
                 let html = '<option value="">เลือกระดับชั้น</option>';
                 for (let grade = 1; grade <= 6; grade++) {
                     for (let room = 1; room <= 14; room++) {
@@ -1112,7 +1882,6 @@
                 const usernameInput = document.getElementById('settings-username');
                 if(usernameInput) usernameInput.value = App.profile.full_name || '';
                 
-                // Load settings data
                 const birthdayInput = document.getElementById('settings-birthday');
                 if(birthdayInput) birthdayInput.value = App.profile.birthday || '';
                 
@@ -1260,46 +2029,46 @@
                     const fileInput = document.getElementById('lost-file');
                     const file = fileInput.files[0];
 
-                if (file) {
-                    const ext = file.name.split('.').pop();
-                    const fileName = `${App.user.id}_${Date.now()}.${ext}`;
-                    const { error: uploadError } = await sb.storage.from('item-images').upload(fileName, file);
-                    if (uploadError) throw uploadError;
-                    const { data: { publicUrl } } = sb.storage.from('item-images').getPublicUrl(fileName);
-                    media_url = publicUrl;
-                }
+                    if (file) {
+                        const ext = file.name.split('.').pop();
+                        const fileName = `${App.user.id}_${Date.now()}.${ext}`;
+                        const { error: uploadError } = await sb.storage.from('item-images').upload(fileName, file);
+                        if (uploadError) throw uploadError;
+                        const { data: { publicUrl } } = sb.storage.from('item-images').getPublicUrl(fileName);
+                        media_url = publicUrl;
+                    }
 
-                const itemData = {
-                    user_id: App.editingOriginalUserId || App.user.id, // ใช้ user_id เดิมถ้ามี
-                    type: 'lost',
-                    status: 'active',
-                    title: document.getElementById('lost-title').value,
-                    category: document.getElementById('lost-category').value,
-                    location: document.getElementById('lost-location').value,
-                    description: document.getElementById('lost-desc').value,
-                    image_url: media_url
-                };
-        
-                let error;
-                if (App.editingItemId) {
-                    const { error: updateError } = await sb.from('items').update(itemData).eq('id', App.editingItemId);
-                    error = updateError;
-                } else {
-                    const { error: insertError } = await sb.from('items').insert(itemData);
-                    error = insertError;
+                    const itemData = {
+                        user_id: App.editingOriginalUserId || App.user.id,
+                        type: 'lost',
+                        status: 'active',
+                        title: document.getElementById('lost-title').value,
+                        category: document.getElementById('lost-category').value,
+                        location: document.getElementById('lost-location').value,
+                        description: document.getElementById('lost-desc').value,
+                        image_url: media_url
+                    };
+                    
+                    let error;
+                    if (App.editingItemId) {
+                        const { error: updateError } = await sb.from('items').update(itemData).eq('id', App.editingItemId);
+                        error = updateError;
+                    } else {
+                        const { error: insertError } = await sb.from('items').insert(itemData);
+                        error = insertError;
+                    }
+                    
+                    if (error) throw error;
+                    
+                    App.toast('success', 'สำเร็จ', App.editingItemId ? 'แก้ไขข้อมูลเรียบร้อยแล้ว' : 'ระบบบันทึกการแจ้งของหายแล้ว');
+                    App.cancelEdit();
+                    App.nav('home');
+                } catch (err) {
+                    App.toast('error', 'เกิดข้อผิดพลาด', err.message);
+                } finally {
+                    App.showLoading(false);
                 }
-        
-                if (error) throw error;
-                
-                App.toast('success', 'สำเร็จ', App.editingItemId ? 'แก้ไขข้อมูลเรียบร้อยแล้ว' : 'ระบบบันทึกการแจ้งของหายแล้ว');
-                App.cancelEdit();
-                App.nav('home');
-            } catch (err) {
-                App.toast('error', 'เกิดข้อผิดพลาด', err.message);
-            } finally {
-                App.showLoading(false);
-            }
-        },
+            },
 
             handleFound: async (e) => {
                 e.preventDefault();
@@ -1345,13 +2114,12 @@
                     const { data: item, error } = await sb.from('items').select('*').eq('id', itemId).single();
                     if (error || !item) throw error;
                     
-                    // ตรวจสอบว่าเป็นเจ้าของหรือ Admin
                     const isOwner = item.user_id === App.user.id;
                     const isAdmin = App.profile.role === 'admin';
-        
+                    
                     if (!isOwner && !isAdmin) {
-                    App.toast('error', 'ไม่มีสิทธิ์', 'คุณไม่มีสิทธิ์แก้ไขโพสต์นี้');
-                    return;
+                        App.toast('error', 'ไม่มีสิทธิ์', 'คุณไม่มีสิทธิ์แก้ไขโพสต์นี้');
+                        return;
                     }
                     
                     document.getElementById('lost-title').value = item.title;
@@ -1359,14 +2127,13 @@
                     document.getElementById('lost-location').value = item.location || '';
                     document.getElementById('lost-desc').value = item.description;
                     
-                    // เก็บ user_id เดิมไว้ (สำคัญ!)
                     App.editingItemId = itemId;
-                    App.editingOriginalUserId = item.user_id; // เก็บ user_id เดิม
+                    App.editingOriginalUserId = item.user_id;
                     
                     document.getElementById('report-lost-title').textContent = 'แก้ไขรายการของหาย';
                     document.getElementById('btn-submit-lost').innerHTML = '<i class="fa-solid fa-save"></i> บันทึกการแก้ไข';
                     document.getElementById('btn-cancel-edit').classList.remove('hidden');
-        
+                    
                     App.nav('report-lost');
                     App.toast('success', 'โหมดแก้ไข', 'แก้ไขข้อมูลแล้วกดบันทึก');
                 } catch (err) {
@@ -1376,7 +2143,7 @@
 
             cancelEdit: () => {
                 App.editingItemId = null;
-                App.editingOriginalUserId = null; // ล้าง user_id เดิม
+                App.editingOriginalUserId = null;
                 document.getElementById('form-lost').reset();
                 document.getElementById('lost-preview').innerHTML = '';
                 document.getElementById('report-lost-title').textContent = 'แจ้งของหาย';
@@ -1458,24 +2225,17 @@
                             ${item.image_url ? `<img src="${item.image_url}" class="item-image">` : 
                             '<div class="item-image" style="display:flex;align-items:center;justify-content:center;"><i class="fa-solid fa-image" style="font-size:48px; color:#D1D5DB;"></i></div>'}
                             <div class="item-content">
-                                <span class="item-badge ${isLost ? '' : 'found'}">
-                                    ${isLost ? 'ของหาย' : 'เก็บของได้'}
-                                </span>
+                                <span class="item-badge ${isLost ? '' : 'found'}">${isLost ? 'ของหาย' : 'เก็บของได้'}</span>
                                 <h3 class="item-title">${item.title}</h3>
                                 <div class="item-author"><i class="fa-solid fa-user"></i> ${authorName}</div>
                                 <div class="item-info"><i class="fa-solid fa-location-dot"></i> ${item.location || '-'}</div>
                                 <div class="item-info"><i class="fa-solid fa-tag"></i> ${item.category}</div>
-                                <p style="margin-top:10px; font-size:13px; color:var(--text-muted); flex:1;">${item.description}</p>
+                                <p style="margin-top:10px; font-size:13px; color:var(--text-secondary); flex:1;">${item.description}</p>
                                 <div style="margin-top:10px; font-size:12px; color:var(--text-muted);"><i class="fa-regular fa-clock"></i> ${dateTime}</div>
-                                
                                 <div class="item-actions">
                                     ${(isOwner || isAdmin) ? `
-                                        <button class="btn btn-warning btn-sm" style="flex:1;" onclick="App.editItem('${item.id}')">
-                                            <i class="fa-solid fa-pen"></i> แก้ไข
-                                        </button>
-                                        <button class="btn btn-danger btn-sm" style="flex:1;" onclick="App.deleteItem('${item.id}')">
-                                            <i class="fa-solid fa-trash"></i> ลบ
-                                        </button>
+                                        <button class="btn btn-warning btn-sm" style="flex:1;" onclick="App.editItem('${item.id}')"><i class="fa-solid fa-pen"></i> แก้ไข</button>
+                                        <button class="btn btn-danger btn-sm" style="flex:1;" onclick="App.deleteItem('${item.id}')"><i class="fa-solid fa-trash"></i> ลบ</button>
                                     ` : ''}
                                 </div>
                             </div>
@@ -1487,7 +2247,6 @@
                 }
             },
 
-            // Notifications Page Functions
             loadNotificationsPage: async () => {
                 const container = document.getElementById('notifications-list');
                 container.innerHTML = '<div style="text-align:center; padding:40px;"><div class="spinner" style="margin:0 auto;"></div></div>';
@@ -1532,20 +2291,14 @@
                                     <div style="flex:1;">
                                         <div class="notification-header">
                                             <div class="notification-title-text">
-                                                <span class="item-badge ${badgeClass}">
-                                                    <i class="fa-solid ${icon}"></i> ${typeLabel}
-                                                </span>
+                                                <span class="item-badge ${badgeClass}"><i class="fa-solid ${icon}"></i> ${typeLabel}</span>
                                             </div>
-                                            <div class="notification-time">
-                                                <i class="fa-regular fa-clock"></i> ${dateTime}
-                                            </div>
+                                            <div class="notification-time"><i class="fa-regular fa-clock"></i> ${dateTime}</div>
                                         </div>
                                         ${notif.title ? `<div style="font-weight:600; margin-bottom:6px; color:var(--text); font-size:14px;">${notif.title}</div>` : ''}
                                         ${notif.message ? `<div class="notification-message">${notif.message}</div>` : ''}
                                         <div class="notification-actions">
-                                            <button class="btn btn-outline btn-sm" onclick="App.deleteNotification('${notif.id}')" style="width:auto;">
-                                                <i class="fa-solid fa-trash"></i> ลบ
-                                            </button>
+                                            <button class="btn btn-outline btn-sm" onclick="App.deleteNotification('${notif.id}')" style="width:auto;"><i class="fa-solid fa-trash"></i> ลบ</button>
                                         </div>
                                     </div>
                                 </div>
@@ -1627,10 +2380,7 @@
                 if (!confirm(`ต้องการลบการแจ้งเตือนที่เลือก ${App.selectedNotifications.size} รายการ?`)) return;
                 
                 try {
-                    const { error } = await sb.from('notifications')
-                        .delete()
-                        .in('id', Array.from(App.selectedNotifications));
-                    
+                    const { error } = await sb.from('notifications').delete().in('id', Array.from(App.selectedNotifications));
                     if (error) throw error;
                     
                     App.toast('success', 'ลบแล้ว', `ลบการแจ้งเตือน ${App.selectedNotifications.size} รายการเรียบร้อยแล้ว`);
@@ -1644,11 +2394,7 @@
 
             markAllAsRead: async () => {
                 try {
-                    const { error } = await sb.from('notifications')
-                        .update({ is_read: true })
-                        .eq('user_id', App.user.id)
-                        .eq('is_read', false);
-                    
+                    const { error } = await sb.from('notifications').update({ is_read: true }).eq('user_id', App.user.id).eq('is_read', false);
                     if (error) throw error;
                     
                     App.toast('success', 'สำเร็จ', 'อ่านทั้งหมดแล้ว');
@@ -1659,7 +2405,6 @@
                 }
             },
 
-            // Admin Report Functions
             openAdminReportModal: () => {
                 document.getElementById('admin-report-modal').classList.remove('hidden');
             },
@@ -1707,7 +2452,6 @@
                     App.loadDashboardStats();
                 } catch (err) {
                     App.toast('error', 'ส่งไม่สำเร็จ', err.message);
-                    console.error('Admin report error:', err);
                 } finally {
                     App.showLoading(false);
                 }
@@ -1730,10 +2474,7 @@
                 container.innerHTML = '<div style="text-align:center; padding:40px; grid-column: span 3;"><div class="spinner" style="margin:0 auto;"></div></div>';
                 
                 try {
-                    const { data: reports, error } = await sb.from('admin_reports')
-                        .select('*')
-                        .order('created_at', { ascending: false });
-                    
+                    const { data: reports, error } = await sb.from('admin_reports').select('*').order('created_at', { ascending: false });
                     if (error) throw error;
                     
                     if (!reports || reports.length === 0) {
@@ -1746,13 +2487,9 @@
                         const dateTime = App.formatDateTime(report.created_at);
                         
                         let statusBadge = '';
-                        if (report.status === 'pending') {
-                            statusBadge = '<span class="status-badge pending">รอดำเนินการ</span>';
-                        } else if (report.status === 'resolved') {
-                            statusBadge = '<span class="status-badge resolved">ได้รับการดำเนินการ</span>';
-                        } else if (report.status === 'rejected') {
-                            statusBadge = '<span class="status-badge rejected">ถูกปฏิเสธ</span>';
-                        }
+                        if (report.status === 'pending') statusBadge = '<span class="status-badge pending">รอดำเนินการ</span>';
+                        else if (report.status === 'resolved') statusBadge = '<span class="status-badge resolved">ได้รับการดำเนินการ</span>';
+                        else if (report.status === 'rejected') statusBadge = '<span class="status-badge rejected">ถูกปฏิเสธ</span>';
                         
                         return `
                             <div class="admin-report-card">
@@ -1760,35 +2497,13 @@
                                 <div class="admin-report-content">
                                     ${statusBadge}
                                     <h3 class="admin-report-subject">${report.subject}</h3>
-                                    <div class="admin-report-meta">
-                                        <i class="fa-solid fa-user"></i> ${authorName}
-                                    </div>
-                                    <div class="admin-report-meta">
-                                        <i class="fa-regular fa-clock"></i> ${dateTime}
-                                    </div>
+                                    <div class="admin-report-meta"><i class="fa-solid fa-user"></i> ${authorName}</div>
+                                    <div class="admin-report-meta"><i class="fa-regular fa-clock"></i> ${dateTime}</div>
                                     <p class="admin-report-desc">${report.description}</p>
-                                    ${report.admin_response ? `
-                                        <div class="admin-report-response">
-                                            <strong><i class="fa-solid fa-check-circle"></i> ${report.admin_title || 'ตอบกลับ'}:</strong><br>
-                                            ${report.admin_response}
-                                        </div>
-                                    ` : ''}
+                                    ${report.admin_response ? `<div class="admin-report-response"><strong><i class="fa-solid fa-check-circle"></i> ${report.admin_title || 'ตอบกลับ'}:</strong><br>${report.admin_response}</div>` : ''}
                                     <div class="admin-report-actions">
-                                        <button class="btn btn-primary btn-sm" onclick="App.viewReportDetail('${report.id}')">
-                                            <i class="fa-solid fa-eye"></i> ดูรายละเอียด
-                                        </button>
-                                        ${report.status === 'pending' ? `
-                                            <button class="btn btn-success btn-sm" onclick="App.openAdminAcceptModal('${report.id}')">
-                                                <i class="fa-solid fa-hand-holding-heart"></i> รับเรื่อง
-                                            </button>
-                                        ` : `
-                                            <button class="btn btn-outline btn-sm" onclick="App.deleteAdminReportOwn('${report.id}')">
-                                                <i class="fa-solid fa-trash"></i> ลบ
-                                            </button>
-                                            <button class="btn btn-danger btn-sm" onclick="App.deleteAdminReportNotif('${report.id}')">
-                                                <i class="fa-solid fa-bell-slash"></i> ลบแจ้งเตือน
-                                            </button>
-                                        `}
+                                        <button class="btn btn-primary btn-sm" onclick="App.viewReportDetail('${report.id}')"><i class="fa-solid fa-eye"></i> ดูรายละเอียด</button>
+                                        ${report.status === 'pending' ? `<button class="btn btn-success btn-sm" onclick="App.openAdminAcceptModal('${report.id}')"><i class="fa-solid fa-hand-holding-heart"></i> รับเรื่อง</button>` : `<button class="btn btn-outline btn-sm" onclick="App.deleteAdminReportOwn('${report.id}')"><i class="fa-solid fa-trash"></i> ลบ</button><button class="btn btn-danger btn-sm" onclick="App.deleteAdminReportNotif('${report.id}')"><i class="fa-solid fa-bell-slash"></i> ลบแจ้งเตือน</button>`}
                                     </div>
                                 </div>
                             </div>
@@ -1802,11 +2517,7 @@
 
             viewReportDetail: async (reportId) => {
                 try {
-                    const { data: report, error } = await sb.from('admin_reports')
-                        .select('*')
-                        .eq('id', reportId)
-                        .single();
-                    
+                    const { data: report, error } = await sb.from('admin_reports').select('*').eq('id', reportId).single();
                     if (error) throw error;
                     
                     App.currentReportId = reportId;
@@ -1815,20 +2526,15 @@
                     const dateTime = App.formatDateTime(report.created_at);
                     
                     let statusBadge = '';
-                    if (report.status === 'pending') {
-                        statusBadge = '<span class="status-badge pending">รอดำเนินการ</span>';
-                    } else if (report.status === 'resolved') {
-                        statusBadge = '<span class="status-badge resolved">ได้รับการดำเนินการ</span>';
-                    } else if (report.status === 'rejected') {
-                        statusBadge = '<span class="status-badge rejected">ถูกปฏิเสธ</span>';
-                    }
+                    if (report.status === 'pending') statusBadge = '<span class="status-badge pending">รอดำเนินการ</span>';
+                    else if (report.status === 'resolved') statusBadge = '<span class="status-badge resolved">ได้รับการดำเนินการ</span>';
+                    else if (report.status === 'rejected') statusBadge = '<span class="status-badge rejected">ถูกปฏิเสธ</span>';
                     
                     document.getElementById('report-detail-content').innerHTML = `
                         <div style="margin-bottom:20px;">
                             <h4 style="margin-bottom:10px; color:var(--text-muted); font-size:14px;">ข้อมูลผู้ส่ง:</h4>
                             <div style="background:#EEF2FF; padding:14px; border-radius:var(--radius); display:flex; align-items:center; gap:14px;">
-                                <img src="${authorProfile?.avatar_url || `https://ui-avatars.com/api/?name=${(authorName || 'U').charAt(0)}&background=6366F1&color=fff`}" 
-                                     style="width:55px; height:55px; border-radius:50%; object-fit:cover;">
+                                <img src="${authorProfile?.avatar_url || `https://ui-avatars.com/api/?name=${(authorName || 'U').charAt(0)}&background=6366F1&color=fff`}" style="width:55px; height:55px; border-radius:50%; object-fit:cover;">
                                 <div>
                                     <div style="font-weight:600; font-size:15px;">${authorName}</div>
                                     <div style="font-size:12px; color:var(--text-muted);">${authorProfile?.email || '-'}</div>
@@ -1838,51 +2544,21 @@
                         </div>
                         <div style="margin-bottom:16px;">
                             <h4 style="margin-bottom:8px; color:var(--text-muted); font-size:14px;">หัวข้อเรื่อง:</h4>
-                            <div style="background:#F9FAFB; padding:14px; border-radius:var(--radius); font-weight:600; font-size:15px;">
-                                ${report.subject}
-                            </div>
+                            <div style="background:#F9FAFB; padding:14px; border-radius:var(--radius); font-weight:600; font-size:15px;">${report.subject}</div>
                         </div>
-                        ${report.image_url ? `
-                            <div style="margin-bottom:16px;">
-                                <h4 style="margin-bottom:8px; color:var(--text-muted); font-size:14px;">รูปภาพประกอบ:</h4>
-                                <img src="${report.image_url}" style="max-width:100%; border-radius:var(--radius); border:2px solid var(--border);">
-                            </div>
-                        ` : ''}
+                        ${report.image_url ? `<div style="margin-bottom:16px;"><h4 style="margin-bottom:8px; color:var(--text-muted); font-size:14px;">รูปภาพประกอบ:</h4><img src="${report.image_url}" style="max-width:100%; border-radius:var(--radius); border:2px solid var(--border);"></div>` : ''}
                         <div style="margin-bottom:16px;">
                             <h4 style="margin-bottom:8px; color:var(--text-muted); font-size:14px;">รายละเอียด:</h4>
-                            <div style="background:#F9FAFB; padding:14px; border-radius:var(--radius); white-space: pre-wrap; line-height:1.5; font-size:14px;">
-                                ${report.description}
-                            </div>
+                            <div style="background:#F9FAFB; padding:14px; border-radius:var(--radius); white-space: pre-wrap; line-height:1.5; font-size:14px;">${report.description}</div>
                         </div>
-                        ${report.admin_response ? `
-                            <div style="margin-bottom:16px;">
-                                <h4 style="margin-bottom:8px; color:var(--success); font-size:14px;"><i class="fa-solid fa-check-circle"></i> ผลการดำเนินการ:</h4>
-                                <div style="background:#D1FAE5; padding:14px; border-radius:var(--radius); white-space: pre-wrap; line-height:1.5; font-size:14px;">
-                                    <strong>หัวข้อ:</strong> ${report.admin_title || '-'}<br><br>
-                                    ${report.admin_response}
-                                </div>
-                            </div>
-                        ` : ''}
+                        ${report.admin_response ? `<div style="margin-bottom:16px;"><h4 style="margin-bottom:8px; color:var(--success); font-size:14px;"><i class="fa-solid fa-check-circle"></i> ผลการดำเนินการ:</h4><div style="background:#D1FAE5; padding:14px; border-radius:var(--radius); white-space: pre-wrap; line-height:1.5; font-size:14px;"><strong>หัวข้อ:</strong> ${report.admin_title || '-'}<br><br>${report.admin_response}</div></div>` : ''}
                         <div style="margin-bottom:16px;">
                             <h4 style="margin-bottom:8px; color:var(--text-muted); font-size:14px;">สถานะ:</h4>
                             ${statusBadge}
                         </div>
                         <div style="display:flex; gap:10px; margin-top:16px;">
-                            ${report.status === 'pending' ? `
-                                <button class="btn btn-success" onclick="App.openAdminAcceptModal('${report.id}'); App.closeReportDetailModal();">
-                                    <i class="fa-solid fa-hand-holding-heart"></i> รับเรื่อง
-                                </button>
-                            ` : `
-                                <button class="btn btn-outline" onclick="App.deleteAdminReportOwn('${report.id}'); App.closeReportDetailModal();">
-                                    <i class="fa-solid fa-trash"></i> ลบ (เฉพาะในแผงควบคุม)
-                                </button>
-                                <button class="btn btn-danger" onclick="App.deleteAdminReportNotif('${report.id}'); App.closeReportDetailModal();">
-                                    <i class="fa-solid fa-bell-slash"></i> ลบแจ้งเตือนของผู้ใช้
-                                </button>
-                            `}
-                            <button class="btn btn-outline" onclick="App.closeReportDetailModal()">
-                                <i class="fa-solid fa-xmark"></i> ปิด
-                            </button>
+                            ${report.status === 'pending' ? `<button class="btn btn-success" onclick="App.openAdminAcceptModal('${report.id}'); App.closeReportDetailModal();"><i class="fa-solid fa-hand-holding-heart"></i> รับเรื่อง</button>` : `<button class="btn btn-outline" onclick="App.deleteAdminReportOwn('${report.id}'); App.closeReportDetailModal();"><i class="fa-solid fa-trash"></i> ลบ (เฉพาะในแผงควบคุม)</button><button class="btn btn-danger" onclick="App.deleteAdminReportNotif('${report.id}'); App.closeReportDetailModal();"><i class="fa-solid fa-bell-slash"></i> ลบแจ้งเตือนของผู้ใช้</button>`}
+                            <button class="btn btn-outline" onclick="App.closeReportDetailModal()"><i class="fa-solid fa-xmark"></i> ปิด</button>
                         </div>
                     `;
                     
@@ -1930,19 +2606,12 @@
                 
                 App.showLoading(true);
                 try {
-                    // สร้างสำเนาใหม่ (insert ข้อมูลใหม่)
-                    const { data: originalReport } = await sb.from('admin_reports')
-                        .select('user_id, subject, description, image_url')
-                        .eq('id', reportId)
-                        .single();
-                    
+                    const { data: originalReport } = await sb.from('admin_reports').select('user_id, subject, description, image_url').eq('id', reportId).single();
                     if (!originalReport) throw new Error('ไม่พบคำร้อง');
                     
-                    // ลบคำร้องเดิม
                     const { error: deleteError } = await sb.from('admin_reports').delete().eq('id', reportId);
                     if (deleteError) throw deleteError;
                     
-                    // สร้างคำร้องใหม่ (สำเนา) พร้อมผลลัพธ์
                     const { data: newReport, error: insertError } = await sb.from('admin_reports').insert({
                         user_id: originalReport.user_id,
                         subject: `[สำเนา] ${originalReport.subject}`,
@@ -1956,7 +2625,6 @@
                     
                     if (insertError) throw insertError;
                     
-                    // สร้าง notification ให้ผู้ส่ง
                     const notifType = status === 'resolved' ? 'admin_response' : 'admin_reject';
                     const { error: notifError } = await sb.from('notifications').insert({
                         user_id: originalReport.user_id,
@@ -1975,25 +2643,21 @@
                     App.loadDashboardStats();
                 } catch (err) {
                     App.toast('error', 'เกิดข้อผิดพลาด', err.message);
-                    console.error('Admin accept error:', err);
                 } finally {
                     App.showLoading(false);
                 }
             },
 
-            // ลบเฉพาะในแผงควบคุม (ไม่ลบ notification)
             deleteAdminReportOwn: async (reportId) => {
                 if (!confirm('ยืนยันการลบ? (ลบเฉพาะในแผงควบคุม ไม่ลบการแจ้งเตือนของผู้ใช้)')) return;
                 
                 App.showLoading(true);
                 try {
                     const { data: report } = await sb.from('admin_reports').select('image_url').eq('id', reportId).single();
-                    
                     if (report && report.image_url) {
                         const fileName = report.image_url.split('/').pop();
                         await sb.storage.from('item-images').remove([fileName]);
                     }
-                    
                     const { error } = await sb.from('admin_reports').delete().eq('id', reportId);
                     if (error) throw error;
                     
@@ -2007,16 +2671,12 @@
                 }
             },
 
-            // ลบ notification ของผู้ใช้
             deleteAdminReportNotif: async (reportId) => {
                 if (!confirm('ยืนยันการลบการแจ้งเตือนของผู้ใช้?')) return;
                 
                 App.showLoading(true);
                 try {
-                    const { error } = await sb.from('notifications')
-                        .delete()
-                        .eq('admin_report_id', reportId);
-                    
+                    const { error } = await sb.from('notifications').delete().eq('admin_report_id', reportId);
                     if (error) throw error;
                     
                     App.toast('success', 'สำเร็จ', 'ลบการแจ้งเตือนของผู้ใช้แล้ว');
@@ -2038,25 +2698,13 @@
                     
                     container.innerHTML = `
                         <table class="admin-table">
-                            <thead>
-                                <tr>
-                                    <th>ชื่อ-นามสกุล</th>
-                                    <th>อีเมล</th>
-                                    <th>ยศ</th>
-                                    <th>สถานะ</th>
-                                    <th>จัดการ</th>
-                                </tr>
-                            </thead>
+                            <thead><tr><th>ชื่อ-นามสกุล</th><th>อีเมล</th><th>ยศ</th><th>สถานะ</th><th>จัดการ</th></tr></thead>
                             <tbody>
                                 ${users.map(user => {
                                     let roleBadge = '';
-                                    if (user.role === 'admin') {
-                                        roleBadge = '<span class="role-badge admin">ผู้ดูแลระบบ</span>';
-                                    } else if (user.role === 'teacher') {
-                                        roleBadge = '<span class="role-badge teacher">ครู</span>';
-                                    } else {
-                                        roleBadge = '<span class="role-badge student">นักเรียน</span>';
-                                    }
+                                    if (user.role === 'admin') roleBadge = '<span class="role-badge admin">ผู้ดูแลระบบ</span>';
+                                    else if (user.role === 'teacher') roleBadge = '<span class="role-badge teacher">ครู</span>';
+                                    else roleBadge = '<span class="role-badge student">นักเรียน</span>';
                                     
                                     return `
                                         <tr>
@@ -2067,18 +2715,10 @@
                                             <td>
                                                 <div style="display:flex; gap:6px; flex-wrap:wrap;">
                                                     ${user.role !== 'admin' ? `
-                                                        <button class="btn btn-primary btn-sm" onclick="App.openUserDetailModal('${user.id}')" title="ดูรายละเอียด">
-                                                            <i class="fa-solid fa-eye"></i>
-                                                        </button>
-                                                        <button class="btn btn-info btn-sm" onclick="App.openChangeNameModal('${user.id}', '${user.full_name || ''}')" title="เปลี่ยนชื่อ">
-                                                            <i class="fa-solid fa-user-pen"></i>
-                                                        </button>
-                                                        <button class="btn btn-warning btn-sm" onclick="App.openChangeRoleModal('${user.id}', '${user.role}')" title="เปลี่ยนยศ">
-                                                            <i class="fa-solid fa-user-tag"></i>
-                                                        </button>
-                                                        <button class="btn btn-${user.is_banned ? 'success' : 'danger'} btn-sm" onclick="App.toggleBanUser('${user.id}', ${!user.is_banned})" title="${user.is_banned ? 'ปลดแบน' : 'แบน'}">
-                                                            <i class="fa-solid fa-${user.is_banned ? 'unlock' : 'ban'}"></i>
-                                                        </button>
+                                                        <button class="btn btn-primary btn-sm" onclick="App.openUserDetailModal('${user.id}')" title="ดูรายละเอียด"><i class="fa-solid fa-eye"></i></button>
+                                                        <button class="btn btn-info btn-sm" onclick="App.openChangeNameModal('${user.id}', '${user.full_name || ''}')" title="เปลี่ยนชื่อ"><i class="fa-solid fa-user-pen"></i></button>
+                                                        <button class="btn btn-warning btn-sm" onclick="App.openChangeRoleModal('${user.id}', '${user.role}')" title="เปลี่ยนยศ"><i class="fa-solid fa-user-tag"></i></button>
+                                                        <button class="btn btn-${user.is_banned ? 'success' : 'danger'} btn-sm" onclick="App.toggleBanUser('${user.id}', ${!user.is_banned})" title="${user.is_banned ? 'ปลดแบน' : 'แบน'}"><i class="fa-solid fa-${user.is_banned ? 'unlock' : 'ban'}"></i></button>
                                                     ` : '<span style="color:var(--text-muted);">-</span>'}
                                                 </div>
                                             </td>
@@ -2108,50 +2748,23 @@
                 
                 document.getElementById('user-detail-content').innerHTML = `
                     <div style="text-align:center; margin-bottom:20px;">
-                        <img src="${user.avatar_url || `https://ui-avatars.com/api/?name=${(user.full_name || 'U').charAt(0)}&background=6366F1&color=fff&size=150`}" 
-                             style="width:100px; height:100px; border-radius:50%; object-fit:cover; border:4px solid var(--primary);">
+                        <img src="${user.avatar_url || `https://ui-avatars.com/api/?name=${(user.full_name || 'U').charAt(0)}&background=6366F1&color=fff&size=150`}" style="width:100px; height:100px; border-radius:50%; object-fit:cover; border:4px solid var(--primary);">
                         <h3 style="margin-top:12px; font-size:20px;">${user.full_name || 'ไม่ระบุชื่อ'}</h3>
-                        <p style="color:var(--text-muted);">${user.email}</p>
+                        <p style="color:var(--text-secondary);">${user.email}</p>
                         <span class="role-badge ${user.role}" style="margin-top:8px;">${roleText}</span>
                     </div>
                     <div class="user-detail-grid">
-                        <div class="user-detail-item">
-                            <div class="user-detail-label"><i class="fa-solid fa-envelope"></i> อีเมล</div>
-                            <div class="user-detail-value">${user.email || '-'}</div>
-                        </div>
-                        <div class="user-detail-item">
-                            <div class="user-detail-label"><i class="fa-solid fa-shield-halved"></i> ยศ</div>
-                            <div class="user-detail-value">${roleText}</div>
-                        </div>
-                        <div class="user-detail-item">
-                            <div class="user-detail-label"><i class="fa-solid fa-calendar"></i> วันเกิด</div>
-                            <div class="user-detail-value">${user.birthday ? new Date(user.birthday).toLocaleDateString('th-TH') : '-'}</div>
-                        </div>
-                        <div class="user-detail-item">
-                            <div class="user-detail-label"><i class="fa-solid fa-door-open"></i> ห้อง Homeroom</div>
-                            <div class="user-detail-value">${user.homeroom || '-'}</div>
-                        </div>
-                        <div class="user-detail-item">
-                            <div class="user-detail-label"><i class="fa-solid fa-graduation-cap"></i> ระดับชั้น</div>
-                            <div class="user-detail-value">${user.grade_level || '-'}</div>
-                        </div>
-                        <div class="user-detail-item">
-                            <div class="user-detail-label"><i class="fa-solid fa-phone"></i> เบอร์ติดต่อ</div>
-                            <div class="user-detail-value">${user.phone || '-'}</div>
-                        </div>
-                        <div class="user-detail-item">
-                            <div class="user-detail-label"><i class="fa-solid fa-clock"></i> สร้างเมื่อ</div>
-                            <div class="user-detail-value">${user.created_at ? new Date(user.created_at).toLocaleDateString('th-TH') : '-'}</div>
-                        </div>
-                        <div class="user-detail-item">
-                            <div class="user-detail-label"><i class="fa-solid fa-ban"></i> สถานะ</div>
-                            <div class="user-detail-value">${user.is_banned ? '<span style="color:var(--danger);">ถูกแบน</span>' : '<span style="color:var(--success);">ปกติ</span>'}</div>
-                        </div>
+                        <div class="user-detail-item"><div class="user-detail-label"><i class="fa-solid fa-envelope"></i> อีเมล</div><div class="user-detail-value">${user.email || '-'}</div></div>
+                        <div class="user-detail-item"><div class="user-detail-label"><i class="fa-solid fa-shield-halved"></i> ยศ</div><div class="user-detail-value">${roleText}</div></div>
+                        <div class="user-detail-item"><div class="user-detail-label"><i class="fa-solid fa-calendar"></i> วันเกิด</div><div class="user-detail-value">${user.birthday ? new Date(user.birthday).toLocaleDateString('th-TH') : '-'}</div></div>
+                        <div class="user-detail-item"><div class="user-detail-label"><i class="fa-solid fa-door-open"></i> ห้อง Homeroom</div><div class="user-detail-value">${user.homeroom || '-'}</div></div>
+                        <div class="user-detail-item"><div class="user-detail-label"><i class="fa-solid fa-graduation-cap"></i> ระดับชั้น</div><div class="user-detail-value">${user.grade_level || '-'}</div></div>
+                        <div class="user-detail-item"><div class="user-detail-label"><i class="fa-solid fa-phone"></i> เบอร์ติดต่อ</div><div class="user-detail-value">${user.phone || '-'}</div></div>
+                        <div class="user-detail-item"><div class="user-detail-label"><i class="fa-solid fa-clock"></i> สร้างเมื่อ</div><div class="user-detail-value">${user.created_at ? new Date(user.created_at).toLocaleDateString('th-TH') : '-'}</div></div>
+                        <div class="user-detail-item"><div class="user-detail-label"><i class="fa-solid fa-ban"></i> สถานะ</div><div class="user-detail-value">${user.is_banned ? '<span style="color:var(--danger);">ถูกแบน</span>' : '<span style="color:var(--success);">ปกติ</span>'}</div></div>
                     </div>
                     <div style="margin-top:20px; text-align:center;">
-                        <button class="btn btn-outline" onclick="App.closeUserDetailModal()">
-                            <i class="fa-solid fa-xmark"></i> ปิด
-                        </button>
+                        <button class="btn btn-outline" onclick="App.closeUserDetailModal()"><i class="fa-solid fa-xmark"></i> ปิด</button>
                     </div>
                 `;
                 
@@ -2178,7 +2791,6 @@
 
             handleChangeRole: async (e) => {
                 e.preventDefault();
-                
                 const userId = document.getElementById('change-role-user-id').value;
                 const newRole = document.getElementById('new-role').value;
                 
@@ -2191,10 +2803,7 @@
                 
                 App.showLoading(true);
                 try {
-                    const { error } = await sb.from('profiles').update({ 
-                        role: newRole
-                    }).eq('id', userId);
-                    
+                    const { error } = await sb.from('profiles').update({ role: newRole }).eq('id', userId);
                     if (error) throw error;
                     
                     App.toast('success', 'สำเร็จ', `เปลี่ยนยศเป็น ${newRole === 'student' ? 'นักเรียน' : 'ครู'} แล้ว`);
@@ -2221,7 +2830,6 @@
 
             handleChangeName: async (e) => {
                 e.preventDefault();
-                
                 const userId = document.getElementById('change-name-user-id').value;
                 const newName = document.getElementById('new-name').value.trim();
                 
@@ -2234,10 +2842,7 @@
                 
                 App.showLoading(true);
                 try {
-                    const { error } = await sb.from('profiles').update({ 
-                        full_name: newName
-                    }).eq('id', userId);
-                    
+                    const { error } = await sb.from('profiles').update({ full_name: newName }).eq('id', userId);
                     if (error) throw error;
                     
                     App.toast('success', 'สำเร็จ', 'เปลี่ยนชื่อ-นามสกุลแล้ว');
@@ -2257,19 +2862,11 @@
                 App.showLoading(true);
                 try {
                     if (ban) {
-                        const { error } = await sb.from('profiles').update({ 
-                            is_banned: true, 
-                            banned_reason: reason,
-                            banned_at: new Date().toISOString()
-                        }).eq('id', userId);
+                        const { error } = await sb.from('profiles').update({ is_banned: true, banned_reason: reason, banned_at: new Date().toISOString() }).eq('id', userId);
                         if (error) throw error;
                         App.toast('success', 'สำเร็จ', 'แบนผู้ใช้เรียบร้อยแล้ว');
                     } else {
-                        const { error } = await sb.from('profiles').update({ 
-                            is_banned: false, 
-                            banned_reason: null,
-                            banned_at: null
-                        }).eq('id', userId);
+                        const { error } = await sb.from('profiles').update({ is_banned: false, banned_reason: null, banned_at: null }).eq('id', userId);
                         if (error) throw error;
                         App.toast('success', 'สำเร็จ', 'ปลดแบนผู้ใช้เรียบร้อยแล้ว');
                     }
@@ -2456,11 +3053,10 @@
                 const toast = document.createElement('div');
                 toast.className = `toast ${type}`;
                 toast.innerHTML = `
-                    <i class="fa-solid ${type==='success'?'fa-circle-check':type==='warning'?'fa-triangle-exclamation':'fa-circle-xmark'}" 
-                       style="font-size:22px; color:${type==='success'?'var(--success)':type==='warning'?'var(--warning)':'var(--danger)'}"></i>
+                    <i class="fa-solid ${type==='success'?'fa-circle-check':type==='warning'?'fa-triangle-exclamation':'fa-circle-xmark'}" style="font-size:22px; color:${type==='success'?'var(--success)':type==='warning'?'var(--warning)':'var(--danger)'}"></i>
                     <div>
                         <div style="font-weight:700; font-size:15px;">${title}</div>
-                        <div style="font-size:13px; color:var(--text-muted);">${msg}</div>
+                        <div style="font-size:13px; color:var(--text-secondary);">${msg}</div>
                     </div>
                 `;
                 container.appendChild(toast);
@@ -2506,9 +3102,7 @@
         // Event Listeners
         const bindForm = (formId, handler) => {
             const form = document.getElementById(formId);
-            if (form) {
-                form.addEventListener('submit', handler);
-            }
+            if (form) form.addEventListener('submit', handler);
         };
 
         bindForm('form-login', App.handleLogin);
