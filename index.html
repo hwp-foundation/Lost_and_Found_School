@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="description" content="Lost & Found School - ระบบแจ้งและติดตามของหาย โรงเรียนหอวัง ปทุมธานี">
     <title>Lost & Found School - โรงเรียนหอวัง ปทุมธานี</title>
-    <link rel="icon" type="image/png" href="https://github.com/momo0991588175-sys/Lost_and_Found_School/raw/main/images/logo.png">
+    <link rel="icon" type="image/png" href="https://github.com/momo0991588175-sys/Lost_and_Found_School/raw/main/images/logo01.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -2446,8 +2446,17 @@
                 container.innerHTML = '<div style="text-align:center; padding:40px;"><div class="spinner" style="margin:0 auto;"></div></div>';
                 
                 try {
+                    // โหลด notifications พร้อมข้อมูล admin_report
                     const { data: notifications, error } = await sb.from('notifications')
-                        .select('*')
+                        .select(`
+                            *,
+                            admin_reports!admin_report_id (
+                                subject,
+                                admin_title,
+                                admin_response,
+                                status
+                            )
+                        `)
                         .eq('user_id', App.user.id)
                         .order('created_at', { ascending: false });
                     
