@@ -359,31 +359,34 @@
         .guest-banner i { font-size: 20px; }
         .guest-banner span { font-weight: 600; }
 
-        .guest-settings-notice {
-            background: linear-gradient(135deg, #FEF3C7, #FDE68A);
-            border: 2px solid var(--warning);
-            border-radius: var(--radius-lg);
-            padding: 24px;
-            text-align: center;
+        /* Guest Settings - Centered Logout Button */
+        .guest-settings-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 400px;
+            padding: 40px;
+        }
+        
+        .guest-settings-icon {
+            font-size: 80px;
+            color: var(--text-muted);
             margin-bottom: 24px;
+            opacity: 0.5;
         }
         
-        .guest-settings-notice i {
-            font-size: 48px;
-            color: var(--warning);
-            margin-bottom: 12px;
-        }
-        
-        .guest-settings-notice h3 {
-            font-size: 20px;
-            font-weight: 700;
-            color: var(--text);
-            margin-bottom: 8px;
-        }
-        
-        .guest-settings-notice p {
+        .guest-settings-text {
+            font-size: 18px;
             color: var(--text-secondary);
-            font-size: 14px;
+            margin-bottom: 32px;
+            text-align: center;
+        }
+        
+        .guest-logout-btn {
+            max-width: 300px;
+            padding: 16px 32px;
+            font-size: 16px;
         }
 
         @media (max-width: 768px) {
@@ -698,80 +701,76 @@
                         <button class="back-btn" onclick="App.nav('home')"><i class="fa-solid fa-arrow-left"></i></button>
                         <h2 class="page-title">ตั้งค่าบัญชี</h2>
                     </div>
-                    <div class="card" style="max-width: 700px; margin: 0 auto;">
-                        <!-- Guest Settings Notice -->
-                        <div id="guest-settings-content" class="hidden">
-                            <div class="guest-settings-notice">
-                                <i class="fa-solid fa-user-secret"></i>
-                                <h3>โหมดผู้เยี่ยมชม</h3>
-                                <p>คุณกำลังใช้งานในฐานะผู้เยี่ยมชม สามารถดูข้อมูลได้เท่านั้น</p>
-                            </div>
-                            <div class="settings-section" style="border-top: 2px solid var(--primary); padding-top: 24px; margin-top: 24px;">
-                                <button class="btn btn-primary" style="max-width: 300px; margin: 0 auto;" onclick="App.logout()">
-                                    <i class="fa-solid fa-arrow-left"></i> กลับหน้า Login
-                                </button>
+                    
+                    <!-- Guest Settings View -->
+                    <div id="guest-settings-view" class="hidden">
+                        <div class="card guest-settings-container">
+                            <i class="fa-solid fa-user-secret guest-settings-icon"></i>
+                            <p class="guest-settings-text">คุณกำลังใช้งานในฐานะผู้เยี่ยมชม<br>ไม่สามารถแก้ไขข้อมูลได้</p>
+                            <button class="btn btn-danger guest-logout-btn" onclick="App.logout()">
+                                <i class="fa-solid fa-right-from-bracket"></i> กลับหน้า login
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Regular Settings View -->
+                    <div id="regular-settings-view" class="card" style="max-width: 700px; margin: 0 auto;">
+                        <div class="settings-section">
+                            <h3 class="settings-title"><i class="fa-solid fa-image"></i> รูปโปรไฟล์</h3>
+                            <div class="settings-row">
+                                <img src="" id="settings-avatar-preview" class="avatar-large" style="width: 100px; height: 100px; margin: 0; border: 3px solid var(--primary);">
+                                <div style="flex: 1; display: flex; gap: 12px; flex-wrap: wrap;">
+                                    <input type="file" id="settings-avatar-input" accept="image/png,image/jpeg" class="hidden">
+                                    <button class="btn btn-primary" style="width: auto;" onclick="document.getElementById('settings-avatar-input').click()"><i class="fa-solid fa-upload"></i> เลือกรูปใหม่</button>
+                                    <button class="btn btn-outline" style="width: auto;" onclick="App.deleteAvatar()"><i class="fa-solid fa-trash"></i> ลบรูปโปรไฟล์</button>
+                                </div>
                             </div>
                         </div>
-                        
-                        <!-- Regular User Settings -->
-                        <div id="regular-settings-content">
-                            <div class="settings-section">
-                                <h3 class="settings-title"><i class="fa-solid fa-image"></i> รูปโปรไฟล์</h3>
-                                <div class="settings-row">
-                                    <img src="" id="settings-avatar-preview" class="avatar-large" style="width: 100px; height: 100px; margin: 0; border: 3px solid var(--primary);">
-                                    <div style="flex: 1; display: flex; gap: 12px; flex-wrap: wrap;">
-                                        <input type="file" id="settings-avatar-input" accept="image/png,image/jpeg" class="hidden">
-                                        <button class="btn btn-primary" style="width: auto;" onclick="document.getElementById('settings-avatar-input').click()"><i class="fa-solid fa-upload"></i> เลือกรูปใหม่</button>
-                                        <button class="btn btn-outline" style="width: auto;" onclick="App.deleteAvatar()"><i class="fa-solid fa-trash"></i> ลบรูปโปรไฟล์</button>
-                                    </div>
-                                </div>
+                        <div class="settings-section">
+                            <h3 class="settings-title"><i class="fa-solid fa-user-pen"></i> ข้อมูลส่วนตัว</h3>
+                            <div class="settings-row">
+                                <input type="text" id="settings-username" class="form-control" placeholder="ชื่อ-นามสกุล">
+                                <button class="btn btn-primary" style="width: auto;" onclick="App.updateUsername()"><i class="fa-solid fa-save"></i> บันทึกชื่อ</button>
                             </div>
-                            <div class="settings-section">
-                                <h3 class="settings-title"><i class="fa-solid fa-user-pen"></i> ข้อมูลส่วนตัว</h3>
-                                <div class="settings-row">
-                                    <input type="text" id="settings-username" class="form-control" placeholder="ชื่อ-นามสกุล">
-                                    <button class="btn btn-primary" style="width: auto;" onclick="App.updateUsername()"><i class="fa-solid fa-save"></i> บันทึกชื่อ</button>
-                                </div>
-                                <div class="settings-row">
-                                    <input type="date" id="settings-birthday" class="form-control">
-                                    <button class="btn btn-primary" style="width: auto;" onclick="App.updateBirthday()"><i class="fa-solid fa-save"></i> บันทึกวันเกิด</button>
-                                </div>
-                                <div class="settings-row">
-                                    <input type="text" id="settings-homeroom" class="form-control" placeholder="ห้อง Homeroom (เช่น 101, 205)">
-                                    <button class="btn btn-primary" style="width: auto;" onclick="App.updateHomeroom()"><i class="fa-solid fa-save"></i> บันทึกห้อง</button>
-                                </div>
-                                <div class="settings-row">
-                                    <select id="settings-grade" class="form-control"><option value="">เลือกระดับชั้น</option></select>
-                                    <button class="btn btn-primary" style="width: auto;" onclick="App.updateGrade()"><i class="fa-solid fa-save"></i> บันทึกระดับชั้น</button>
-                                </div>
-                                <div class="settings-row">
-                                    <input type="tel" id="settings-phone" class="form-control" placeholder="เบอร์ติดต่อ (เช่น 0812345678)">
-                                    <button class="btn btn-primary" style="width: auto;" onclick="App.updatePhone()"><i class="fa-solid fa-save"></i> บันทึกเบอร์</button>
-                                </div>
-                                <div class="account-info-box">
-                                    <div class="account-info-item"><i class="fa-solid fa-envelope"></i><span>อีเมล: <strong id="account-email">-</strong></span></div>
-                                    <div class="account-info-item"><i class="fa-solid fa-shield-halved"></i><span>ยศ: <strong id="account-role">-</strong></span></div>
-                                    <div class="account-info-item"><i class="fa-solid fa-clock"></i><span>บัญชีถูกสร้างเมื่อ: <strong id="account-created">-</strong></span></div>
-                                </div>
+                            <div class="settings-row">
+                                <input type="date" id="settings-birthday" class="form-control">
+                                <button class="btn btn-primary" style="width: auto;" onclick="App.updateBirthday()"><i class="fa-solid fa-save"></i> บันทึกวันเกิด</button>
                             </div>
-                            <div class="settings-section">
-                                <h3 class="settings-title"><i class="fa-solid fa-key"></i> รหัสผ่าน</h3>
-                                <div class="settings-row">
-                                    <input type="password" id="settings-password" class="form-control" placeholder="รหัสผ่านใหม่ (อย่างน้อย 8 ตัว)" oninput="App.checkPasswordStrength(this.value)">
-                                    <div class="password-strength hidden" id="settings-password-strength">
-                                        <div>ความแข็งแรง: <span id="settings-strength-text">-</span></div>
-                                        <div class="strength-bar"><div class="strength-fill" id="settings-strength-fill"></div></div>
-                                    </div>
-                                    <button class="btn btn-primary" style="width: auto;" onclick="App.updatePassword()"><i class="fa-solid fa-save"></i> เปลี่ยนรหัสผ่าน</button>
+                            <div class="settings-row">
+                                <input type="text" id="settings-homeroom" class="form-control" placeholder="ห้อง Homeroom (เช่น 101, 205)">
+                                <button class="btn btn-primary" style="width: auto;" onclick="App.updateHomeroom()"><i class="fa-solid fa-save"></i> บันทึกห้อง</button>
+                            </div>
+                            <div class="settings-row">
+                                <select id="settings-grade" class="form-control"><option value="">เลือกระดับชั้น</option></select>
+                                <button class="btn btn-primary" style="width: auto;" onclick="App.updateGrade()"><i class="fa-solid fa-save"></i> บันทึกระดับชั้น</button>
+                            </div>
+                            <div class="settings-row">
+                                <input type="tel" id="settings-phone" class="form-control" placeholder="เบอร์ติดต่อ (เช่น 0812345678)">
+                                <button class="btn btn-primary" style="width: auto;" onclick="App.updatePhone()"><i class="fa-solid fa-save"></i> บันทึกเบอร์</button>
+                            </div>
+                            <div class="account-info-box">
+                                <div class="account-info-item"><i class="fa-solid fa-envelope"></i><span>อีเมล: <strong id="account-email">-</strong></span></div>
+                                <div class="account-info-item"><i class="fa-solid fa-shield-halved"></i><span>ยศ: <strong id="account-role">-</strong></span></div>
+                                <div class="account-info-item"><i class="fa-solid fa-clock"></i><span>บัญชีถูกสร้างเมื่อ: <strong id="account-created">-</strong></span></div>
+                            </div>
+                        </div>
+                        <div class="settings-section">
+                            <h3 class="settings-title"><i class="fa-solid fa-key"></i> รหัสผ่าน</h3>
+                            <div class="settings-row">
+                                <input type="password" id="settings-password" class="form-control" placeholder="รหัสผ่านใหม่ (อย่างน้อย 8 ตัว)" oninput="App.checkPasswordStrength(this.value)">
+                                <div class="password-strength hidden" id="settings-password-strength">
+                                    <div>ความแข็งแรง: <span id="settings-strength-text">-</span></div>
+                                    <div class="strength-bar"><div class="strength-fill" id="settings-strength-fill"></div></div>
                                 </div>
-                                <small style="color: var(--text-secondary); display: block; margin-top: 12px; padding: 12px; background: #F0F9FF; border-radius: 8px; border-left: 4px solid var(--primary);">
-                                    <i class="fa-solid fa-shield-halved"></i> ใช้รหัสผ่านที่ผสมตัวอักษรใหญ่, เล็ก, ตัวเลข และสัญลักษณ์ เพื่อความปลอดภัย
-                                </small>
+                                <button class="btn btn-primary" style="width: auto;" onclick="App.updatePassword()"><i class="fa-solid fa-save"></i> เปลี่ยนรหัสผ่าน</button>
                             </div>
-                            <div class="settings-section" style="border-top: 2px solid var(--danger); padding-top: 24px; margin-top: 24px; background: linear-gradient(135deg, #FEF2F2 0%, #FFFFFF 100%);">
-                                <h3 class="settings-title" style="color: var(--danger);"><i class="fa-solid fa-right-from-bracket"></i> โซนอันตราย</h3>
-                                <button class="btn btn-danger" style="max-width: 300px;" onclick="App.logout()"><i class="fa-solid fa-power-off"></i> ออกจากระบบ</button>
-                            </div>
+                            <small style="color: var(--text-secondary); display: block; margin-top: 12px; padding: 12px; background: #F0F9FF; border-radius: 8px; border-left: 4px solid var(--primary);">
+                                <i class="fa-solid fa-shield-halved"></i> ใช้รหัสผ่านที่ผสมตัวอักษรใหญ่, เล็ก, ตัวเลข และสัญลักษณ์ เพื่อความปลอดภัย
+                            </small>
+                        </div>
+                        <div class="settings-section" style="border-top: 2px solid var(--danger); padding-top: 24px; margin-top: 24px; background: linear-gradient(135deg, #FEF2F2 0%, #FFFFFF 100%);">
+                            <h3 class="settings-title" style="color: var(--danger);"><i class="fa-solid fa-right-from-bracket"></i> โซนอันตราย</h3>
+                            <button class="btn btn-danger" style="max-width: 300px;" onclick="App.logout()"><i class="fa-solid fa-power-off"></i> ออกจากระบบ</button>
                         </div>
                     </div>
                 </div>
@@ -916,9 +915,6 @@
         const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhlY29wbWVqYmx1bG5zbnJtY21nIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODkwMDgwMDUsImV4cCI6MjEwNDU4NDAwNX0.ad_EFeHFhoFJAvVCycc0E_fZ-kYozNdvK_wy-x6slFA';
         const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-        // รูปโปรไฟล์สำหรับผู้เยี่ยมชม (ล็อกไว้)
-        const GUEST_AVATAR_URL = 'https://github.com/momo0991588175-sys/Lost_and_Found_School/raw/main/images/logo01.png';
-
         const App = {
             user: null, 
             profile: null,
@@ -979,9 +975,10 @@
                     full_name: 'ผู้เยี่ยมชม',
                     email: 'guest@visitor.com',
                     role: 'guest',
-                    avatar_url: GUEST_AVATAR_URL
+                    avatar_url: null
                 };
                 App.showApp();
+                App.setupRealtime();
                 App.nav('home');
                 App.toast('success', 'เข้าสู่ระบบในฐานะผู้เยี่ยมชม', 'คุณสามารถดูรายการแจ้งเหตุได้เท่านั้น');
             },
@@ -990,7 +987,7 @@
                 const itemsChannel = sb.channel('items-changes')
                     .on('postgres_changes', { event: '*', schema: 'public', table: 'items' }, (payload) => {
                         console.log('Items changed:', payload);
-                        if (document.getElementById('page-view-lost') && !document.getElementById('page-view-lost').classList.contains('hidden')) {
+                        if (document.getElementById('page-view-lost').classList.contains('fade-in') && !document.getElementById('page-view-lost').classList.contains('hidden')) {
                             App.loadLostItems();
                         }
                     })
@@ -1051,7 +1048,6 @@
                 document.getElementById('page-auth').classList.add('hidden');
                 document.getElementById('app-container').classList.remove('hidden');
                 
-                // แสดง/ซ่อน Guest Banner
                 if (App.isGuest) {
                     document.getElementById('guest-banner').classList.remove('hidden');
                     document.getElementById('nav-report').classList.add('disabled');
@@ -1086,7 +1082,6 @@
             goBack: () => { App.nav(App.previousPage || 'home'); },
 
             nav: (pageId) => {
-                // ป้องกัน Guest เข้าถึงหน้าบางอย่าง
                 if (App.isGuest && !['home', 'view-lost', 'settings'].includes(pageId)) {
                     App.toast('warning', 'สิทธิ์ไม่เพียงพอ', 'ผู้เยี่ยมชมสามารถดูได้เฉพาะหน้ารายการแจ้งเหตุและตั้งค่าเท่านั้น');
                     return;
@@ -1151,11 +1146,11 @@
 
             updateProfileUI: () => {
                 if (App.isGuest) {
-                    // แสดงข้อมูลล็อกสำหรับผู้เยี่ยมชม
+                    // Guest mode - แสดงข้อมูลล็อกไว้
+                    document.getElementById('dash-avatar').src = 'https://ui-avatars.com/api/?name=G&background=9CA3AF&color=fff&size=150';
                     document.getElementById('dash-name').textContent = 'ผู้เยี่ยมชม';
                     document.getElementById('dash-email').textContent = '-';
                     document.getElementById('role-badge-container').innerHTML = '<span class="role-badge guest"><i class="fa-solid fa-user-secret"></i> ไม่ระบุ</span>';
-                    document.getElementById('dash-avatar').src = GUEST_AVATAR_URL;
                     return;
                 }
 
@@ -1189,11 +1184,11 @@
 
             loadDashboardStats: async () => {
                 if (App.isGuest) {
-                    // แสดง "ไม่ระบุ" สำหรับผู้เยี่ยมชม
+                    // Guest mode - แสดง "ไม่ระบุ"
                     document.getElementById('stats-row').innerHTML = `
-                        <div class="stat-card"><div class="stat-value">ไม่ระบุ</div><div class="stat-label">แจ้งของหาย</div></div>
-                        <div class="stat-card"><div class="stat-value">ไม่ระบุ</div><div class="stat-label">แจ้งเก็บของได้</div></div>
-                        <div class="stat-card"><div class="stat-value">ไม่ระบุ</div><div class="stat-label">ส่งคำร้องขอ</div></div>
+                        <div class="stat-card"><div class="stat-value" style="color: var(--text-muted);">ไม่ระบุ</div><div class="stat-label">แจ้งของหาย</div></div>
+                        <div class="stat-card"><div class="stat-value" style="color: var(--text-muted);">ไม่ระบุ</div><div class="stat-label">แจ้งเก็บของได้</div></div>
+                        <div class="stat-card"><div class="stat-value" style="color: var(--text-muted);">ไม่ระบุ</div><div class="stat-label">ส่งคำร้องขอ</div></div>
                     `;
                     return;
                 }
@@ -1873,14 +1868,15 @@
                 finally { App.showLoading(false); }
             },
 
-            loadSettingsData: () => { 
-                // แสดง/ซ่อนเนื้อหาตามสถานะ Guest
+            loadSettingsData: () => {
                 if (App.isGuest) {
-                    document.getElementById('guest-settings-content').classList.remove('hidden');
-                    document.getElementById('regular-settings-content').classList.add('hidden');
+                    // แสดง Guest Settings View
+                    document.getElementById('guest-settings-view').classList.remove('hidden');
+                    document.getElementById('regular-settings-view').classList.add('hidden');
                 } else {
-                    document.getElementById('guest-settings-content').classList.add('hidden');
-                    document.getElementById('regular-settings-content').classList.remove('hidden');
+                    // แสดง Regular Settings View
+                    document.getElementById('guest-settings-view').classList.add('hidden');
+                    document.getElementById('regular-settings-view').classList.remove('hidden');
                     App.updateProfileUI();
                 }
             },
@@ -1997,13 +1993,12 @@
 
             logout: async () => {
                 if (App.isGuest) {
-                    // Guest logout - กลับหน้า login
                     App.isGuest = false;
                     App.user = null;
                     App.profile = null;
                     App.cleanupRealtime();
                     App.showAuth();
-                    App.toast('success', 'ออกจากระบบ', 'คุณได้ออกจากระบบผู้เยี่ยมชมแล้ว');
+                    App.toast('success', 'ออกจากระบบผู้เยี่ยมชม', 'คุณได้ออกจากระบบผู้เยี่ยมชมแล้ว');
                     return;
                 }
                 if (confirm('คุณแน่ใจว่าต้องการออกจากระบบ?')) { 
