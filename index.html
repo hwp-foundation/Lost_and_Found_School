@@ -192,7 +192,7 @@
         .modal-close { background: none; border: none; font-size: 24px; cursor: pointer; color: var(--text-muted); transition: var(--transition); width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; border-radius: 50%; }
         .modal-close:hover { color: var(--danger); background: rgba(239, 68, 68, 0.1); }
 
-        /* Professional Announcement Section - Updated to match theme */
+        /* Announcement Section - Updated with clean design */
         .announcement-section {
             background: linear-gradient(135deg, #EEF2FF 0%, #E0E7FF 100%);
             border: 2px solid var(--primary-light);
@@ -262,25 +262,55 @@
             margin-top: 8px;
         }
         
-        .user-selection-box select {
-            width: 100%;
-            min-height: 150px;
-            border: none;
+        .user-selection-box label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 600;
+            color: var(--text);
+            margin-bottom: 12px;
             font-size: 14px;
         }
         
-        .user-selection-box select option {
+        .user-selection-box select {
+            width: 100%;
+            min-height: 180px;
+            border: 2px solid var(--border-light);
+            border-radius: var(--radius);
+            font-size: 14px;
             padding: 8px;
+            background: #FAFAFA;
+        }
+        
+        .user-selection-box select option {
+            padding: 10px 12px;
             border-bottom: 1px solid var(--border-light);
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        
+        .user-selection-box select option:hover {
+            background: var(--primary-light);
+            color: white;
+        }
+        
+        .user-selection-box select option:checked {
+            background: var(--primary);
+            color: white;
+            font-weight: 600;
         }
         
         .user-selection-hint {
             font-size: 12px;
             color: var(--text-muted);
-            margin-top: 8px;
+            margin-top: 10px;
             display: flex;
             align-items: center;
             gap: 6px;
+            padding: 8px 12px;
+            background: #F0F9FF;
+            border-radius: 8px;
+            border-left: 3px solid var(--primary);
         }
         
         .announcement-actions {
@@ -480,7 +510,7 @@
             width: 100%;
         }
 
-        /* Responsive Design - Enhanced */
+        /* Responsive Design */
         @media (max-width: 1200px) {
             .sidebar { width: 240px; }
             .main-content { padding: 24px; }
@@ -887,7 +917,7 @@
                         <h2 class="page-title">แผงควบคุม Admin</h2>
                     </div>
                     
-                    <!-- Professional Announcement Section - Updated Colors -->
+                    <!-- Announcement Section - Clean Design -->
                     <div class="announcement-section">
                         <h3><i class="fa-solid fa-bullhorn"></i> ประกาศ</h3>
                         <form id="form-announcement">
@@ -910,8 +940,8 @@
                             </div>
                             
                             <div id="user-selection" class="user-selection-box hidden">
-                                <label><i class="fa-solid fa-users"></i> เลือกผู้ใช้ (กด Ctrl/Cmd เพื่อเลือกหลายรายการ)</label>
-                                <select id="announcement-users" class="form-control" multiple size="5">
+                                <label><i class="fa-solid fa-users"></i> เลือกผู้ใช้</label>
+                                <select id="announcement-users" class="form-control" multiple size="6">
                                     <!-- จะถูกเติมด้วย JavaScript -->
                                 </select>
                                 <div class="user-selection-hint">
@@ -923,9 +953,6 @@
                             <div class="announcement-actions">
                                 <button type="submit" class="btn btn-primary">
                                     <i class="fa-solid fa-paper-plane"></i> ส่งประกาศ
-                                </button>
-                                <button type="button" class="btn btn-outline" onclick="document.getElementById('form-announcement').reset()">
-                                    <i class="fa-solid fa-rotate-left"></i> ล้างฟอร์ม
                                 </button>
                             </div>
                         </form>
@@ -1182,7 +1209,6 @@
             },
 
             initSecurityMeasures: () => {
-                // Prevent copy, cut, paste on non-input elements
                 document.addEventListener('copy', (e) => {
                     if (!e.target.matches('input, textarea')) {
                         e.preventDefault();
@@ -1204,36 +1230,29 @@
                     }
                 });
 
-                // Prevent key combinations
                 document.addEventListener('keydown', (e) => {
-                    // F12
                     if (e.key === 'F12' || e.keyCode === 123) {
                         e.preventDefault();
                         App.handleDevToolsDetection();
                         return false;
                     }
-                    // Ctrl+Shift+I/J/C
                     if (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J' || e.key === 'C')) {
                         e.preventDefault();
                         App.handleDevToolsDetection();
                         return false;
                     }
-                    // Ctrl+U
                     if (e.ctrlKey && e.key === 'U') {
                         e.preventDefault();
                         return false;
                     }
-                    // Ctrl+S
                     if (e.ctrlKey && e.key === 'S') {
                         e.preventDefault();
                         return false;
                     }
-                    // Ctrl+P
                     if (e.ctrlKey && e.key === 'P') {
                         e.preventDefault();
                         return false;
                     }
-                    // Ctrl+A (only in non-input elements)
                     if (e.ctrlKey && e.key === 'A') {
                         const tagName = e.target.tagName.toLowerCase();
                         if (tagName !== 'input' && tagName !== 'textarea') {
@@ -1243,14 +1262,12 @@
                     }
                 });
 
-                // Detect DevTools - Check every 1 second
                 App.devToolsCheckInterval = setInterval(() => {
                     App.detectDevTools();
                 }, 1000);
             },
 
             detectDevTools: () => {
-                // Only check for non-admin users
                 if (App.profile?.role === 'admin') return;
                 
                 const threshold = 160;
@@ -1263,7 +1280,6 @@
             },
 
             handleDevToolsDetection: () => {
-                // Redirect to YouTube video
                 window.location.href = 'https://www.youtube.com/watch?v=GBIIQ0kP15E';
             },
 
@@ -1842,10 +1858,25 @@
                     }
                     container.innerHTML = notifications.map(notif => {
                         const dateTime = App.formatDateTime(notif.created_at);
-                        let icon = 'fa-bell', badgeClass = '', typeLabel = 'แจ้งเตือน';
-                        if (notif.type === 'admin_response') { icon = 'fa-check-circle'; badgeClass = 'success'; typeLabel = 'คำร้องได้รับการดำเนินการ'; }
-                        else if (notif.type === 'admin_reject') { icon = 'fa-times-circle'; badgeClass = 'danger'; typeLabel = 'คำร้องถูกปฏิเสธ'; }
-                        else if (notif.type === 'announcement') { icon = 'fa-bullhorn'; badgeClass = 'warning'; typeLabel = 'ประกาศ'; }
+                        let icon, badgeClass, typeLabel;
+                        
+                        if (notif.type === 'admin_response') { 
+                            icon = 'fa-check-circle'; 
+                            badgeClass = 'success'; 
+                            typeLabel = 'คำร้องได้รับการดำเนินการ'; 
+                        } else if (notif.type === 'admin_reject') { 
+                            icon = 'fa-times-circle'; 
+                            badgeClass = 'danger'; 
+                            typeLabel = 'คำร้องถูกปฏิเสธ'; 
+                        } else if (notif.type === 'announcement') { 
+                            icon = 'fa-bullhorn'; 
+                            badgeClass = 'warning'; 
+                            typeLabel = 'ประกาศจากผู้ดูแลระบบ'; 
+                        } else {
+                            icon = 'fa-bell';
+                            badgeClass = '';
+                            typeLabel = 'แจ้งเตือน';
+                        }
                         
                         return `
                             <div class="notification-card type-${notif.type} ${!notif.is_read ? 'unread' : ''}" data-id="${notif.id}">
@@ -2421,7 +2452,14 @@
                 const container = document.getElementById('toast-container');
                 const toast = document.createElement('div');
                 toast.className = `toast ${type}`;
-                toast.innerHTML = `<i class="fa-solid ${type==='success'?'fa-circle-check':type==='warning'?'fa-triangle-exclamation':'fa-circle-xmark'}" style="font-size:22px; color:${type==='success'?'var(--success)':type==='warning'?'var(--warning)':'var(--danger)'}"></i><div><div style="font-weight:700; font-size:15px;">${title}</div><div style="font-size:13px; color:var(--text-secondary);">${msg}</div></div>`;
+                
+                // เลือกไอคอนตามประเภท
+                let iconClass = 'fa-circle-xmark';
+                if (type === 'success') iconClass = 'fa-circle-check';
+                else if (type === 'warning') iconClass = 'fa-triangle-exclamation';
+                else if (title && title.includes('แจ้งเตือน')) iconClass = 'fa-bullhorn';
+                
+                toast.innerHTML = `<i class="fa-solid ${iconClass}" style="font-size:22px; color:${type==='success'?'var(--success)':type==='warning'?'var(--warning)':'var(--danger)'}"></i><div><div style="font-weight:700; font-size:15px;">${title}</div><div style="font-size:13px; color:var(--text-secondary);">${msg}</div></div>`;
                 container.appendChild(toast);
                 setTimeout(() => { toast.style.animation = 'slideIn 0.4s ease reverse'; setTimeout(() => toast.remove(), 400); }, 4000);
             }
