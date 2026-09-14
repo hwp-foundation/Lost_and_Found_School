@@ -218,9 +218,48 @@
         #loading-overlay { position: fixed; inset: 0; background: rgba(255,255,255,0.95); backdrop-filter: blur(8px); display: flex; align-items: center; justify-content: center; z-index: 9998; }
         .spinner { width: 56px; height: 56px; border: 5px solid var(--border); border-top-color: var(--primary); border-radius: 50%; animation: spin 1s linear infinite; }
 
+        /* Notification Page - ปรับปรุงใหม่ */
         .notification-page-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; flex-wrap: wrap; gap: 16px; }
         .notification-actions-bar { display: flex; gap: 12px; flex-wrap: wrap; }
-        .notification-card { background: white; border-radius: var(--radius); padding: 20px 24px; margin-bottom: 16px; box-shadow: var(--shadow); border-left: 5px solid var(--primary); transition: var(--transition); }
+        
+        .notification-legend-box {
+            background: white;
+            border-radius: var(--radius-lg);
+            padding: 16px 24px;
+            margin-bottom: 24px;
+            box-shadow: var(--shadow);
+            display: flex;
+            align-items: center;
+            gap: 24px;
+            flex-wrap: wrap;
+        }
+        
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+        
+        .legend-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+        
+        .legend-dot.success { background: var(--success); }
+        .legend-dot.danger { background: var(--danger); }
+        
+        .notification-card { 
+            background: white; 
+            border-radius: var(--radius); 
+            padding: 20px 24px; 
+            margin-bottom: 16px; 
+            box-shadow: var(--shadow); 
+            border-left: 5px solid var(--primary); 
+            transition: var(--transition);
+        }
         .notification-card:hover { transform: translateX(4px); box-shadow: var(--shadow-lg); }
         .notification-card.type-admin_response { border-left-color: var(--success); }
         .notification-card.type-admin_reject { border-left-color: var(--danger); }
@@ -230,6 +269,52 @@
         .notification-time { font-size: 12px; color: var(--text-muted); white-space: nowrap; }
         .notification-message { font-size: 14px; color: var(--text-secondary); line-height: 1.6; white-space: pre-wrap; margin-bottom: 12px; }
         .notification-actions { display: flex; justify-content: flex-end; gap: 10px; }
+
+        /* View Toggle Buttons */
+        .view-toggle-container {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 32px;
+            background: white;
+            padding: 8px;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow);
+        }
+        
+        .view-toggle-btn {
+            flex: 1;
+            padding: 14px 24px;
+            border: none;
+            border-radius: var(--radius);
+            font-family: inherit;
+            font-weight: 600;
+            font-size: 15px;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        
+        .view-toggle-btn.active.lost {
+            background: linear-gradient(135deg, var(--danger), var(--danger-dark));
+            color: white;
+        }
+        
+        .view-toggle-btn.active.found {
+            background: linear-gradient(135deg, var(--success), var(--success-dark));
+            color: white;
+        }
+        
+        .view-toggle-btn:not(.active) {
+            background: var(--border-light);
+            color: var(--text-secondary);
+        }
+        
+        .view-toggle-btn:not(.active):hover {
+            background: var(--border);
+        }
 
         .alert-box { padding: 12px 16px; border-radius: var(--radius); margin-bottom: 20px; font-size: 14px; display: flex; align-items: flex-start; gap: 10px; }
         .alert-box.info { background: #D1FAE5; border-left: 4px solid var(--success); color: #065F46; }
@@ -270,6 +355,7 @@
             .admin-report-actions { flex-direction: column; }
             .notification-page-header { flex-direction: column; align-items: flex-start; }
             .user-detail-grid { grid-template-columns: 1fr; }
+            .view-toggle-container { flex-direction: column; }
         }
     </style>
 </head>
@@ -368,19 +454,19 @@
                     <div class="report-type-selection">
                         <div class="report-type-card lost" onclick="App.nav('report-lost')">
                             <div class="report-type-icon"><i class="fa-solid fa-circle-exclamation"></i></div>
-                            <h3 class="report-type-title">แจ้งของหาย</h3>
+                            <h3 class="report-type-title">ของหาย</h3>
                             <p class="report-type-desc">กรอกรายละเอียดสิ่งของที่หาย<br>รูปภาพ/วิดีโอไม่บังคับ</p>
                         </div>
                         <div class="report-type-card found" onclick="App.nav('report-found')">
                             <div class="report-type-icon"><i class="fa-solid fa-hand-holding-heart"></i></div>
-                            <h3 class="report-type-title">แจ้งเก็บของได้</h3>
+                            <h3 class="report-type-title">เก็บของได้</h3>
                             <p class="report-type-desc">กรอกรายละเอียดสิ่งของที่เก็บได้<br>รูปภาพ/วิดีโอบังคับ</p>
                         </div>
                         <div class="report-type-card admin" onclick="App.openAdminReportModal()">
                             <div class="report-type-icon">
                                 <img src="https://github.com/momo0991588175-sys/Lost_and_Found_School/raw/main/images/Logo_Admin.png" alt="Admin" onerror="this.style.display='none'; this.parentElement.innerHTML='<i class=\'fa-solid fa-user-shield\'></i>';">
                             </div>
-                            <h3 class="report-type-title">แจ้งผู้ดูแลระบบ</h3>
+                            <h3 class="report-type-title">แจ้งปัญหา</h3>
                             <p class="report-type-desc">กรอกรายละเอียดหรือปัญหาที่พบ<br>เพื่อแจ้งให้ผู้ดูแลระบบทราบ</p>
                         </div>
                     </div>
@@ -390,7 +476,7 @@
                 <div id="page-report-lost" class="page-section hidden fade-in">
                     <div class="page-header">
                         <button class="back-btn" onclick="App.nav('report')"><i class="fa-solid fa-arrow-left"></i></button>
-                        <h2 class="page-title" id="report-lost-title">แจ้งของหาย</h2>
+                        <h2 class="page-title" id="report-lost-title">ของหาย</h2>
                     </div>
                     <div class="card" style="max-width: 680px; margin: 0 auto;">
                         <form id="form-lost">
@@ -438,7 +524,7 @@
                 <div id="page-report-found" class="page-section hidden fade-in">
                     <div class="page-header">
                         <button class="back-btn" onclick="App.nav('report')"><i class="fa-solid fa-arrow-left"></i></button>
-                        <h2 class="page-title">แจ้งเก็บของได้</h2>
+                        <h2 class="page-title">เก็บของได้</h2>
                     </div>
                     <div class="card" style="max-width: 680px; margin: 0 auto;">
                         <form id="form-found">
@@ -485,6 +571,17 @@
                         <button class="back-btn" onclick="App.nav('home')"><i class="fa-solid fa-arrow-left"></i></button>
                         <h2 class="page-title">รายการแจ้งเหตุ</h2>
                     </div>
+                    
+                    <!-- View Toggle Buttons -->
+                    <div class="view-toggle-container">
+                        <button class="view-toggle-btn active lost" onclick="App.switchView('lost')">
+                            <i class="fa-solid fa-circle-exclamation"></i> ของหาย
+                        </button>
+                        <button class="view-toggle-btn found" onclick="App.switchView('found')">
+                            <i class="fa-solid fa-hand-holding-heart"></i> เก็บของได้
+                        </button>
+                    </div>
+                    
                     <div id="lost-list" class="items-grid"></div>
                 </div>
 
@@ -501,10 +598,19 @@
                             <button class="btn btn-danger btn-sm hidden" id="btn-delete-selected" onclick="App.deleteSelectedNotifications()"><i class="fa-solid fa-trash"></i> ลบที่เลือก (<span id="selected-count">0</span>)</button>
                         </div>
                     </div>
-                    <div style="margin-bottom: 16px; display: flex; gap: 16px; flex-wrap: wrap; font-size: 13px; color: var(--text-secondary);">
-                        <span><i class="fa-solid fa-circle" style="color: var(--success);"></i> คำร้องได้รับการดำเนินการ</span>
-                        <span><i class="fa-solid fa-circle" style="color: var(--danger);"></i> คำร้องถูกปฏิเสธ</span>
+                    
+                    <!-- Legend Box -->
+                    <div class="notification-legend-box">
+                        <div class="legend-item">
+                            <div class="legend-dot success"></div>
+                            <span>คำร้องได้รับการดำเนินการ</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-dot danger"></div>
+                            <span>คำร้องถูกปฏิเสธ</span>
+                        </div>
                     </div>
+                    
                     <div id="notifications-list"></div>
                 </div>
 
@@ -603,7 +709,7 @@
         <div class="modal-overlay" onclick="App.closeAdminReportModal(event)">
             <div class="modal-content" onclick="event.stopPropagation()">
                 <div class="modal-header">
-                    <h3 class="modal-title"><i class="fa-solid fa-user-shield" style="color: var(--admin-gold);"></i> แจ้งผู้ดูแลระบบ</h3>
+                    <h3 class="modal-title"><i class="fa-solid fa-user-shield" style="color: var(--admin-gold);"></i> แจ้งปัญหา</h3>
                     <button class="modal-close" onclick="App.closeAdminReportModal()"><i class="fa-solid fa-xmark"></i></button>
                 </div>
                 <form id="form-admin-report">
@@ -625,7 +731,7 @@
                         <input type="file" id="admin-report-file" accept="image/png,image/jpeg" class="hidden">
                         <div id="admin-report-preview" class="preview-container"></div>
                     </div>
-                    <button type="submit" class="btn btn-admin"><i class="fa-solid fa-paper-plane"></i> ส่งแจ้งผู้ดูแลระบบ</button>
+                    <button type="submit" class="btn btn-admin"><i class="fa-solid fa-paper-plane"></i> ส่งแจ้งปัญหา</button>
                 </form>
             </div>
         </div>
@@ -742,6 +848,7 @@
             editingOriginalUserId: null,
             currentReportId: null,
             previousPage: 'home',
+            currentView: 'lost', // 'lost' or 'found'
             profilesCache: {},
             unreadNotifications: 0,
             selectedNotifications: new Set(),
@@ -846,6 +953,25 @@
                 if (pageId === 'admin') App.loadAdminPanel();
                 if (pageId === 'settings') App.loadSettingsData();
                 App.loadUnreadNotifications();
+            },
+
+            // Switch view between lost and found
+            switchView: (viewType) => {
+                App.currentView = viewType;
+                
+                // Update buttons
+                document.querySelectorAll('.view-toggle-btn').forEach(btn => {
+                    btn.classList.remove('active');
+                });
+                
+                if (viewType === 'lost') {
+                    document.querySelector('.view-toggle-btn.lost').classList.add('active');
+                } else {
+                    document.querySelector('.view-toggle-btn.found').classList.add('active');
+                }
+                
+                // Reload items
+                App.loadLostItems();
             },
 
             loadProfile: async () => {
@@ -1073,7 +1199,7 @@
                 App.editingOriginalUserId = null;
                 document.getElementById('form-lost').reset();
                 document.getElementById('lost-preview').innerHTML = '';
-                document.getElementById('report-lost-title').textContent = 'แจ้งของหาย';
+                document.getElementById('report-lost-title').textContent = 'ของหาย';
                 document.getElementById('btn-submit-lost').innerHTML = '<i class="fa-solid fa-paper-plane"></i> ส่งแจ้งของหาย';
                 document.getElementById('btn-cancel-edit').classList.add('hidden');
             },
@@ -1112,10 +1238,14 @@
                 container.innerHTML = '<div style="text-align:center; padding:60px;"><div class="spinner" style="margin:0 auto;"></div></div>';
                 try {
                     await App.loadProfilesCache();
-                    const { data, error } = await sb.from('items').select('*').in('type', ['lost', 'found']).eq('status', 'active').order('created_at', {ascending: false});
+                    
+                    // Filter by current view
+                    const itemType = App.currentView;
+                    const { data, error } = await sb.from('items').select('*').eq('type', itemType).eq('status', 'active').order('created_at', {ascending: false});
                     if (error) throw error;
                     if (!data || data.length === 0) {
-                        container.innerHTML = '<div style="text-align:center; padding:60px; color:white; background:rgba(255,255,255,0.1); border-radius:16px;"><i class="fa-solid fa-box-open" style="font-size:48px; margin-bottom:16px; opacity:0.5;"></i><p style="font-size:18px;">ไม่พบรายการในระบบ</p></div>';
+                        const emptyText = itemType === 'lost' ? 'ไม่พบรายการของหาย' : 'ไม่พบรายการเก็บของได้';
+                        container.innerHTML = `<div style="text-align:center; padding:60px; color:white; background:rgba(255,255,255,0.1); border-radius:16px;"><i class="fa-solid fa-box-open" style="font-size:48px; margin-bottom:16px; opacity:0.5;"></i><p style="font-size:18px;">${emptyText}</p></div>`;
                         return;
                     }
                     const isAdmin = App.profile.role === 'admin';
@@ -1427,7 +1557,6 @@
                 if (!confirm('ยืนยันการลบการแจ้งเตือนของผู้ใช้ที่เกี่ยวข้องกับคำร้องนี้?')) return;
                 App.showLoading(true);
                 try {
-                    // ลบการแจ้งเตือนทั้งหมดที่เชื่อมโยงกับ report นี้
                     const { error } = await sb.from('notifications').delete().eq('admin_report_id', reportId);
                     if (error) throw error;
                     App.toast('success', 'สำเร็จ', 'ลบการแจ้งเตือนของผู้ใช้ที่เกี่ยวข้องแล้ว');
