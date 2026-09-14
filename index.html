@@ -87,10 +87,16 @@
         .btn-outline { background: transparent; border: 2px solid var(--border); color: var(--text); }
         .btn-outline:hover { border-color: var(--primary); color: var(--primary); background: rgba(99, 102, 241, 0.05); }
         .btn-sm { padding: 10px 16px; font-size: 13px; width: auto; }
+        .btn-guest { background: linear-gradient(135deg, #9CA3AF, #6B7280); color: white; margin-top: 12px; }
+        .btn-guest:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(107, 114, 128, 0.4); }
         
         .auth-switch { text-align: center; margin-top: 24px; font-size: 14px; color: var(--text-secondary); }
         .auth-switch a { color: var(--primary); font-weight: 600; cursor: pointer; text-decoration: none; }
         .auth-switch a:hover { text-decoration: underline; }
+
+        .auth-divider { display: flex; align-items: center; margin: 20px 0; color: var(--text-muted); font-size: 13px; }
+        .auth-divider::before, .auth-divider::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+        .auth-divider span { padding: 0 12px; }
 
         #app-container { display: flex; flex-direction: column; min-height: 100vh; }
         .top-header { background: linear-gradient(135deg, #D4A373 0%, #BC8A5F 100%); padding: 16px 32px; box-shadow: var(--shadow-lg); display: flex; align-items: center; justify-content: space-between; gap: 16px; position: sticky; top: 0; z-index: 100; }
@@ -111,6 +117,7 @@
         .nav-btn:hover { background: linear-gradient(135deg, #EEF2FF, #E0E7FF); transform: translateX(4px); color: var(--primary); }
         .nav-btn.active { background: linear-gradient(135deg, var(--primary), var(--primary-dark)); color: white; box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3); }
         .nav-btn i { font-size: 18px; width: 24px; }
+        .nav-btn.disabled { opacity: 0.5; cursor: not-allowed; pointer-events: none; }
 
         .main-content { flex: 1; padding: 32px; overflow-y: auto; }
         .page-header { display: flex; align-items: center; gap: 16px; margin-bottom: 32px; }
@@ -128,6 +135,7 @@
         .role-badge.student { background: linear-gradient(135deg, var(--student-blue), #2563EB); color: white; }
         .role-badge.teacher { background: linear-gradient(135deg, var(--teacher-red), #B91C1C); color: white; }
         .role-badge.admin { background: linear-gradient(135deg, var(--admin-gold), #F59E0B); color: #000; }
+        .role-badge.guest { background: linear-gradient(135deg, #9CA3AF, #6B7280); color: white; }
         
         .stats-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 28px; }
         .stat-card { background: linear-gradient(135deg, #EEF2FF, #E0E7FF); padding: 24px; border-radius: var(--radius-lg); border: 2px solid var(--border); box-shadow: var(--shadow); transition: var(--transition); cursor: pointer; }
@@ -218,7 +226,6 @@
         #loading-overlay { position: fixed; inset: 0; background: rgba(255,255,255,0.95); backdrop-filter: blur(8px); display: flex; align-items: center; justify-content: center; z-index: 9998; }
         .spinner { width: 56px; height: 56px; border: 5px solid var(--border); border-top-color: var(--primary); border-radius: 50%; animation: spin 1s linear infinite; }
 
-        /* Notification Page - ปรับปรุงใหม่ */
         .notification-page-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; flex-wrap: wrap; gap: 16px; }
         .notification-actions-bar { display: flex; gap: 12px; flex-wrap: wrap; }
         
@@ -270,7 +277,6 @@
         .notification-message { font-size: 14px; color: var(--text-secondary); line-height: 1.6; white-space: pre-wrap; margin-bottom: 12px; }
         .notification-actions { display: flex; justify-content: flex-end; gap: 10px; }
 
-        /* View Toggle Buttons */
         .view-toggle-container {
             display: flex;
             gap: 12px;
@@ -338,6 +344,21 @@
         .strength-medium { background: var(--warning); width: 66%; }
         .strength-strong { background: var(--success); width: 100%; }
 
+        .guest-banner {
+            background: linear-gradient(135deg, #F59E0B, #D97706);
+            color: white;
+            padding: 12px 20px;
+            border-radius: var(--radius);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            box-shadow: var(--shadow);
+        }
+        
+        .guest-banner i { font-size: 20px; }
+        .guest-banner span { font-weight: 600; }
+
         @media (max-width: 768px) {
             .app-layout { flex-direction: column; }
             .sidebar { width: 100%; border-right: none; border-bottom: 1px solid var(--border); flex-direction: row; flex-wrap: wrap; padding: 12px; gap: 8px; }
@@ -380,6 +401,12 @@
                 </div>
                 <button type="submit" class="btn btn-primary"><i class="fa-solid fa-right-to-bracket"></i> เข้าสู่ระบบ</button>
                 <div class="auth-switch">ยังไม่มีบัญชี? <a onclick="App.toggleAuth('register')">สร้างบัญชีใหม่</a></div>
+                
+                <div class="auth-divider"><span>หรือ</span></div>
+                
+                <button type="button" class="btn btn-guest" onclick="App.enterGuestMode()">
+                    <i class="fa-solid fa-user-secret"></i> เข้าสู่ระบบในฐานะผู้เยี่ยมชม
+                </button>
             </form>
             <form id="form-register" class="hidden fade-in">
                 <div class="form-group">
@@ -425,14 +452,20 @@
         <div class="app-layout">
             <nav class="sidebar">
                 <button class="nav-btn active" onclick="App.nav('home')"><i class="fa-solid fa-house"></i><span>หน้าหลัก</span></button>
-                <button class="nav-btn" onclick="App.nav('report')"><i class="fa-solid fa-circle-exclamation"></i><span>หน้าแจ้งเหตุ</span></button>
+                <button class="nav-btn" id="nav-report" onclick="App.nav('report')"><i class="fa-solid fa-circle-exclamation"></i><span>หน้าแจ้งเหตุ</span></button>
                 <button class="nav-btn" onclick="App.nav('view-lost')"><i class="fa-solid fa-magnifying-glass"></i><span>รายการแจ้งเหตุ</span></button>
                 <button class="nav-btn hidden" id="admin-nav-btn" onclick="App.nav('admin')"><i class="fa-solid fa-shield-halved"></i><span>แผงควบคุม Admin</span></button>
                 <div style="flex: 1;"></div>
-                <button class="nav-btn" onclick="App.nav('settings')"><i class="fa-solid fa-gear"></i><span>ตั้งค่าบัญชี</span></button>
+                <button class="nav-btn" id="nav-settings" onclick="App.nav('settings')"><i class="fa-solid fa-gear"></i><span>ตั้งค่าบัญชี</span></button>
             </nav>
 
             <main class="main-content">
+                <!-- Guest Banner -->
+                <div id="guest-banner" class="guest-banner hidden">
+                    <i class="fa-solid fa-user-secret"></i>
+                    <span>คุณกำลังใช้งานในฐานะผู้เยี่ยมชม - สามารถดูรายการแจ้งเหตุได้เท่านั้น</span>
+                </div>
+
                 <!-- HOME -->
                 <div id="page-home" class="page-section fade-in">
                     <div class="page-header"><h2 class="page-title">หน้าหลัก</h2></div>
@@ -572,7 +605,6 @@
                         <h2 class="page-title">รายการแจ้งเหตุ</h2>
                     </div>
                     
-                    <!-- View Toggle Buttons -->
                     <div class="view-toggle-container">
                         <button class="view-toggle-btn active lost" onclick="App.switchView('lost')">
                             <i class="fa-solid fa-circle-exclamation"></i> ของหาย
@@ -599,7 +631,6 @@
                         </div>
                     </div>
                     
-                    <!-- Legend Box -->
                     <div class="notification-legend-box">
                         <div class="legend-item">
                             <div class="legend-dot success"></div>
@@ -844,14 +875,16 @@
         const App = {
             user: null, 
             profile: null,
+            isGuest: false,
             editingItemId: null,
             editingOriginalUserId: null,
             currentReportId: null,
             previousPage: 'home',
-            currentView: 'lost', // 'lost' or 'found'
+            currentView: 'lost',
             profilesCache: {},
             unreadNotifications: 0,
             selectedNotifications: new Set(),
+            realtimeChannels: [],
 
             init: async () => {
                 try {
@@ -861,6 +894,7 @@
                         App.user = session.user;
                         await App.loadProfile();
                         App.showApp();
+                        App.setupRealtime();
                     } else {
                         App.showAuth();
                     }
@@ -872,15 +906,72 @@
                 sb.auth.onAuthStateChange((event, session) => {
                     if (event === 'SIGNED_IN') { 
                         App.user = session.user; 
-                        App.loadProfile().then(() => App.showApp()); 
+                        App.loadProfile().then(() => {
+                            App.showApp();
+                            App.setupRealtime();
+                        }); 
                     } else if (event === 'SIGNED_OUT') { 
                         App.user = null; 
+                        App.cleanupRealtime();
                         App.showAuth();
                     }
                 });
 
                 App.generateGradeOptions();
                 App.setupPhoneInputMask();
+            },
+
+            enterGuestMode: () => {
+                App.isGuest = true;
+                App.user = {
+                    id: 'guest-' + Date.now(),
+                    email: 'guest@visitor.com',
+                    role: 'guest'
+                };
+                App.profile = {
+                    full_name: 'ผู้เยี่ยมชม',
+                    email: 'guest@visitor.com',
+                    role: 'guest',
+                    avatar_url: null
+                };
+                App.showApp();
+                App.setupRealtime();
+                App.nav('view-lost');
+                App.toast('success', 'เข้าสู่ระบบในฐานะผู้เยี่ยมชม', 'คุณสามารถดูรายการแจ้งเหตุได้เท่านั้น');
+            },
+
+            setupRealtime: () => {
+                // Subscribe to items changes
+                const itemsChannel = sb.channel('items-changes')
+                    .on('postgres_changes', { event: '*', schema: 'public', table: 'items' }, (payload) => {
+                        console.log('Items changed:', payload);
+                        if (document.getElementById('page-view-lost').classList.contains('fade-in') && !document.getElementById('page-view-lost').classList.contains('hidden')) {
+                            App.loadLostItems();
+                        }
+                    })
+                    .subscribe();
+                
+                App.realtimeChannels.push(itemsChannel);
+
+                // Subscribe to notifications changes
+                if (!App.isGuest) {
+                    const notifChannel = sb.channel('notifications-changes')
+                        .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'notifications', filter: `user_id=eq.${App.user.id}` }, (payload) => {
+                            console.log('New notification:', payload);
+                            App.loadUnreadNotifications();
+                            App.toast('info', 'มีการแจ้งเตือนใหม่', payload.new.title || 'คุณมีการแจ้งเตือนใหม่');
+                        })
+                        .subscribe();
+                    
+                    App.realtimeChannels.push(notifChannel);
+                }
+            },
+
+            cleanupRealtime: () => {
+                App.realtimeChannels.forEach(channel => {
+                    sb.removeChannel(channel);
+                });
+                App.realtimeChannels = [];
             },
 
             generateGradeOptions: () => {
@@ -915,6 +1006,25 @@
             showApp: () => {
                 document.getElementById('page-auth').classList.add('hidden');
                 document.getElementById('app-container').classList.remove('hidden');
+                
+                // Show/hide guest banner
+                if (App.isGuest) {
+                    document.getElementById('guest-banner').classList.remove('hidden');
+                    // Disable certain nav buttons for guests
+                    document.getElementById('nav-report').classList.add('disabled');
+                    document.getElementById('nav-settings').classList.add('disabled');
+                    document.getElementById('admin-nav-btn').classList.add('hidden');
+                } else {
+                    document.getElementById('guest-banner').classList.add('hidden');
+                    document.getElementById('nav-report').classList.remove('disabled');
+                    document.getElementById('nav-settings').classList.remove('disabled');
+                    if (App.profile?.role === 'admin') {
+                        document.getElementById('admin-nav-btn').classList.remove('hidden');
+                    } else {
+                        document.getElementById('admin-nav-btn').classList.add('hidden');
+                    }
+                }
+                
                 App.nav('home');
             },
 
@@ -933,6 +1043,12 @@
             goBack: () => { App.nav(App.previousPage || 'home'); },
 
             nav: (pageId) => {
+                // Prevent guests from accessing certain pages
+                if (App.isGuest && !['home', 'view-lost'].includes(pageId)) {
+                    App.toast('warning', 'สิทธิ์ไม่เพียงพอ', 'ผู้เยี่ยมชมสามารถดูได้เฉพาะหน้ารายการแจ้งเหตุเท่านั้น');
+                    return;
+                }
+
                 const currentPage = document.querySelector('.page-section:not(.hidden)');
                 if (currentPage && pageId !== 'notifications') {
                     const currentId = currentPage.id.replace('page-', '');
@@ -955,22 +1071,14 @@
                 App.loadUnreadNotifications();
             },
 
-            // Switch view between lost and found
             switchView: (viewType) => {
                 App.currentView = viewType;
-                
-                // Update buttons
-                document.querySelectorAll('.view-toggle-btn').forEach(btn => {
-                    btn.classList.remove('active');
-                });
-                
+                document.querySelectorAll('.view-toggle-btn').forEach(btn => btn.classList.remove('active'));
                 if (viewType === 'lost') {
                     document.querySelector('.view-toggle-btn.lost').classList.add('active');
                 } else {
                     document.querySelector('.view-toggle-btn.found').classList.add('active');
                 }
-                
-                // Reload items
                 App.loadLostItems();
             },
 
@@ -992,8 +1100,6 @@
                     }
                     App.profile = profile;
                     App.updateProfileUI();
-                    if (profile.role === 'admin') document.getElementById('admin-nav-btn').classList.remove('hidden');
-                    else document.getElementById('admin-nav-btn').classList.add('hidden');
                 } catch (err) { 
                     console.error('Load profile error:', err);
                     App.toast('error', 'โหลดข้อมูลไม่สำเร็จ', 'กรุณาลองใหม่อีกครั้ง');
@@ -1007,6 +1113,7 @@
                 const roleBadgeContainer = document.getElementById('role-badge-container');
                 if (App.profile.role === 'admin') roleBadgeContainer.innerHTML = '<span class="role-badge admin"><i class="fa-solid fa-shield-halved"></i> ผู้ดูแลระบบ</span>';
                 else if (App.profile.role === 'teacher') roleBadgeContainer.innerHTML = '<span class="role-badge teacher"><i class="fa-solid fa-chalkboard-user"></i> ครู</span>';
+                else if (App.isGuest) roleBadgeContainer.innerHTML = '<span class="role-badge guest"><i class="fa-solid fa-user-secret"></i> ผู้เยี่ยมชม</span>';
                 else roleBadgeContainer.innerHTML = '<span class="role-badge student"><i class="fa-solid fa-user-graduate"></i> นักเรียน</span>';
                 
                 const avatarUrl = App.profile.avatar_url || `https://ui-avatars.com/api/?name=${(App.profile.full_name || 'U').charAt(0).toUpperCase()}&background=6366F1&color=fff&size=150`;
@@ -1056,6 +1163,7 @@
             },
 
             loadUnreadNotifications: async () => {
+                if (App.isGuest) return;
                 try {
                     const { count, error } = await sb.from('notifications').select('*', {count: 'exact', head: true}).eq('user_id', App.user.id).eq('is_read', false);
                     if (error) throw error;
@@ -1238,8 +1346,6 @@
                 container.innerHTML = '<div style="text-align:center; padding:60px;"><div class="spinner" style="margin:0 auto;"></div></div>';
                 try {
                     await App.loadProfilesCache();
-                    
-                    // Filter by current view
                     const itemType = App.currentView;
                     const { data, error } = await sb.from('items').select('*').eq('type', itemType).eq('status', 'active').order('created_at', {ascending: false});
                     if (error) throw error;
@@ -1248,7 +1354,7 @@
                         container.innerHTML = `<div style="text-align:center; padding:60px; color:white; background:rgba(255,255,255,0.1); border-radius:16px;"><i class="fa-solid fa-box-open" style="font-size:48px; margin-bottom:16px; opacity:0.5;"></i><p style="font-size:18px;">${emptyText}</p></div>`;
                         return;
                     }
-                    const isAdmin = App.profile.role === 'admin';
+                    const isAdmin = App.profile?.role === 'admin';
                     container.innerHTML = data.map(item => {
                         const isOwner = item.user_id === App.user.id;
                         const authorName = App.getProfileName(item.user_id);
@@ -1265,7 +1371,7 @@
                                 <p style="margin-top:10px; font-size:13px; color:var(--text-secondary); flex:1;">${item.description}</p>
                                 <div style="margin-top:10px; font-size:12px; color:var(--text-muted);"><i class="fa-regular fa-clock"></i> ${App.formatDateTime(item.created_at)}</div>
                                 <div class="item-actions">
-                                    ${(isOwner || isAdmin) ? `
+                                    ${(isOwner || isAdmin) && !App.isGuest ? `
                                         <button class="btn btn-warning btn-sm" style="flex:1;" onclick="App.editItem('${item.id}')"><i class="fa-solid fa-pen"></i> แก้ไข</button>
                                         <button class="btn btn-danger btn-sm" style="flex:1;" onclick="App.deleteItem('${item.id}')"><i class="fa-solid fa-trash"></i> ลบ</button>
                                     ` : ''}
@@ -1279,6 +1385,10 @@
             },
 
             loadNotificationsPage: async () => {
+                if (App.isGuest) {
+                    App.toast('warning', 'สิทธิ์ไม่เพียงพอ', 'ผู้เยี่ยมชมไม่สามารถดูการแจ้งเตือนได้');
+                    return;
+                }
                 const container = document.getElementById('notifications-list');
                 container.innerHTML = '<div style="text-align:center; padding:40px;"><div class="spinner" style="margin:0 auto;"></div></div>';
                 try {
@@ -1609,6 +1719,10 @@
                 let roleText = user.role === 'admin' ? 'ผู้ดูแลระบบ' : (user.role === 'teacher' ? 'ครู' : 'นักเรียน');
                 let createdText = user.created_at ? `${new Date(user.created_at).toLocaleDateString('th-TH')} - ${new Date(user.created_at).toLocaleTimeString('th-TH', {hour: '2-digit', minute: '2-digit', second: '2-digit'})}` : '-';
                 
+                // หมายเหตุ: Supabase ไม่เก็บ plain text password ไว้ในฐานข้อมูล
+                // Password ถูกเก็บในรูปแบบ hash เท่านั้น ไม่สามารถดึงกลับมาได้
+                // สามารถแสดงข้อมูลอื่นเช่น email, role, created_at ได้
+                
                 document.getElementById('user-detail-content').innerHTML = `
                     <div style="text-align:center; margin-bottom:20px;">
                         <img src="${user.avatar_url || `https://ui-avatars.com/api/?name=${(user.full_name || 'U').charAt(0)}&background=6366F1&color=fff&size=150`}" style="width:100px; height:100px; border-radius:50%; object-fit:cover; border:4px solid var(--primary);">
@@ -1625,6 +1739,9 @@
                         <div class="user-detail-item"><div class="user-detail-label"><i class="fa-solid fa-phone"></i> เบอร์ติดต่อ</div><div class="user-detail-value">${user.phone || '-'}</div></div>
                         <div class="user-detail-item"><div class="user-detail-label"><i class="fa-solid fa-clock"></i> สร้างเมื่อ</div><div class="user-detail-value">${createdText}</div></div>
                         <div class="user-detail-item"><div class="user-detail-label"><i class="fa-solid fa-ban"></i> สถานะ</div><div class="user-detail-value">${user.is_banned ? '<span style="color:var(--danger);">ถูกแบน</span>' : '<span style="color:var(--success);">ปกติ</span>'}</div></div>
+                    </div>
+                    <div style="margin-top:16px; padding:12px; background:#FEF3C7; border-radius:var(--radius); font-size:12px; color:#92400E;">
+                        <i class="fa-solid fa-shield-halved"></i> <strong>หมายเหตุ:</strong> Supabase ไม่เก็บรหัสผ่านในรูปแบบข้อความธรรมดา (plain text) แต่เก็บในรูปแบบ hash ที่ไม่สามารถกู้คืนได้ เพื่อความปลอดภัยของระบบ
                     </div>
                     <div style="margin-top:20px; text-align:center;"><button class="btn btn-outline" onclick="App.closeUserDetailModal()"><i class="fa-solid fa-xmark"></i> ปิด</button></div>`;
                 document.getElementById('user-detail-modal').classList.remove('hidden');
@@ -1812,7 +1929,19 @@
             },
 
             logout: async () => {
-                if (confirm('คุณแน่ใจว่าต้องการออกจากระบบ?')) { await sb.auth.signOut(); location.reload(); }
+                if (App.isGuest) {
+                    App.isGuest = false;
+                    App.user = null;
+                    App.profile = null;
+                    App.cleanupRealtime();
+                    App.showAuth();
+                    App.toast('success', 'ออกจากระบบผู้เยี่ยมชม', 'คุณได้ออกจากระบบผู้เยี่ยมชมแล้ว');
+                    return;
+                }
+                if (confirm('คุณแน่ใจว่าต้องการออกจากระบบ?')) { 
+                    await sb.auth.signOut(); 
+                    location.reload();
+                }
             },
 
             showLoading: (show) => { document.getElementById('loading-overlay').classList.toggle('hidden', !show); },
