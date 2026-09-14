@@ -261,6 +261,7 @@
         
         .legend-dot.success { background: var(--success); }
         .legend-dot.danger { background: var(--danger); }
+        .legend-dot.warning { background: var(--warning); }
         
         .notification-card { 
             background: white; 
@@ -377,18 +378,105 @@
             width: 100%;
         }
 
-        /* Announcement Section */
+        /* Professional Announcement Section */
         .announcement-section {
-            background: linear-gradient(135deg, #FEF3C7, #FDE68A);
+            background: linear-gradient(135deg, #FEF3C7 0%, #FDE68A 100%);
             border: 2px solid var(--warning);
-            border-radius: var(--radius-lg);
-            padding: 24px;
-            margin-bottom: 24px;
+            border-radius: var(--radius-xl);
+            padding: 32px;
+            margin-bottom: 32px;
+            box-shadow: var(--shadow-lg);
         }
         
         .announcement-section h3 {
             color: var(--warning-dark);
-            margin-bottom: 16px;
+            margin-bottom: 24px;
+            font-size: 22px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .announcement-form-group {
+            margin-bottom: 20px;
+        }
+        
+        .announcement-form-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--text);
+            font-size: 14px;
+        }
+        
+        .announcement-form-group .required {
+            color: var(--danger);
+            margin-left: 2px;
+        }
+        
+        .announcement-form-group input,
+        .announcement-form-group textarea,
+        .announcement-form-group select {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid var(--border);
+            border-radius: var(--radius);
+            font-family: inherit;
+            font-size: 14px;
+            transition: var(--transition);
+            background: white;
+        }
+        
+        .announcement-form-group input:focus,
+        .announcement-form-group textarea:focus,
+        .announcement-form-group select:focus {
+            outline: none;
+            border-color: var(--warning);
+            box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.1);
+        }
+        
+        .announcement-form-group textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+        
+        .user-selection-box {
+            background: white;
+            border: 2px solid var(--border);
+            border-radius: var(--radius);
+            padding: 16px;
+            margin-top: 8px;
+        }
+        
+        .user-selection-box select {
+            width: 100%;
+            min-height: 150px;
+            border: none;
+            font-size: 14px;
+        }
+        
+        .user-selection-box select option {
+            padding: 8px;
+            border-bottom: 1px solid var(--border-light);
+        }
+        
+        .user-selection-hint {
+            font-size: 12px;
+            color: var(--text-muted);
+            margin-top: 8px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        
+        .announcement-actions {
+            display: flex;
+            gap: 12px;
+            margin-top: 24px;
+        }
+        
+        .announcement-actions .btn {
+            flex: 1;
         }
 
         @media (max-width: 768px) {
@@ -409,6 +497,7 @@
             .notification-page-header { flex-direction: column; align-items: flex-start; }
             .user-detail-grid { grid-template-columns: 1fr; }
             .view-toggle-container { flex-direction: column; }
+            .announcement-actions { flex-direction: column; }
         }
     </style>
 </head>
@@ -537,7 +626,7 @@
                     </div>
                 </div>
 
-                <!-- REPORT PROBLEM (แจ้งปัญหา - แบบเต็มหน้า) -->
+                <!-- REPORT PROBLEM -->
                 <div id="page-report-problem" class="page-section hidden fade-in">
                     <div class="page-header">
                         <button class="back-btn" onclick="App.nav('report')"><i class="fa-solid fa-arrow-left"></i></button>
@@ -721,34 +810,47 @@
                         <h2 class="page-title">แผงควบคุม Admin</h2>
                     </div>
                     
-                    <!-- Announcement Section -->
+                    <!-- Professional Announcement Section -->
                     <div class="announcement-section">
                         <h3><i class="fa-solid fa-bullhorn"></i> ประกาศ</h3>
                         <form id="form-announcement">
-                            <div class="form-group">
-                                <label>หัวข้อประกาศ <span style="color:var(--danger)">*</span></label>
+                            <div class="announcement-form-group">
+                                <label>หัวข้อประกาศ <span class="required">*</span></label>
                                 <input type="text" id="announcement-title" class="form-control" placeholder="เช่น ปิดระบบบำรุงรักษา, แจ้งเปลี่ยนกฎ" required>
                             </div>
-                            <div class="form-group">
-                                <label>รายละเอียด <span style="color:var(--danger)">*</span></label>
+                            
+                            <div class="announcement-form-group">
+                                <label>รายละเอียด <span class="required">*</span></label>
                                 <textarea id="announcement-content" class="form-control" placeholder="กรอกรายละเอียดประกาศ" required></textarea>
                             </div>
-                            <div class="form-group">
+                            
+                            <div class="announcement-form-group">
                                 <label>ประเภทการประกาศ</label>
                                 <select id="announcement-type" class="form-control" onchange="App.toggleUserSelection()">
-                                    <option value="all">ประกาศทั้งหมด (ยกเว้นตัวเองและ Guest)</option>
-                                    <option value="specific">ประกาศรายบุคคล</option>
+                                    <option value="all"> ประกาศทั้งหมด (ยกเว้นตัวเองและ Guest)</option>
+                                    <option value="specific"> ประกาศรายบุคคล</option>
                                 </select>
                             </div>
-                            <div id="user-selection" class="hidden">
-                                <label>เลือกผู้ใช้ (กด Ctrl/Cmd เพื่อเลือกหลายรายการ)</label>
+                            
+                            <div id="user-selection" class="user-selection-box hidden">
+                                <label><i class="fa-solid fa-users"></i> เลือกผู้ใช้ (กด Ctrl/Cmd เพื่อเลือกหลายรายการ)</label>
                                 <select id="announcement-users" class="form-control" multiple size="5">
                                     <!-- จะถูกเติมด้วย JavaScript -->
                                 </select>
+                                <div class="user-selection-hint">
+                                    <i class="fa-solid fa-info-circle"></i>
+                                    <span>กด Ctrl (Windows) หรือ Cmd (Mac) ค้างไว้เพื่อเลือกหลายผู้ใช้</span>
+                                </div>
                             </div>
-                            <button type="submit" class="btn btn-warning">
-                                <i class="fa-solid fa-paper-plane"></i> ส่งประกาศ
-                            </button>
+                            
+                            <div class="announcement-actions">
+                                <button type="submit" class="btn btn-warning">
+                                    <i class="fa-solid fa-paper-plane"></i> ส่งประกาศ
+                                </button>
+                                <button type="button" class="btn btn-outline" onclick="document.getElementById('form-announcement').reset()">
+                                    <i class="fa-solid fa-rotate-left"></i> ล้างฟอร์ม
+                                </button>
+                            </div>
                         </form>
                     </div>
                     
@@ -1002,7 +1104,6 @@
             },
 
             initSecurityMeasures: () => {
-                // Prevent copy, cut, paste on non-input elements
                 document.addEventListener('copy', (e) => {
                     if (!e.target.matches('input, textarea')) {
                         e.preventDefault();
@@ -1024,36 +1125,29 @@
                     }
                 });
 
-                // Prevent key combinations
                 document.addEventListener('keydown', (e) => {
-                    // F12
                     if (e.key === 'F12' || e.keyCode === 123) {
                         e.preventDefault();
                         App.handleDevToolsDetection();
                         return false;
                     }
-                    // Ctrl+Shift+I/J/C
                     if (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J' || e.key === 'C')) {
                         e.preventDefault();
                         App.handleDevToolsDetection();
                         return false;
                     }
-                    // Ctrl+U
                     if (e.ctrlKey && e.key === 'U') {
                         e.preventDefault();
                         return false;
                     }
-                    // Ctrl+S
                     if (e.ctrlKey && e.key === 'S') {
                         e.preventDefault();
                         return false;
                     }
-                    // Ctrl+P
                     if (e.ctrlKey && e.key === 'P') {
                         e.preventDefault();
                         return false;
                     }
-                    // Ctrl+A (only in non-input elements)
                     if (e.ctrlKey && e.key === 'A') {
                         const tagName = e.target.tagName.toLowerCase();
                         if (tagName !== 'input' && tagName !== 'textarea') {
@@ -1063,14 +1157,12 @@
                     }
                 });
 
-                // Detect DevTools - เฉพาะนักเรียนและ Guest เท่านั้น (ไม่รวม Admin)
                 setInterval(() => {
                     App.detectDevTools();
                 }, 1000);
             },
 
             detectDevTools: () => {
-                // เฉพาะ Admin เท่านั้นที่ไม่โดนตรวจสอบ
                 if (App.profile?.role === 'admin') return;
                 
                 const threshold = 160;
@@ -1083,7 +1175,6 @@
             },
 
             handleDevToolsDetection: () => {
-                // Redirect to the specified YouTube video
                 window.location.href = 'https://www.youtube.com/watch?v=GBIIQ0kP15E';
             },
 
@@ -1107,11 +1198,8 @@
             },
 
             setupRealtime: () => {
-                // Subscribe to items changes
                 const itemsChannel = sb.channel('items-changes')
                     .on('postgres_changes', { event: '*', schema: 'public', table: 'items' }, (payload) => {
-                        console.log('Items changed:', payload);
-                        // Refresh items if on the view-lost page
                         if (!document.getElementById('page-view-lost').classList.contains('hidden')) {
                             App.loadLostItems();
                         }
@@ -1120,11 +1208,9 @@
                 
                 App.realtimeChannels.push(itemsChannel);
 
-                // Subscribe to notifications changes (สำหรับ non-guest)
                 if (!App.isGuest) {
                     const notifChannel = sb.channel('notifications-changes')
                         .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'notifications', filter: `user_id=eq.${App.user.id}` }, (payload) => {
-                            console.log('New notification:', payload);
                             App.loadUnreadNotifications();
                             if (!document.getElementById('page-notifications').classList.contains('hidden')) {
                                 App.loadNotificationsPage();
@@ -1134,23 +1220,11 @@
                         .subscribe();
                     
                     App.realtimeChannels.push(notifChannel);
-
-                    // Subscribe to announcements
-                    const announcementChannel = sb.channel('announcements-changes')
-                        .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'announcements' }, (payload) => {
-                            console.log('New announcement:', payload);
-                            App.toast('warning', 'ประกาศใหม่', payload.new.title);
-                        })
-                        .subscribe();
-                    
-                    App.realtimeChannels.push(announcementChannel);
                 }
 
-                // Subscribe to admin_reports changes (สำหรับ Admin)
                 if (App.profile?.role === 'admin') {
                     const reportsChannel = sb.channel('admin-reports-changes')
                         .on('postgres_changes', { event: '*', schema: 'public', table: 'admin_reports' }, (payload) => {
-                            console.log('Admin reports changed:', payload);
                             if (!document.getElementById('page-admin').classList.contains('hidden')) {
                                 App.loadAdminReports();
                             }
@@ -1232,12 +1306,9 @@
                 document.getElementById('page-auth').classList.add('hidden');
                 document.getElementById('app-container').classList.remove('hidden');
                 
-                // Show/hide guest banner
                 if (App.isGuest) {
                     document.getElementById('guest-banner').classList.remove('hidden');
-                    // Disable certain nav buttons for guests
                     document.getElementById('nav-report').classList.add('disabled');
-                    // Show guest settings, hide regular settings
                     document.getElementById('guest-settings').classList.remove('hidden');
                     document.getElementById('regular-settings').classList.add('hidden');
                     document.getElementById('admin-nav-btn').classList.add('hidden');
@@ -1271,7 +1342,6 @@
             goBack: () => { App.nav(App.previousPage || 'home'); },
 
             nav: (pageId) => {
-                // Prevent guests from accessing certain pages
                 if (App.isGuest && !['home', 'view-lost', 'settings'].includes(pageId)) {
                     App.toast('warning', 'สิทธิ์ไม่เพียงพอ', 'ผู้เยี่ยมชมสามารถดูได้เฉพาะหน้ารายการแจ้งเหตุและตั้งค่าเท่านั้น');
                     return;
@@ -1340,7 +1410,7 @@
                 
                 const roleBadgeContainer = document.getElementById('role-badge-container');
                 if (App.isGuest) {
-                    roleBadgeContainer.innerHTML = ''; // Don't show role for guests
+                    roleBadgeContainer.innerHTML = '';
                 } else if (App.profile.role === 'admin') {
                     roleBadgeContainer.innerHTML = '<span class="role-badge admin"><i class="fa-solid fa-shield-halved"></i> ผู้ดูแลระบบ</span>';
                 } else if (App.profile.role === 'teacher') {
@@ -1376,7 +1446,6 @@
             loadDashboardStats: async () => {
                 try {
                     if (App.isGuest) {
-                        // Show "ไม่ระบุ" for all stats
                         document.getElementById('stats-row').innerHTML = `
                             <div class="stat-card"><div class="stat-value">ไม่ระบุ</div><div class="stat-label">แจ้งของหาย</div></div>
                             <div class="stat-card"><div class="stat-value">ไม่ระบุ</div><div class="stat-label">แจ้งเก็บของได้</div></div>
@@ -1788,7 +1857,6 @@
                         
                         if (fetchError) throw fetchError;
                         
-                        // สร้าง notification สำหรับผู้ใช้ทุกคน
                         const notifications = targetUsers.map(user => ({
                             user_id: user.id,
                             type: 'announcement',
@@ -1797,10 +1865,13 @@
                             is_read: false
                         }));
                         
-                        const { error: insertError } = await sb.from('notifications').insert(notifications);
-                        if (insertError) throw insertError;
-                        
-                        App.toast('success', 'สำเร็จ', `ส่งประกาศไปยัง ${targetUsers.length} ผู้ใช้แล้ว`);
+                        if (notifications.length > 0) {
+                            const { error: insertError } = await sb.from('notifications').insert(notifications);
+                            if (insertError) throw insertError;
+                            App.toast('success', 'สำเร็จ', `ส่งประกาศไปยัง ${targetUsers.length} ผู้ใช้แล้ว`);
+                        } else {
+                            App.toast('warning', 'ไม่มีผู้ใช้', 'ไม่มีผู้ใช้ที่สามารถส่งประกาศได้');
+                        }
                     } else {
                         // ประกาศรายบุคคล
                         const selectedUsers = Array.from(document.getElementById('announcement-users').selectedOptions).map(opt => opt.value);
@@ -1825,11 +1896,11 @@
                         App.toast('success', 'สำเร็จ', `ส่งประกาศไปยัง ${selectedUsers.length} ผู้ใช้แล้ว`);
                     }
                     
-                    // Reset form
                     document.getElementById('form-announcement').reset();
                     document.getElementById('user-selection').classList.add('hidden');
                     
                 } catch (err) {
+                    console.error('Announcement error:', err);
                     App.toast('error', 'ส่งประกาศไม่สำเร็จ', err.message);
                 } finally {
                     App.showLoading(false);
