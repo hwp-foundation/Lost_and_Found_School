@@ -60,6 +60,7 @@
         ::-webkit-scrollbar-track { background: var(--border-light); }
         ::-webkit-scrollbar-thumb { background: var(--primary-light); border-radius: 4px; }
 
+        /* Auth & Layout */
         #page-auth { display: flex; align-items: center; justify-content: center; min-height: 100vh; padding: 20px; }
         .auth-box { width: 100%; max-width: 460px; background: rgba(255, 255, 255, 0.98); padding: 48px; border-radius: var(--radius-xl); box-shadow: var(--shadow-lg); }
         .auth-header { text-align: center; margin-bottom: 36px; }
@@ -150,6 +151,7 @@
         .item-author.admin { color: var(--admin-gold); }
         .item-actions { display: flex; gap: 10px; margin-top: auto; padding-top: 16px; flex-wrap: wrap; }
 
+        /* Report Type Selection */
         .report-type-selection { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; max-width: 900px; margin: 0 auto; }
         .report-type-card { background: rgba(255, 255, 255, 0.98); border-radius: var(--radius-xl); padding: 48px 32px; text-align: center; cursor: pointer; transition: var(--transition); box-shadow: var(--shadow-lg); border: 3px solid transparent; }
         .report-type-card:hover { transform: translateY(-8px); box-shadow: var(--shadow-lg); }
@@ -218,27 +220,30 @@
         #loading-overlay { position: fixed; inset: 0; background: rgba(255,255,255,0.95); backdrop-filter: blur(8px); display: flex; align-items: center; justify-content: center; z-index: 9998; }
         .spinner { width: 56px; height: 56px; border: 5px solid var(--border); border-top-color: var(--primary); border-radius: 50%; animation: spin 1s linear infinite; }
 
-        /* Notification Page - ปรับปรุงใหม่ */
+        /* Notifications Page - ปรับปรุงใหม่ */
         .notification-page-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; flex-wrap: wrap; gap: 16px; }
         .notification-actions-bar { display: flex; gap: 12px; flex-wrap: wrap; }
         
-        .notification-legend-box {
-            background: white;
+        .notification-legend-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
             border-radius: var(--radius-lg);
             padding: 16px 24px;
-            margin-bottom: 24px;
             box-shadow: var(--shadow);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            margin-bottom: 20px;
             display: flex;
             align-items: center;
             gap: 24px;
             flex-wrap: wrap;
         }
         
-        .legend-item {
+        .notification-legend-item {
             display: flex;
             align-items: center;
             gap: 8px;
             font-size: 14px;
+            font-weight: 500;
             color: var(--text-secondary);
         }
         
@@ -246,74 +251,74 @@
             width: 12px;
             height: 12px;
             border-radius: 50%;
+            display: inline-block;
         }
         
         .legend-dot.success { background: var(--success); }
         .legend-dot.danger { background: var(--danger); }
         
-        .notification-card { 
-            background: white; 
-            border-radius: var(--radius); 
-            padding: 20px 24px; 
-            margin-bottom: 16px; 
-            box-shadow: var(--shadow); 
-            border-left: 5px solid var(--primary); 
+        .notification-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: var(--radius-lg);
+            padding: 20px 24px;
+            margin-bottom: 16px;
+            box-shadow: var(--shadow);
+            border-left: 5px solid var(--primary);
             transition: var(--transition);
+            border: 1px solid rgba(255, 255, 255, 0.3);
         }
         .notification-card:hover { transform: translateX(4px); box-shadow: var(--shadow-lg); }
         .notification-card.type-admin_response { border-left-color: var(--success); }
         .notification-card.type-admin_reject { border-left-color: var(--danger); }
-        .notification-card.unread { background: #F0F9FF; }
+        .notification-card.unread { background: rgba(240, 249, 255, 0.95); }
         .notification-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px; flex-wrap: wrap; gap: 10px; }
         .notification-title-text { font-weight: 600; font-size: 15px; display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
         .notification-time { font-size: 12px; color: var(--text-muted); white-space: nowrap; }
         .notification-message { font-size: 14px; color: var(--text-secondary); line-height: 1.6; white-space: pre-wrap; margin-bottom: 12px; }
         .notification-actions { display: flex; justify-content: flex-end; gap: 10px; }
 
-        /* View Toggle Buttons */
+        /* View Items Toggle Buttons */
         .view-toggle-container {
             display: flex;
-            gap: 12px;
-            margin-bottom: 32px;
-            background: white;
-            padding: 8px;
-            border-radius: var(--radius-lg);
-            box-shadow: var(--shadow);
+            gap: 16px;
+            margin-bottom: 24px;
+            max-width: 600px;
         }
         
         .view-toggle-btn {
             flex: 1;
-            padding: 14px 24px;
-            border: none;
-            border-radius: var(--radius);
-            font-family: inherit;
-            font-weight: 600;
-            font-size: 15px;
+            padding: 16px 24px;
+            border: 2px solid var(--border);
+            border-radius: var(--radius-lg);
+            background: rgba(255, 255, 255, 0.9);
             cursor: pointer;
             transition: var(--transition);
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 8px;
+            gap: 10px;
+            font-family: inherit;
+            font-weight: 600;
+            font-size: 15px;
+            color: var(--text-secondary);
+        }
+        
+        .view-toggle-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
         }
         
         .view-toggle-btn.active.lost {
             background: linear-gradient(135deg, var(--danger), var(--danger-dark));
             color: white;
+            border-color: var(--danger);
         }
         
         .view-toggle-btn.active.found {
             background: linear-gradient(135deg, var(--success), var(--success-dark));
             color: white;
-        }
-        
-        .view-toggle-btn:not(.active) {
-            background: var(--border-light);
-            color: var(--text-secondary);
-        }
-        
-        .view-toggle-btn:not(.active):hover {
-            background: var(--border);
+            border-color: var(--success);
         }
 
         .alert-box { padding: 12px 16px; border-radius: var(--radius); margin-bottom: 20px; font-size: 14px; display: flex; align-items: flex-start; gap: 10px; }
@@ -337,6 +342,26 @@
         .strength-weak { background: var(--danger); width: 33%; }
         .strength-medium { background: var(--warning); width: 66%; }
         .strength-strong { background: var(--success); width: 100%; }
+
+        /* Settings Danger Zone */
+        .danger-zone {
+            border-top: 2px solid var(--danger);
+            padding-top: 24px;
+            margin-top: 24px;
+            background: linear-gradient(135deg, #FEF2F2 0%, #FFFFFF 100%);
+            padding: 24px;
+            border-radius: var(--radius-lg);
+        }
+        
+        .danger-zone-title {
+            color: var(--danger);
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
 
         @media (max-width: 768px) {
             .app-layout { flex-direction: column; }
@@ -476,7 +501,7 @@
                 <div id="page-report-lost" class="page-section hidden fade-in">
                     <div class="page-header">
                         <button class="back-btn" onclick="App.nav('report')"><i class="fa-solid fa-arrow-left"></i></button>
-                        <h2 class="page-title" id="report-lost-title">ของหาย</h2>
+                        <h2 class="page-title" id="report-lost-title">แจ้งของหาย</h2>
                     </div>
                     <div class="card" style="max-width: 680px; margin: 0 auto;">
                         <form id="form-lost">
@@ -524,7 +549,7 @@
                 <div id="page-report-found" class="page-section hidden fade-in">
                     <div class="page-header">
                         <button class="back-btn" onclick="App.nav('report')"><i class="fa-solid fa-arrow-left"></i></button>
-                        <h2 class="page-title">เก็บของได้</h2>
+                        <h2 class="page-title">แจ้งเก็บของได้</h2>
                     </div>
                     <div class="card" style="max-width: 680px; margin: 0 auto;">
                         <form id="form-found">
@@ -565,19 +590,19 @@
                     </div>
                 </div>
 
-                <!-- VIEW LOST -->
+                <!-- VIEW ITEMS (รวมของหาย + เก็บของได้ พร้อมปุ่มสลับ) -->
                 <div id="page-view-lost" class="page-section hidden fade-in">
                     <div class="page-header">
                         <button class="back-btn" onclick="App.nav('home')"><i class="fa-solid fa-arrow-left"></i></button>
                         <h2 class="page-title">รายการแจ้งเหตุ</h2>
                     </div>
                     
-                    <!-- View Toggle Buttons -->
+                    <!-- ปุ่มสลับระหว่าง ของหาย / เก็บของได้ -->
                     <div class="view-toggle-container">
-                        <button class="view-toggle-btn active lost" onclick="App.switchView('lost')">
+                        <button class="view-toggle-btn lost active" id="btn-view-lost" onclick="App.switchViewType('lost')">
                             <i class="fa-solid fa-circle-exclamation"></i> ของหาย
                         </button>
-                        <button class="view-toggle-btn found" onclick="App.switchView('found')">
+                        <button class="view-toggle-btn found" id="btn-view-found" onclick="App.switchViewType('found')">
                             <i class="fa-solid fa-hand-holding-heart"></i> เก็บของได้
                         </button>
                     </div>
@@ -599,14 +624,14 @@
                         </div>
                     </div>
                     
-                    <!-- Legend Box -->
-                    <div class="notification-legend-box">
-                        <div class="legend-item">
-                            <div class="legend-dot success"></div>
+                    <!-- Legend Card -->
+                    <div class="notification-legend-card">
+                        <div class="notification-legend-item">
+                            <span class="legend-dot success"></span>
                             <span>คำร้องได้รับการดำเนินการ</span>
                         </div>
-                        <div class="legend-item">
-                            <div class="legend-dot danger"></div>
+                        <div class="notification-legend-item">
+                            <span class="legend-dot danger"></span>
                             <span>คำร้องถูกปฏิเสธ</span>
                         </div>
                     </div>
@@ -684,19 +709,28 @@
                             <h3 class="settings-title"><i class="fa-solid fa-key"></i> รหัสผ่าน</h3>
                             <div class="settings-row">
                                 <input type="password" id="settings-password" class="form-control" placeholder="รหัสผ่านใหม่ (อย่างน้อย 8 ตัว)" oninput="App.checkPasswordStrength(this.value)">
-                                <div class="password-strength hidden" id="settings-password-strength">
-                                    <div>ความแข็งแรง: <span id="settings-strength-text">-</span></div>
-                                    <div class="strength-bar"><div class="strength-fill" id="settings-strength-fill"></div></div>
-                                </div>
                                 <button class="btn btn-primary" style="width: auto;" onclick="App.updatePassword()"><i class="fa-solid fa-save"></i> เปลี่ยนรหัสผ่าน</button>
+                            </div>
+                            <div class="password-strength hidden" id="settings-password-strength">
+                                <div>ความแข็งแรง: <span id="settings-strength-text">-</span></div>
+                                <div class="strength-bar"><div class="strength-fill" id="settings-strength-fill"></div></div>
                             </div>
                             <small style="color: var(--text-secondary); display: block; margin-top: 12px; padding: 12px; background: #F0F9FF; border-radius: 8px; border-left: 4px solid var(--primary);">
                                 <i class="fa-solid fa-shield-halved"></i> ใช้รหัสผ่านที่ผสมตัวอักษรใหญ่, เล็ก, ตัวเลข และสัญลักษณ์ เพื่อความปลอดภัย
                             </small>
                         </div>
-                        <div class="settings-section" style="border-top: 2px solid var(--danger); padding-top: 24px; margin-top: 24px; background: linear-gradient(135deg, #FEF2F2 0%, #FFFFFF 100%);">
-                            <h3 class="settings-title" style="color: var(--danger);"><i class="fa-solid fa-right-from-bracket"></i> โซนอันตราย</h3>
-                            <button class="btn btn-danger" style="max-width: 300px;" onclick="App.logout()"><i class="fa-solid fa-power-off"></i> ออกจากระบบ</button>
+                        
+                        <!-- Danger Zone -->
+                        <div class="danger-zone">
+                            <div class="danger-zone-title"><i class="fa-solid fa-triangle-exclamation"></i> โซนอันตราย</div>
+                            <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+                                <button class="btn btn-outline" style="width: auto; flex: 1; min-width: 200px;" onclick="App.logoutToLogin()">
+                                    <i class="fa-solid fa-right-to-bracket"></i> กลับไปหน้า Login
+                                </button>
+                                <button class="btn btn-danger" style="width: auto; flex: 1; min-width: 200px;" onclick="App.logout()">
+                                    <i class="fa-solid fa-power-off"></i> ออกจากระบบ
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -848,10 +882,10 @@
             editingOriginalUserId: null,
             currentReportId: null,
             previousPage: 'home',
-            currentView: 'lost', // 'lost' or 'found'
             profilesCache: {},
             unreadNotifications: 0,
             selectedNotifications: new Set(),
+            currentViewType: 'lost', // 'lost' หรือ 'found'
 
             init: async () => {
                 try {
@@ -955,22 +989,11 @@
                 App.loadUnreadNotifications();
             },
 
-            // Switch view between lost and found
-            switchView: (viewType) => {
-                App.currentView = viewType;
-                
-                // Update buttons
-                document.querySelectorAll('.view-toggle-btn').forEach(btn => {
-                    btn.classList.remove('active');
-                });
-                
-                if (viewType === 'lost') {
-                    document.querySelector('.view-toggle-btn.lost').classList.add('active');
-                } else {
-                    document.querySelector('.view-toggle-btn.found').classList.add('active');
-                }
-                
-                // Reload items
+            // สลับระหว่าง ของหาย / เก็บของได้
+            switchViewType: (type) => {
+                App.currentViewType = type;
+                document.getElementById('btn-view-lost').classList.toggle('active', type === 'lost');
+                document.getElementById('btn-view-found').classList.toggle('active', type === 'found');
                 App.loadLostItems();
             },
 
@@ -1199,7 +1222,7 @@
                 App.editingOriginalUserId = null;
                 document.getElementById('form-lost').reset();
                 document.getElementById('lost-preview').innerHTML = '';
-                document.getElementById('report-lost-title').textContent = 'ของหาย';
+                document.getElementById('report-lost-title').textContent = 'แจ้งของหาย';
                 document.getElementById('btn-submit-lost').innerHTML = '<i class="fa-solid fa-paper-plane"></i> ส่งแจ้งของหาย';
                 document.getElementById('btn-cancel-edit').classList.add('hidden');
             },
@@ -1238,14 +1261,11 @@
                 container.innerHTML = '<div style="text-align:center; padding:60px;"><div class="spinner" style="margin:0 auto;"></div></div>';
                 try {
                     await App.loadProfilesCache();
-                    
-                    // Filter by current view
-                    const itemType = App.currentView;
-                    const { data, error } = await sb.from('items').select('*').eq('type', itemType).eq('status', 'active').order('created_at', {ascending: false});
+                    const { data, error } = await sb.from('items').select('*').eq('type', App.currentViewType).eq('status', 'active').order('created_at', {ascending: false});
                     if (error) throw error;
                     if (!data || data.length === 0) {
-                        const emptyText = itemType === 'lost' ? 'ไม่พบรายการของหาย' : 'ไม่พบรายการเก็บของได้';
-                        container.innerHTML = `<div style="text-align:center; padding:60px; color:white; background:rgba(255,255,255,0.1); border-radius:16px;"><i class="fa-solid fa-box-open" style="font-size:48px; margin-bottom:16px; opacity:0.5;"></i><p style="font-size:18px;">${emptyText}</p></div>`;
+                        const label = App.currentViewType === 'lost' ? 'ของหาย' : 'เก็บของได้';
+                        container.innerHTML = `<div style="text-align:center; padding:60px; color:white; background:rgba(255,255,255,0.1); border-radius:16px;"><i class="fa-solid fa-box-open" style="font-size:48px; margin-bottom:16px; opacity:0.5;"></i><p style="font-size:18px;">ไม่พบรายการ${label}ในระบบ</p></div>`;
                         return;
                     }
                     const isAdmin = App.profile.role === 'admin';
@@ -1812,7 +1832,18 @@
             },
 
             logout: async () => {
-                if (confirm('คุณแน่ใจว่าต้องการออกจากระบบ?')) { await sb.auth.signOut(); location.reload(); }
+                if (confirm('คุณแน่ใจว่าต้องการออกจากระบบ?')) { 
+                    await sb.auth.signOut(); 
+                    location.reload(); 
+                }
+            },
+
+            logoutToLogin: async () => {
+                if (confirm('กลับไปหน้า Login? (ระบบจะออกจากระบบปัจจุบัน)')) {
+                    await sb.auth.signOut();
+                    App.showAuth();
+                    App.toggleAuth('login');
+                }
             },
 
             showLoading: (show) => { document.getElementById('loading-overlay').classList.toggle('hidden', !show); },
