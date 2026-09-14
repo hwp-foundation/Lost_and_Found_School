@@ -274,6 +274,7 @@
         .notification-card:hover { transform: translateX(4px); box-shadow: var(--shadow-lg); }
         .notification-card.type-admin_response { border-left-color: var(--success); }
         .notification-card.type-admin_reject { border-left-color: var(--danger); }
+        .notification-card.type-announcement { border-left-color: var(--warning); }
         .notification-card.unread { background: #F0F9FF; }
         .notification-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px; flex-wrap: wrap; gap: 10px; }
         .notification-title-text { font-weight: 600; font-size: 15px; display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
@@ -329,6 +330,7 @@
         .alert-box { padding: 12px 16px; border-radius: var(--radius); margin-bottom: 20px; font-size: 14px; display: flex; align-items: flex-start; gap: 10px; }
         .alert-box.info { background: #D1FAE5; border-left: 4px solid var(--success); color: #065F46; }
         .alert-box.danger { background: #FEE2E2; border-left: 4px solid var(--danger); color: #991B1B; }
+        .alert-box.warning { background: #FEF3C7; border-left: 4px solid var(--warning); color: #92400E; }
 
         .user-detail-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
         .user-detail-item { background: var(--border-light); padding: 16px; border-radius: var(--radius); }
@@ -373,6 +375,20 @@
         .guest-logout-btn {
             max-width: 400px;
             width: 100%;
+        }
+
+        /* Announcement Section */
+        .announcement-section {
+            background: linear-gradient(135deg, #FEF3C7, #FDE68A);
+            border: 2px solid var(--warning);
+            border-radius: var(--radius-lg);
+            padding: 24px;
+            margin-bottom: 24px;
+        }
+        
+        .announcement-section h3 {
+            color: var(--warning-dark);
+            margin-bottom: 16px;
         }
 
         @media (max-width: 768px) {
@@ -511,13 +527,46 @@
                             <h3 class="report-type-title">เก็บของได้</h3>
                             <p class="report-type-desc">กรอกรายละเอียดสิ่งของที่เก็บได้<br>รูปภาพ/วิดีโอบังคับ</p>
                         </div>
-                        <div class="report-type-card admin" onclick="App.openAdminReportModal()">
+                        <div class="report-type-card admin" onclick="App.nav('report-problem')">
                             <div class="report-type-icon">
                                 <img src="https://github.com/momo0991588175-sys/Lost_and_Found_School/raw/main/images/Logo_Admin.png" alt="Admin" onerror="this.style.display='none'; this.parentElement.innerHTML='<i class=\'fa-solid fa-user-shield\'></i>';">
                             </div>
                             <h3 class="report-type-title">แจ้งปัญหา</h3>
                             <p class="report-type-desc">กรอกรายละเอียดหรือปัญหาที่พบ<br>เพื่อแจ้งให้ผู้ดูแลระบบทราบ</p>
                         </div>
+                    </div>
+                </div>
+
+                <!-- REPORT PROBLEM (แจ้งปัญหา - แบบเต็มหน้า) -->
+                <div id="page-report-problem" class="page-section hidden fade-in">
+                    <div class="page-header">
+                        <button class="back-btn" onclick="App.nav('report')"><i class="fa-solid fa-arrow-left"></i></button>
+                        <h2 class="page-title">แจ้งปัญหา</h2>
+                    </div>
+                    <div class="card" style="max-width: 680px; margin: 0 auto;">
+                        <form id="form-problem">
+                            <div class="form-group">
+                                <label>หัวข้อเรื่อง <span style="color:var(--danger)">*</span></label>
+                                <input type="text" id="problem-subject" class="form-control" placeholder="เช่น ปัญหาการใช้งาน, รายงานข้อผิดพลาด" required>
+                            </div>
+                            <div class="form-group">
+                                <label>รายละเอียดหรือปัญหาที่พบ <span style="color:var(--danger)">*</span></label>
+                                <textarea id="problem-description" class="form-control" placeholder="อธิบายรายละเอียดหรือปัญหาที่พบอย่างชัดเจน" required></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label>รูปภาพประกอบ (ไม่บังคับ)</label>
+                                <label for="problem-file" class="file-upload-box">
+                                    <i class="fa-solid fa-cloud-arrow-up"></i>
+                                    <p style="font-weight: 600; margin-bottom: 4px;">คลิกเพื่อเลือกรูปภาพ</p>
+                                    <small style="color: var(--text-muted)">รองรับ PNG, JPG (สูงสุด 5MB)</small>
+                                </label>
+                                <input type="file" id="problem-file" accept="image/png,image/jpeg" class="hidden">
+                                <div id="problem-preview" class="preview-container"></div>
+                            </div>
+                            <button type="submit" class="btn btn-warning">
+                                <i class="fa-solid fa-paper-plane"></i> ส่งแจ้งปัญหา
+                            </button>
+                        </form>
                     </div>
                 </div>
 
@@ -656,6 +705,10 @@
                             <div class="legend-dot danger"></div>
                             <span>คำร้องถูกปฏิเสธ</span>
                         </div>
+                        <div class="legend-item">
+                            <div class="legend-dot warning"></div>
+                            <span>ประกาศจากผู้ดูแลระบบ</span>
+                        </div>
                     </div>
                     
                     <div id="notifications-list"></div>
@@ -667,6 +720,38 @@
                         <button class="back-btn" onclick="App.nav('home')"><i class="fa-solid fa-arrow-left"></i></button>
                         <h2 class="page-title">แผงควบคุม Admin</h2>
                     </div>
+                    
+                    <!-- Announcement Section -->
+                    <div class="announcement-section">
+                        <h3><i class="fa-solid fa-bullhorn"></i> ประกาศ</h3>
+                        <form id="form-announcement">
+                            <div class="form-group">
+                                <label>หัวข้อประกาศ <span style="color:var(--danger)">*</span></label>
+                                <input type="text" id="announcement-title" class="form-control" placeholder="เช่น ปิดระบบบำรุงรักษา, แจ้งเปลี่ยนกฎ" required>
+                            </div>
+                            <div class="form-group">
+                                <label>รายละเอียด <span style="color:var(--danger)">*</span></label>
+                                <textarea id="announcement-content" class="form-control" placeholder="กรอกรายละเอียดประกาศ" required></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label>ประเภทการประกาศ</label>
+                                <select id="announcement-type" class="form-control" onchange="App.toggleUserSelection()">
+                                    <option value="all">ประกาศทั้งหมด (ยกเว้นตัวเองและ Guest)</option>
+                                    <option value="specific">ประกาศรายบุคคล</option>
+                                </select>
+                            </div>
+                            <div id="user-selection" class="hidden">
+                                <label>เลือกผู้ใช้ (กด Ctrl/Cmd เพื่อเลือกหลายรายการ)</label>
+                                <select id="announcement-users" class="form-control" multiple size="5">
+                                    <!-- จะถูกเติมด้วย JavaScript -->
+                                </select>
+                            </div>
+                            <button type="submit" class="btn btn-warning">
+                                <i class="fa-solid fa-paper-plane"></i> ส่งประกาศ
+                            </button>
+                        </form>
+                    </div>
+                    
                     <div class="card">
                         <div class="admin-section">
                             <h3><i class="fa-solid fa-bell" style="color: var(--warning);"></i> คำร้องขอจากผู้ใช้งาน</h3>
@@ -762,38 +847,6 @@
     </div>
 
     <!-- Modals -->
-    <div id="admin-report-modal" class="hidden">
-        <div class="modal-overlay" onclick="App.closeAdminReportModal(event)">
-            <div class="modal-content" onclick="event.stopPropagation()">
-                <div class="modal-header">
-                    <h3 class="modal-title"><i class="fa-solid fa-user-shield" style="color: var(--admin-gold);"></i> แจ้งปัญหา</h3>
-                    <button class="modal-close" onclick="App.closeAdminReportModal()"><i class="fa-solid fa-xmark"></i></button>
-                </div>
-                <form id="form-admin-report">
-                    <div class="form-group">
-                        <label>หัวข้อเรื่อง <span style="color:var(--danger)">*</span></label>
-                        <input type="text" id="admin-report-subject" class="form-control" placeholder="เช่น ปัญหาการใช้งาน, รายงานข้อผิดพลาด" required>
-                    </div>
-                    <div class="form-group">
-                        <label>รายละเอียดหรือปัญหาที่พบ <span style="color:var(--danger)">*</span></label>
-                        <textarea id="admin-report-description" class="form-control" placeholder="อธิบายรายละเอียดหรือปัญหาที่พบอย่างชัดเจน" required></textarea>
-                    </div>
-                    <div class="form-group">
-                        <label>รูปภาพประกอบ (ไม่บังคับ)</label>
-                        <label for="admin-report-file" class="file-upload-box">
-                            <i class="fa-solid fa-cloud-arrow-up"></i>
-                            <p style="font-weight: 600; margin-bottom: 4px;">คลิกเพื่อเลือกรูปภาพ</p>
-                            <small style="color: var(--text-muted)">รองรับ PNG, JPG (สูงสุด 5MB)</small>
-                        </label>
-                        <input type="file" id="admin-report-file" accept="image/png,image/jpeg" class="hidden">
-                        <div id="admin-report-preview" class="preview-container"></div>
-                    </div>
-                    <button type="submit" class="btn btn-admin"><i class="fa-solid fa-paper-plane"></i> ส่งแจ้งปัญหา</button>
-                </form>
-            </div>
-        </div>
-    </div>
-
     <div id="admin-report-detail-modal" class="hidden">
         <div class="modal-overlay" onclick="App.closeReportDetailModal(event)">
             <div class="modal-content large" onclick="event.stopPropagation()">
@@ -1010,15 +1063,16 @@
                     }
                 });
 
-                // Detect DevTools
+                // Detect DevTools - เฉพาะนักเรียนและ Guest เท่านั้น (ไม่รวม Admin)
                 setInterval(() => {
                     App.detectDevTools();
                 }, 1000);
             },
 
             detectDevTools: () => {
-                if (App.profile?.role === 'admin' || App.isGuest) return; // Skip for admins and guests
-
+                // เฉพาะ Admin เท่านั้นที่ไม่โดนตรวจสอบ
+                if (App.profile?.role === 'admin') return;
+                
                 const threshold = 160;
                 const widthThreshold = window.outerWidth - window.innerWidth > threshold;
                 const heightThreshold = window.outerHeight - window.innerHeight > threshold;
@@ -1029,8 +1083,6 @@
             },
 
             handleDevToolsDetection: () => {
-                if (App.profile?.role === 'admin' || App.isGuest) return;
-                
                 // Redirect to the specified YouTube video
                 window.location.href = 'https://www.youtube.com/watch?v=GBIIQ0kP15E';
             },
@@ -1059,7 +1111,8 @@
                 const itemsChannel = sb.channel('items-changes')
                     .on('postgres_changes', { event: '*', schema: 'public', table: 'items' }, (payload) => {
                         console.log('Items changed:', payload);
-                        if (document.getElementById('page-view-lost').classList.contains('fade-in') && !document.getElementById('page-view-lost').classList.contains('hidden')) {
+                        // Refresh items if on the view-lost page
+                        if (!document.getElementById('page-view-lost').classList.contains('hidden')) {
                             App.loadLostItems();
                         }
                     })
@@ -1067,17 +1120,44 @@
                 
                 App.realtimeChannels.push(itemsChannel);
 
-                // Subscribe to notifications changes
+                // Subscribe to notifications changes (สำหรับ non-guest)
                 if (!App.isGuest) {
                     const notifChannel = sb.channel('notifications-changes')
                         .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'notifications', filter: `user_id=eq.${App.user.id}` }, (payload) => {
                             console.log('New notification:', payload);
                             App.loadUnreadNotifications();
+                            if (!document.getElementById('page-notifications').classList.contains('hidden')) {
+                                App.loadNotificationsPage();
+                            }
                             App.toast('info', 'มีการแจ้งเตือนใหม่', payload.new.title || 'คุณมีการแจ้งเตือนใหม่');
                         })
                         .subscribe();
                     
                     App.realtimeChannels.push(notifChannel);
+
+                    // Subscribe to announcements
+                    const announcementChannel = sb.channel('announcements-changes')
+                        .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'announcements' }, (payload) => {
+                            console.log('New announcement:', payload);
+                            App.toast('warning', 'ประกาศใหม่', payload.new.title);
+                        })
+                        .subscribe();
+                    
+                    App.realtimeChannels.push(announcementChannel);
+                }
+
+                // Subscribe to admin_reports changes (สำหรับ Admin)
+                if (App.profile?.role === 'admin') {
+                    const reportsChannel = sb.channel('admin-reports-changes')
+                        .on('postgres_changes', { event: '*', schema: 'public', table: 'admin_reports' }, (payload) => {
+                            console.log('Admin reports changed:', payload);
+                            if (!document.getElementById('page-admin').classList.contains('hidden')) {
+                                App.loadAdminReports();
+                            }
+                        })
+                        .subscribe();
+                    
+                    App.realtimeChannels.push(reportsChannel);
                 }
             },
 
@@ -1086,6 +1166,37 @@
                     sb.removeChannel(channel);
                 });
                 App.realtimeChannels = [];
+            },
+
+            toggleUserSelection: () => {
+                const type = document.getElementById('announcement-type').value;
+                const userSelection = document.getElementById('user-selection');
+                
+                if (type === 'specific') {
+                    userSelection.classList.remove('hidden');
+                    App.loadUsersForAnnouncement();
+                } else {
+                    userSelection.classList.add('hidden');
+                }
+            },
+
+            loadUsersForAnnouncement: async () => {
+                try {
+                    const { data: users, error } = await sb.from('profiles')
+                        .select('id, full_name, email, role')
+                        .neq('role', 'admin')
+                        .neq('role', 'guest')
+                        .order('full_name');
+                    
+                    if (error) throw error;
+                    
+                    const select = document.getElementById('announcement-users');
+                    select.innerHTML = users.map(user => 
+                        `<option value="${user.id}">${user.full_name || user.email} (${user.email})</option>`
+                    ).join('');
+                } catch (err) {
+                    console.error('Load users error:', err);
+                }
             },
 
             generateGradeOptions: () => {
@@ -1364,6 +1475,41 @@
                 finally { App.showLoading(false); }
             },
 
+            handleProblem: async (e) => {
+                e.preventDefault();
+                App.showLoading(true);
+                try {
+                    let image_url = null;
+                    const file = document.getElementById('problem-file').files[0];
+                    if (file) {
+                        const fileName = `problem_${App.user.id}_${Date.now()}.${file.name.split('.').pop()}`;
+                        const { error: uploadError } = await sb.storage.from('item-images').upload(fileName, file);
+                        if (uploadError) throw uploadError;
+                        const { data: { publicUrl } } = sb.storage.from('item-images').getPublicUrl(fileName);
+                        image_url = publicUrl;
+                    }
+                    
+                    const { error } = await sb.from('admin_reports').insert({
+                        user_id: App.user.id,
+                        subject: document.getElementById('problem-subject').value,
+                        description: document.getElementById('problem-description').value,
+                        image_url: image_url,
+                        status: 'pending'
+                    });
+                    
+                    if (error) throw error;
+                    
+                    App.toast('success', 'ส่งสำเร็จ', 'ผู้ดูแลระบบจะตรวจสอบและติดต่อกลับโดยเร็ว');
+                    document.getElementById('form-problem').reset();
+                    document.getElementById('problem-preview').innerHTML = '';
+                    App.nav('home');
+                } catch (err) {
+                    App.toast('error', 'ส่งไม่สำเร็จ', err.message);
+                } finally {
+                    App.showLoading(false);
+                }
+            },
+
             handleLost: async (e) => {
                 e.preventDefault(); 
                 App.showLoading(true);
@@ -1536,6 +1682,7 @@
                         let icon = 'fa-bell', badgeClass = '', typeLabel = 'แจ้งเตือน';
                         if (notif.type === 'admin_response') { icon = 'fa-check-circle'; badgeClass = 'success'; typeLabel = 'คำร้องได้รับการดำเนินการ'; }
                         else if (notif.type === 'admin_reject') { icon = 'fa-times-circle'; badgeClass = 'danger'; typeLabel = 'คำร้องถูกปฏิเสธ'; }
+                        else if (notif.type === 'announcement') { icon = 'fa-bullhorn'; badgeClass = 'warning'; typeLabel = 'ประกาศ'; }
                         
                         return `
                             <div class="notification-card type-${notif.type} ${!notif.is_read ? 'unread' : ''}" data-id="${notif.id}">
@@ -1623,35 +1770,70 @@
                 } catch (err) { App.toast('error', 'เกิดข้อผิดพลาด', err.message); }
             },
 
-            openAdminReportModal: () => { document.getElementById('admin-report-modal').classList.remove('hidden'); },
-            closeAdminReportModal: (event) => {
-                if (!event || event.target === event.currentTarget) {
-                    document.getElementById('admin-report-modal').classList.add('hidden');
-                    document.getElementById('form-admin-report').reset();
-                    document.getElementById('admin-report-preview').innerHTML = '';
-                }
-            },
-
-            handleAdminReport: async (e) => {
+            handleAnnouncement: async (e) => {
                 e.preventDefault();
                 App.showLoading(true);
+                
                 try {
-                    let image_url = null;
-                    const file = document.getElementById('admin-report-file').files[0];
-                    if (file) {
-                        const fileName = `report_${App.user.id}_${Date.now()}.${file.name.split('.').pop()}`;
-                        const { error: uploadError } = await sb.storage.from('item-images').upload(fileName, file);
-                        if (uploadError) throw uploadError;
-                        const { data: { publicUrl } } = sb.storage.from('item-images').getPublicUrl(fileName);
-                        image_url = publicUrl;
+                    const title = document.getElementById('announcement-title').value;
+                    const content = document.getElementById('announcement-content').value;
+                    const type = document.getElementById('announcement-type').value;
+                    
+                    if (type === 'all') {
+                        // ประกาศทั้งหมด (ยกเว้น Admin และ Guest)
+                        const { data: targetUsers, error: fetchError } = await sb.from('profiles')
+                            .select('id')
+                            .neq('role', 'admin')
+                            .neq('role', 'guest');
+                        
+                        if (fetchError) throw fetchError;
+                        
+                        // สร้าง notification สำหรับผู้ใช้ทุกคน
+                        const notifications = targetUsers.map(user => ({
+                            user_id: user.id,
+                            type: 'announcement',
+                            title: title,
+                            message: content,
+                            is_read: false
+                        }));
+                        
+                        const { error: insertError } = await sb.from('notifications').insert(notifications);
+                        if (insertError) throw insertError;
+                        
+                        App.toast('success', 'สำเร็จ', `ส่งประกาศไปยัง ${targetUsers.length} ผู้ใช้แล้ว`);
+                    } else {
+                        // ประกาศรายบุคคล
+                        const selectedUsers = Array.from(document.getElementById('announcement-users').selectedOptions).map(opt => opt.value);
+                        
+                        if (selectedUsers.length === 0) {
+                            App.toast('warning', 'ไม่มีผู้ใช้ที่เลือก', 'กรุณาเลือกผู้ใช้อย่างน้อย 1 คน');
+                            App.showLoading(false);
+                            return;
+                        }
+                        
+                        const notifications = selectedUsers.map(userId => ({
+                            user_id: userId,
+                            type: 'announcement',
+                            title: title,
+                            message: content,
+                            is_read: false
+                        }));
+                        
+                        const { error: insertError } = await sb.from('notifications').insert(notifications);
+                        if (insertError) throw insertError;
+                        
+                        App.toast('success', 'สำเร็จ', `ส่งประกาศไปยัง ${selectedUsers.length} ผู้ใช้แล้ว`);
                     }
-                    const { error } = await sb.from('admin_reports').insert({ user_id: App.user.id, subject: document.getElementById('admin-report-subject').value, description: document.getElementById('admin-report-description').value, image_url: image_url, status: 'pending' });
-                    if (error) throw error;
-                    App.toast('success', 'ส่งสำเร็จ', 'ผู้ดูแลระบบจะตรวจสอบและติดต่อกลับโดยเร็ว');
-                    App.closeAdminReportModal();
-                    App.loadDashboardStats();
-                } catch (err) { App.toast('error', 'ส่งไม่สำเร็จ', err.message); } 
-                finally { App.showLoading(false); }
+                    
+                    // Reset form
+                    document.getElementById('form-announcement').reset();
+                    document.getElementById('user-selection').classList.add('hidden');
+                    
+                } catch (err) {
+                    App.toast('error', 'ส่งประกาศไม่สำเร็จ', err.message);
+                } finally {
+                    App.showLoading(false);
+                }
             },
 
             loadAdminPanel: async () => {
@@ -2088,7 +2270,8 @@
         bindForm('form-register', App.handleRegister);
         bindForm('form-lost', App.handleLost);
         bindForm('form-found', App.handleFound);
-        bindForm('form-admin-report', App.handleAdminReport);
+        bindForm('form-problem', App.handleProblem);
+        bindForm('form-announcement', App.handleAnnouncement);
         bindForm('form-admin-accept', App.handleAdminAccept);
         bindForm('form-change-role', App.handleChangeRole);
         bindForm('form-change-name', App.handleChangeName);
@@ -2112,9 +2295,9 @@
                 preview.innerHTML = file.type.startsWith('video/') ? `<div class="preview-item"><video src="${url}" controls></video></div>` : `<div class="preview-item"><img src="${url}"></div>`;
             }
         });
-        document.getElementById('admin-report-file').addEventListener('change', (e) => {
+        document.getElementById('problem-file').addEventListener('change', (e) => {
             const file = e.target.files[0];
-            const preview = document.getElementById('admin-report-preview');
+            const preview = document.getElementById('problem-preview');
             preview.innerHTML = '';
             if (file) {
                 const url = URL.createObjectURL(file);
