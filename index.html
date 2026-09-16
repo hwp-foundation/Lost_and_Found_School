@@ -1147,7 +1147,7 @@
             animation: spin 1s linear infinite;
         }
 
-        /* Notification Page - Enhanced */
+        /* Notification Page - Enhanced with Correct Colors */
         .notification-page-header { 
             display: flex; 
             justify-content: space-between; 
@@ -1195,6 +1195,7 @@
         .legend-dot.danger { background: var(--danger); }
         .legend-dot.warning { background: var(--warning); }
         
+        /* Notification Cards - Fixed Colors */
         .notification-card { 
             background: white; 
             border-radius: var(--radius); 
@@ -1209,6 +1210,7 @@
             transform: translateX(4px); 
             box-shadow: var(--shadow-md);
         }
+        
         /* แก้สีให้ตรงกับ legend */
         .notification-card.type-admin_response { 
             border-left-color: var(--success);
@@ -1234,6 +1236,7 @@
         .notification-card.type-announcement.unread {
             background: var(--warning-50);
         }
+        
         .notification-header { 
             display: flex; 
             justify-content: space-between; 
@@ -1266,6 +1269,29 @@
             display: flex; 
             justify-content: flex-end; 
             gap: 10px;
+        }
+
+        /* Notification Badge Colors - Fixed */
+        .notif-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        .notif-badge.success {
+            background: var(--success-100);
+            color: var(--success-dark);
+        }
+        .notif-badge.danger {
+            background: var(--danger-100);
+            color: var(--danger-dark);
+        }
+        .notif-badge.warning {
+            background: var(--warning-100);
+            color: var(--warning-dark);
         }
 
         .view-toggle-container {
@@ -1434,7 +1460,7 @@
             width: 100%;
         }
 
-        /* Guest Profile Card - New UI */
+        /* Guest Profile Card */
         .guest-profile-card {
             text-align: center;
             padding: 48px 36px;
@@ -1757,7 +1783,7 @@
                                 <img src="https://github.com/momo0991588175-sys/Lost_and_Found_School/raw/main/images/Logo_Admin.png" alt="Admin" onerror="this.style.display='none'; this.parentElement.innerHTML='<i class=\'fa-solid fa-user-shield\'></i>';">
                             </div>
                             <h3 class="report-type-title">แจ้งปัญหา</h3>
-                            <p class="report-type-desc">กรอกรายละเอียดหรือปัญหาที่พบ<br>เพื่อแจ้งให้ผู้ดูแลระบบทราบ</p>
+                            <p class="report-type-desc">กรอกรายละเอียดหรือปัญหาที่พบเพื่อแจ้งให้ผู้ดูแลระบบทราบ</p>
                         </div>
                     </div>
                 </div>
@@ -2349,7 +2375,6 @@
                             if (!document.getElementById('page-notifications').classList.contains('hidden')) {
                                 App.loadNotificationsPage();
                             }
-                            // แสดง toast พร้อมสีตามประเภท
                             App.showNotificationToast(payload.new);
                         })
                         .subscribe();
@@ -2376,7 +2401,6 @@
                 const container = document.getElementById('toast-container');
                 const toast = document.createElement('div');
                 
-                // กำหนดสีตามประเภท
                 let iconClass = 'fa-bell';
                 let borderColor = 'var(--primary)';
                 let iconColor = 'var(--primary)';
@@ -2588,12 +2612,10 @@
                 }
             },
 
-            // แก้ไขหน้า Home ให้แสดง UI ตามสถานะ Guest/Logged-in
             renderHomePage: () => {
                 const card = document.getElementById('home-profile-card');
                 
                 if (App.isGuest) {
-                    // UI สำหรับ Guest - ไม่แสดงข้อมูลส่วนตัว
                     card.innerHTML = `
                         <div class="guest-profile-card">
                             <div class="guest-icon-wrapper">
@@ -2632,7 +2654,6 @@
                         </div>
                     `;
                 } else {
-                    // UI สำหรับ Logged-in User - แสดงข้อมูลปกติ
                     const avatarUrl = App.profile.avatar_url || `https://ui-avatars.com/api/?name=${(App.profile.full_name || 'U').charAt(0).toUpperCase()}&background=6366F1&color=fff&size=150`;
                     
                     let roleBadgeHtml = '';
@@ -2992,7 +3013,9 @@
                                     <input type="checkbox" class="notif-checkbox" data-id="${notif.id}" ${App.selectedNotifications.has(notif.id) ? 'checked' : ''} onchange="App.toggleNotification('${notif.id}')" style="margin-top:3px; cursor:pointer;">
                                     <div style="flex:1;">
                                         <div class="notification-header">
-                                            <div class="notification-title-text"><span class="item-badge ${badgeClass}"><i class="fa-solid ${icon}"></i> ${typeLabel}</span></div>
+                                            <div class="notification-title-text">
+                                                <span class="notif-badge ${badgeClass}"><i class="fa-solid ${icon}"></i> ${typeLabel}</span>
+                                            </div>
                                             <div class="notification-time"><i class="fa-regular fa-clock"></i> ${dateTime}</div>
                                         </div>
                                         ${notif.title ? `<div style="font-weight:600; margin-bottom:6px; font-size:14px;">${notif.title}</div>` : ''}
@@ -3607,7 +3630,11 @@
             preview.innerHTML = '';
             if (file) {
                 const url = URL.createObjectURL(file);
-                preview.innerHTML = file.type.startsWith('video/') ? `<div class="preview-item"><video src="${url}" controls></video></div>` : `<div class="preview-item"><img src="${url}"></div>`;
+                if (file.type.startsWith('video/')) {
+                    preview.innerHTML = `<div class="preview-item"><video src="${url}" controls></video></div>`;
+                } else {
+                    preview.innerHTML = `<div class="preview-item"><img src="${url}"></div>`;
+                }
             }
         });
         document.getElementById('found-file').addEventListener('change', (e) => {
@@ -3616,7 +3643,11 @@
             preview.innerHTML = '';
             if (file) {
                 const url = URL.createObjectURL(file);
-                preview.innerHTML = file.type.startsWith('video/') ? `<div class="preview-item"><video src="${url}" controls></video></div>` : `<div class="preview-item"><img src="${url}"></div>`;
+                if (file.type.startsWith('video/')) {
+                    preview.innerHTML = `<div class="preview-item"><video src="${url}" controls></video></div>`;
+                } else {
+                    preview.innerHTML = `<div class="preview-item"><img src="${url}"></div>`;
+                }
             }
         });
         document.getElementById('problem-file').addEventListener('change', (e) => {
