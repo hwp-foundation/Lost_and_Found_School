@@ -20,11 +20,9 @@
             --success: #10B981;
             --success-dark: #059669;
             --success-50: #ECFDF5;
-            --success-100: #D1FAE5;
             --danger: #EF4444;
             --danger-dark: #DC2626;
             --danger-50: #FEF2F2;
-            --danger-100: #FEE2E2;
             --warning: #F59E0B;
             --warning-dark: #D97706;
             --warning-50: #FFFBEB;
@@ -82,10 +80,6 @@
             50% { transform: scale(1.1); } 
         }
         @keyframes spin { to { transform: rotate(360deg); } }
-        @keyframes shimmer {
-            0% { background-position: -200% 0; }
-            100% { background-position: 200% 0; }
-        }
 
         ::-webkit-scrollbar { width: 8px; height: 8px; }
         ::-webkit-scrollbar-track { background: var(--border-light); border-radius: 4px; }
@@ -556,37 +550,6 @@
             font-weight: 500;
         }
 
-        /* Guest Login Prompt */
-        .guest-login-prompt {
-            text-align: center;
-            padding: 60px 40px;
-            background: linear-gradient(135deg, var(--primary-50), var(--primary-100));
-            border-radius: var(--radius-xl);
-            border: 2px dashed var(--primary-light);
-        }
-        .guest-login-prompt i {
-            font-size: 64px;
-            color: var(--primary);
-            margin-bottom: 20px;
-            opacity: 0.7;
-        }
-        .guest-login-prompt h3 {
-            font-size: 24px;
-            font-weight: 700;
-            color: var(--text);
-            margin-bottom: 12px;
-        }
-        .guest-login-prompt p {
-            font-size: 16px;
-            color: var(--text-secondary);
-            margin-bottom: 32px;
-            line-height: 1.6;
-        }
-        .guest-login-prompt .btn {
-            max-width: 300px;
-            margin: 0 auto;
-        }
-
         .items-grid { 
             display: grid; 
             grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); 
@@ -1023,11 +986,11 @@
             color: var(--warning-dark);
         }
         .status-badge.resolved { 
-            background: var(--success-100); 
+            background: var(--success-50); 
             color: var(--success-dark);
         }
         .status-badge.rejected { 
-            background: var(--danger-100); 
+            background: var(--danger-50); 
             color: var(--danger-dark);
         }
 
@@ -1171,7 +1134,7 @@
             animation: spin 1s linear infinite;
         }
 
-        /* Notification Page - Enhanced with Correct Colors */
+        /* Notification Page - Enhanced */
         .notification-page-header { 
             display: flex; 
             justify-content: space-between; 
@@ -1225,16 +1188,14 @@
             padding: 20px 24px; 
             margin-bottom: 16px; 
             box-shadow: var(--shadow);
+            border-left: 5px solid var(--primary); 
             transition: var(--transition);
             border: 1px solid var(--border-light);
-            border-left: 5px solid var(--primary);
         }
         .notification-card:hover { 
             transform: translateX(4px); 
             box-shadow: var(--shadow-md);
         }
-        
-        /* Notification Colors - Match Legend */
         .notification-card.type-admin_response { 
             border-left-color: var(--success);
         }
@@ -1247,7 +1208,6 @@
         .notification-card.unread { 
             background: var(--primary-50);
         }
-        
         .notification-header { 
             display: flex; 
             justify-content: space-between; 
@@ -1264,30 +1224,6 @@
             gap: 10px; 
             flex-wrap: wrap;
         }
-        
-        /* Notification Badge Colors - Match Legend */
-        .notification-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            padding: 6px 14px;
-            border-radius: 20px;
-            font-size: 11px;
-            font-weight: 600;
-        }
-        .notification-badge.success {
-            background: var(--success-100);
-            color: var(--success-dark);
-        }
-        .notification-badge.danger {
-            background: var(--danger-100);
-            color: var(--danger-dark);
-        }
-        .notification-badge.warning {
-            background: var(--warning-100);
-            color: var(--warning-dark);
-        }
-        
         .notification-time { 
             font-size: 12px; 
             color: var(--text-muted); 
@@ -1472,6 +1408,37 @@
             width: 100%;
         }
 
+        /* Guest Login Prompt */
+        .guest-login-prompt {
+            text-align: center;
+            padding: 40px 20px;
+        }
+        
+        .guest-login-prompt i {
+            font-size: 64px;
+            color: var(--text-muted);
+            margin-bottom: 20px;
+        }
+        
+        .guest-login-prompt h3 {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 12px;
+        }
+        
+        .guest-login-prompt p {
+            font-size: 16px;
+            color: var(--text-secondary);
+            margin-bottom: 24px;
+            line-height: 1.6;
+        }
+        
+        .guest-login-prompt .btn {
+            max-width: 300px;
+            margin: 0 auto;
+        }
+
         /* Responsive Design */
         @media (max-width: 1200px) {
             .sidebar { width: 240px; }
@@ -1526,10 +1493,6 @@
             .auth-box { padding: 32px 24px; }
             .auth-logo { width: 90px; height: 90px; }
             .auth-header h1 { font-size: 24px; }
-            .guest-login-prompt { padding: 40px 20px; }
-            .guest-login-prompt i { font-size: 48px; }
-            .guest-login-prompt h3 { font-size: 20px; }
-            .guest-login-prompt p { font-size: 14px; }
         }
         
         @media (max-width: 480px) {
@@ -1669,27 +1632,8 @@
                 <!-- HOME -->
                 <div id="page-home" class="page-section fade-in">
                     <div class="page-header"><h2 class="page-title">หน้าหลัก</h2></div>
-                    <div class="card profile-card">
-                        <!-- Guest Login Prompt - Show for Guest Users -->
-                        <div id="guest-profile-section" class="hidden">
-                            <div class="guest-login-prompt">
-                                <i class="fa-solid fa-right-to-bracket"></i>
-                                <h3>ยินดีต้อนรับผู้เยี่ยมชม!</h3>
-                                <p>กรุณาเข้าสู่ระบบเพื่อดูข้อมูลโปรไฟล์และใช้งานระบบเต็มรูปแบบ<br>คุณสามารถดูรายการแจ้งเหตุได้โดยไม่ต้องล็อกอิน</p>
-                                <button class="btn btn-primary" onclick="App.toggleAuth('login')">
-                                    <i class="fa-solid fa-right-to-bracket"></i> เข้าสู่ระบบ
-                                </button>
-                            </div>
-                        </div>
-                        
-                        <!-- Regular Profile - Show for Logged-in Users -->
-                        <div id="regular-profile-section">
-                            <img src="" id="dash-avatar" class="avatar-large" alt="Profile">
-                            <h3 class="user-name" id="dash-name">กำลังโหลด...</h3>
-                            <p class="user-email" id="dash-email">-</p>
-                            <div id="role-badge-container"></div>
-                            <div class="stats-row" id="stats-row"></div>
-                        </div>
+                    <div class="card profile-card" id="profile-card-content">
+                        <!-- Content will be dynamically inserted -->
                     </div>
                 </div>
 
@@ -2403,27 +2347,17 @@
                 document.getElementById('page-auth').classList.add('hidden');
                 document.getElementById('app-container').classList.remove('hidden');
                 
-                // Show/hide guest banner
                 if (App.isGuest) {
                     document.getElementById('guest-banner').classList.remove('hidden');
                     document.getElementById('nav-report').classList.add('disabled');
                     document.getElementById('guest-settings').classList.remove('hidden');
                     document.getElementById('regular-settings').classList.add('hidden');
                     document.getElementById('admin-nav-btn').classList.add('hidden');
-                    
-                    // Show guest profile prompt, hide regular profile
-                    document.getElementById('guest-profile-section').classList.remove('hidden');
-                    document.getElementById('regular-profile-section').classList.add('hidden');
                 } else {
                     document.getElementById('guest-banner').classList.add('hidden');
                     document.getElementById('nav-report').classList.remove('disabled');
                     document.getElementById('guest-settings').classList.add('hidden');
                     document.getElementById('regular-settings').classList.remove('hidden');
-                    
-                    // Hide guest profile prompt, show regular profile
-                    document.getElementById('guest-profile-section').classList.add('hidden');
-                    document.getElementById('regular-profile-section').classList.remove('hidden');
-                    
                     if (App.profile?.role === 'admin') {
                         document.getElementById('admin-nav-btn').classList.remove('hidden');
                     } else {
@@ -2551,32 +2485,70 @@
             },
 
             loadDashboardStats: async () => {
+                const profileCard = document.getElementById('profile-card-content');
+                
+                if (App.isGuest) {
+                    // แสดงข้อความแจ้งให้ login สำหรับ Guest
+                    profileCard.innerHTML = `
+                        <div class="guest-login-prompt">
+                            <i class="fa-solid fa-right-to-bracket"></i>
+                            <h3>กรุณาเข้าสู่ระบบ</h3>
+                            <p>เพื่อเข้าถึงข้อมูลโปรไฟล์และใช้งานระบบเต็มรูปแบบ<br>กรุณาออกจากระบบผู้เยี่ยมชมและเข้าสู่ระบบด้วยบัญชีของคุณ</p>
+                            <button class="btn btn-primary" onclick="App.logout()">
+                                <i class="fa-solid fa-right-to-bracket"></i> ออกจากระบบผู้เยี่ยมชม
+                            </button>
+                        </div>
+                    `;
+                    return;
+                }
+                
+                // แสดงข้อมูลโปรไฟล์ปกติสำหรับผู้ใช้ที่ login แล้ว
                 try {
-                    if (App.isGuest) {
-                        // Guest users see login prompt, no stats
-                        document.getElementById('stats-row').innerHTML = '';
-                    } else if (App.profile.role === 'admin') {
+                    if (App.profile.role === 'admin') {
                         const { count: totalLost } = await sb.from('items').select('*', {count:'exact', head:true}).eq('type', 'lost');
                         const { count: totalFound } = await sb.from('items').select('*', {count:'exact', head:true}).eq('type', 'found');
                         const { count: totalUsers } = await sb.from('profiles').select('*', {count:'exact', head:true}).neq('id', App.user.id);
                         const { count: pendingReports } = await sb.from('admin_reports').select('*', {count:'exact', head:true}).eq('status', 'pending');
-                        document.getElementById('stats-row').innerHTML = `
-                            <div class="stat-card"><div class="stat-value">${totalLost || 0}</div><div class="stat-label">การแจ้งของหาย (ทั้งหมด)</div></div>
-                            <div class="stat-card"><div class="stat-value">${totalFound || 0}</div><div class="stat-label">การแจ้งเก็บของได้ (ทั้งหมด)</div></div>
-                            <div class="stat-card"><div class="stat-value">${totalUsers || 0}</div><div class="stat-label">จำนวนสมาชิก</div></div>
-                            <div class="stat-card" onclick="App.nav('admin')" style="cursor:pointer; grid-column: span 3;"><div class="stat-value">${pendingReports || 0}</div><div class="stat-label">คำร้องขอที่รอดำเนินการ</div></div>
+                        
+                        profileCard.innerHTML = `
+                            <img src="${App.profile.avatar_url || `https://ui-avatars.com/api/?name=${(App.profile.full_name || 'U').charAt(0).toUpperCase()}&background=6366F1&color=fff&size=150`}" class="avatar-large" alt="Profile">
+                            <h3 class="user-name">${App.profile.full_name || 'ผู้ใช้'}</h3>
+                            <p class="user-email">${App.user.email}</p>
+                            <div id="role-badge-container">
+                                <span class="role-badge admin"><i class="fa-solid fa-shield-halved"></i> ผู้ดูแลระบบ</span>
+                            </div>
+                            <div class="stats-row">
+                                <div class="stat-card"><div class="stat-value">${totalLost || 0}</div><div class="stat-label">การแจ้งของหาย (ทั้งหมด)</div></div>
+                                <div class="stat-card"><div class="stat-value">${totalFound || 0}</div><div class="stat-label">การแจ้งเก็บของได้ (ทั้งหมด)</div></div>
+                                <div class="stat-card"><div class="stat-value">${totalUsers || 0}</div><div class="stat-label">จำนวนสมาชิก</div></div>
+                                <div class="stat-card" onclick="App.nav('admin')" style="cursor:pointer; grid-column: span 3;"><div class="stat-value">${pendingReports || 0}</div><div class="stat-label">คำร้องขอที่รอดำเนินการ</div></div>
+                            </div>
                         `;
                     } else {
                         const { count: lost } = await sb.from('items').select('*', {count:'exact', head:true}).eq('user_id', App.user.id).eq('type', 'lost');
                         const { count: found } = await sb.from('items').select('*', {count:'exact', head:true}).eq('user_id', App.user.id).eq('type', 'found');
                         const { count: myReports } = await sb.from('admin_reports').select('*', {count:'exact', head:true}).eq('user_id', App.user.id);
-                        document.getElementById('stats-row').innerHTML = `
-                            <div class="stat-card"><div class="stat-value">${lost || 0}</div><div class="stat-label">แจ้งของหาย</div></div>
-                            <div class="stat-card"><div class="stat-value">${found || 0}</div><div class="stat-label">แจ้งเก็บของได้</div></div>
-                            <div class="stat-card"><div class="stat-value">${myReports || 0}</div><div class="stat-label">ส่งคำร้องขอ</div></div>
+                        
+                        profileCard.innerHTML = `
+                            <img src="${App.profile.avatar_url || `https://ui-avatars.com/api/?name=${(App.profile.full_name || 'U').charAt(0).toUpperCase()}&background=6366F1&color=fff&size=150`}" class="avatar-large" alt="Profile">
+                            <h3 class="user-name">${App.profile.full_name || 'ผู้ใช้'}</h3>
+                            <p class="user-email">${App.user.email}</p>
+                            <div id="role-badge-container">
+                                <span class="role-badge ${App.profile.role}">
+                                    <i class="fa-solid fa-${App.profile.role === 'teacher' ? 'chalkboard-user' : 'user-graduate'}"></i>
+                                    ${App.profile.role === 'teacher' ? 'ครู' : 'นักเรียน'}
+                                </span>
+                            </div>
+                            <div class="stats-row">
+                                <div class="stat-card"><div class="stat-value">${lost || 0}</div><div class="stat-label">แจ้งของหาย</div></div>
+                                <div class="stat-card"><div class="stat-value">${found || 0}</div><div class="stat-label">แจ้งเก็บของได้</div></div>
+                                <div class="stat-card"><div class="stat-value">${myReports || 0}</div><div class="stat-label">ส่งคำร้องขอ</div></div>
+                            </div>
                         `;
                     }
-                } catch (err) { console.error('Stats error:', err); }
+                } catch (err) { 
+                    console.error('Stats error:', err);
+                }
             },
 
             loadUnreadNotifications: async () => {
@@ -2878,11 +2850,7 @@
                                     <input type="checkbox" class="notif-checkbox" data-id="${notif.id}" ${App.selectedNotifications.has(notif.id) ? 'checked' : ''} onchange="App.toggleNotification('${notif.id}')" style="margin-top:3px; cursor:pointer;">
                                     <div style="flex:1;">
                                         <div class="notification-header">
-                                            <div class="notification-title-text">
-                                                <span class="notification-badge ${badgeClass}">
-                                                    <i class="fa-solid ${icon}"></i> ${typeLabel}
-                                                </span>
-                                            </div>
+                                            <div class="notification-title-text"><span class="item-badge ${badgeClass}"><i class="fa-solid ${icon}"></i> ${typeLabel}</span></div>
                                             <div class="notification-time"><i class="fa-regular fa-clock"></i> ${dateTime}</div>
                                         </div>
                                         ${notif.title ? `<div style="font-weight:600; margin-bottom:6px; font-size:14px;">${notif.title}</div>` : ''}
@@ -3452,11 +3420,25 @@
                 toast.className = `toast ${type}`;
                 
                 let iconClass = 'fa-circle-xmark';
-                if (type === 'success') iconClass = 'fa-circle-check';
-                else if (type === 'warning') iconClass = 'fa-triangle-exclamation';
-                else if (title && title.includes('แจ้งเตือน')) iconClass = 'fa-bullhorn';
+                let borderColor = 'var(--danger)';
+                let iconColor = 'var(--danger)';
                 
-                toast.innerHTML = `<i class="fa-solid ${iconClass}" style="font-size:22px; color:${type==='success'?'var(--success)':type==='warning'?'var(--warning)':'var(--danger)'}"></i><div><div style="font-weight:700; font-size:15px;">${title}</div><div style="font-size:13px; color:var(--text-secondary);">${msg}</div></div>`;
+                if (type === 'success') {
+                    iconClass = 'fa-circle-check';
+                    borderColor = 'var(--success)';
+                    iconColor = 'var(--success)';
+                } else if (type === 'warning') {
+                    iconClass = 'fa-triangle-exclamation';
+                    borderColor = 'var(--warning)';
+                    iconColor = 'var(--warning)';
+                } else if (title && title.includes('แจ้งเตือน')) {
+                    iconClass = 'fa-bullhorn';
+                    borderColor = 'var(--warning)';
+                    iconColor = 'var(--warning)';
+                }
+                
+                toast.style.borderLeftColor = borderColor;
+                toast.innerHTML = `<i class="fa-solid ${iconClass}" style="font-size:22px; color:${iconColor}"></i><div><div style="font-weight:700; font-size:15px;">${title}</div><div style="font-size:13px; color:var(--text-secondary);">${msg}</div></div>`;
                 container.appendChild(toast);
                 setTimeout(() => { toast.style.animation = 'slideIn 0.4s ease reverse'; setTimeout(() => toast.remove(), 400); }, 4000);
             }
