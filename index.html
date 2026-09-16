@@ -20,9 +20,11 @@
             --success: #10B981;
             --success-dark: #059669;
             --success-50: #ECFDF5;
+            --success-100: #D1FAE5;
             --danger: #EF4444;
             --danger-dark: #DC2626;
             --danger-50: #FEF2F2;
+            --danger-100: #FEE2E2;
             --warning: #F59E0B;
             --warning-dark: #D97706;
             --warning-50: #FFFBEB;
@@ -80,6 +82,16 @@
             50% { transform: scale(1.1); } 
         }
         @keyframes spin { to { transform: rotate(360deg); } }
+        @keyframes shimmer {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
+        }
+        @keyframes bounceIn {
+            0% { opacity: 0; transform: scale(0.3); }
+            50% { opacity: 1; transform: scale(1.05); }
+            70% { transform: scale(0.9); }
+            100% { transform: scale(1); }
+        }
 
         ::-webkit-scrollbar { width: 8px; height: 8px; }
         ::-webkit-scrollbar-track { background: var(--border-light); border-radius: 4px; }
@@ -986,11 +998,11 @@
             color: var(--warning-dark);
         }
         .status-badge.resolved { 
-            background: var(--success-50); 
+            background: var(--success-100); 
             color: var(--success-dark);
         }
         .status-badge.rejected { 
-            background: var(--danger-50); 
+            background: var(--danger-100); 
             color: var(--danger-dark);
         }
 
@@ -1114,6 +1126,7 @@
         .toast.success { border-left-color: var(--success); }
         .toast.error { border-left-color: var(--danger); }
         .toast.warning { border-left-color: var(--warning); }
+        .toast.info { border-left-color: var(--primary); }
 
         #loading-overlay { 
             position: fixed; 
@@ -1134,7 +1147,7 @@
             animation: spin 1s linear infinite;
         }
 
-        /* Notification Page */
+        /* Notification Page - Enhanced */
         .notification-page-header { 
             display: flex; 
             justify-content: space-between; 
@@ -1196,17 +1209,30 @@
             transform: translateX(4px); 
             box-shadow: var(--shadow-md);
         }
+        /* แก้สีให้ตรงกับ legend */
         .notification-card.type-admin_response { 
             border-left-color: var(--success);
+            background: var(--success-50);
         }
         .notification-card.type-admin_reject { 
             border-left-color: var(--danger);
+            background: var(--danger-50);
         }
         .notification-card.type-announcement { 
             border-left-color: var(--warning);
+            background: var(--warning-50);
         }
         .notification-card.unread { 
             background: var(--primary-50);
+        }
+        .notification-card.type-admin_response.unread {
+            background: var(--success-50);
+        }
+        .notification-card.type-admin_reject.unread {
+            background: var(--danger-50);
+        }
+        .notification-card.type-announcement.unread {
+            background: var(--warning-50);
         }
         .notification-header { 
             display: flex; 
@@ -1408,35 +1434,99 @@
             width: 100%;
         }
 
-        /* Guest Login Prompt */
-        .guest-login-prompt {
+        /* Guest Profile Card - New UI */
+        .guest-profile-card {
             text-align: center;
-            padding: 40px 20px;
+            padding: 48px 36px;
         }
         
-        .guest-login-prompt i {
-            font-size: 64px;
-            color: var(--text-muted);
-            margin-bottom: 20px;
+        .guest-icon-wrapper {
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 24px;
+            background: linear-gradient(135deg, var(--warning-50), var(--warning-100));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 4px solid var(--warning);
+            box-shadow: var(--shadow-lg);
+            animation: bounceIn 0.6s ease-out;
         }
         
-        .guest-login-prompt h3 {
+        .guest-icon-wrapper i {
+            font-size: 56px;
+            color: var(--warning);
+        }
+        
+        .guest-title {
             font-size: 24px;
             font-weight: 700;
-            color: var(--text);
             margin-bottom: 12px;
+            color: var(--text);
         }
         
-        .guest-login-prompt p {
-            font-size: 16px;
+        .guest-description {
+            font-size: 15px;
             color: var(--text-secondary);
-            margin-bottom: 24px;
+            margin-bottom: 28px;
             line-height: 1.6;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
         }
         
-        .guest-login-prompt .btn {
-            max-width: 300px;
-            margin: 0 auto;
+        .guest-features {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            margin-bottom: 32px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .guest-feature-item {
+            background: var(--border-light);
+            padding: 20px 16px;
+            border-radius: var(--radius);
+            border: 1px solid var(--border);
+            transition: var(--transition);
+        }
+        
+        .guest-feature-item:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
+            border-color: var(--primary-light);
+        }
+        
+        .guest-feature-item i {
+            font-size: 28px;
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+        
+        .guest-feature-item .feature-title {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text);
+            margin-bottom: 4px;
+        }
+        
+        .guest-feature-item .feature-desc {
+            font-size: 11px;
+            color: var(--text-muted);
+        }
+        
+        .guest-cta-buttons {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .guest-cta-buttons .btn {
+            max-width: 200px;
         }
 
         /* Responsive Design */
@@ -1467,6 +1557,7 @@
             .stats-row { grid-template-columns: 1fr; }
             .items-grid { grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); }
             .report-type-selection { grid-template-columns: 1fr; }
+            .guest-features { grid-template-columns: 1fr; }
         }
         
         @media (max-width: 768px) {
@@ -1493,6 +1584,11 @@
             .auth-box { padding: 32px 24px; }
             .auth-logo { width: 90px; height: 90px; }
             .auth-header h1 { font-size: 24px; }
+            .guest-profile-card { padding: 32px 20px; }
+            .guest-icon-wrapper { width: 100px; height: 100px; }
+            .guest-icon-wrapper i { font-size: 48px; }
+            .guest-title { font-size: 20px; }
+            .guest-description { font-size: 14px; }
         }
         
         @media (max-width: 480px) {
@@ -1533,6 +1629,8 @@
             .toast i { font-size: 18px; }
             .toast div div:first-child { font-size: 14px; }
             .toast div div:last-child { font-size: 12px; }
+            .guest-cta-buttons { flex-direction: column; align-items: center; }
+            .guest-cta-buttons .btn { max-width: 100%; }
         }
         
         @media (max-width: 360px) {
@@ -1632,8 +1730,8 @@
                 <!-- HOME -->
                 <div id="page-home" class="page-section fade-in">
                     <div class="page-header"><h2 class="page-title">หน้าหลัก</h2></div>
-                    <div class="card profile-card" id="profile-card-content">
-                        <!-- Content will be dynamically inserted -->
+                    <div class="card profile-card" id="home-profile-card">
+                        <!-- Content จะถูกสร้างโดย JavaScript ตามสถานะ Guest/Logged-in -->
                     </div>
                 </div>
 
@@ -1659,7 +1757,7 @@
                                 <img src="https://github.com/momo0991588175-sys/Lost_and_Found_School/raw/main/images/Logo_Admin.png" alt="Admin" onerror="this.style.display='none'; this.parentElement.innerHTML='<i class=\'fa-solid fa-user-shield\'></i>';">
                             </div>
                             <h3 class="report-type-title">แจ้งปัญหา</h3>
-                            <p class="report-type-desc">กรอกรายละเอียดหรือปัญหาที่พบเพื่อแจ้งให้ผู้ดูแลระบบทราบ</p>
+                            <p class="report-type-desc">กรอกรายละเอียดหรือปัญหาที่พบ<br>เพื่อแจ้งให้ผู้ดูแลระบบทราบ</p>
                         </div>
                     </div>
                 </div>
@@ -2123,7 +2221,10 @@
                 sb.auth.onAuthStateChange((event, session) => {
                     if (event === 'SIGNED_IN') { 
                         App.user = session.user; 
-                        App.loadProfile().then(() => App.showApp()); 
+                        App.loadProfile().then(() => {
+                            App.showApp();
+                            App.setupRealtime();
+                        }); 
                     } else if (event === 'SIGNED_OUT') { 
                         App.user = null; 
                         App.cleanupRealtime();
@@ -2222,12 +2323,12 @@
                     full_name: 'ผู้เยี่ยมชม',
                     email: 'guest@visitor.com',
                     role: 'guest',
-                    avatar_url: 'https://ui-avatars.com/api/?name=ผู้เยี่ยมชม&background=9CA3AF&color=fff&size=150'
+                    avatar_url: null
                 };
                 App.showApp();
                 App.setupRealtime();
                 App.nav('home');
-                App.toast('success', 'เข้าสู่ระบบในฐานะผู้เยี่ยมชม', 'คุณสามารถดูรายการแจ้งเหตุได้เท่านั้น');
+                App.toast('info', 'เข้าสู่ระบบในฐานะผู้เยี่ยมชม', 'คุณสามารถดูรายการแจ้งเหตุได้เท่านั้น');
             },
 
             setupRealtime: () => {
@@ -2248,7 +2349,8 @@
                             if (!document.getElementById('page-notifications').classList.contains('hidden')) {
                                 App.loadNotificationsPage();
                             }
-                            App.toast('info', 'มีการแจ้งเตือนใหม่', payload.new.title || 'คุณมีการแจ้งเตือนใหม่');
+                            // แสดง toast พร้อมสีตามประเภท
+                            App.showNotificationToast(payload.new);
                         })
                         .subscribe();
                     
@@ -2266,6 +2368,51 @@
                     
                     App.realtimeChannels.push(reportsChannel);
                 }
+            },
+
+            showNotificationToast: (notification) => {
+                if (!notification) return;
+                
+                const container = document.getElementById('toast-container');
+                const toast = document.createElement('div');
+                
+                // กำหนดสีตามประเภท
+                let iconClass = 'fa-bell';
+                let borderColor = 'var(--primary)';
+                let iconColor = 'var(--primary)';
+                let typeLabel = 'แจ้งเตือน';
+                
+                if (notification.type === 'admin_response') {
+                    iconClass = 'fa-circle-check';
+                    borderColor = 'var(--success)';
+                    iconColor = 'var(--success)';
+                    typeLabel = 'คำร้องได้รับการดำเนินการ';
+                } else if (notification.type === 'admin_reject') {
+                    iconClass = 'fa-circle-xmark';
+                    borderColor = 'var(--danger)';
+                    iconColor = 'var(--danger)';
+                    typeLabel = 'คำร้องถูกปฏิเสธ';
+                } else if (notification.type === 'announcement') {
+                    iconClass = 'fa-bullhorn';
+                    borderColor = 'var(--warning)';
+                    iconColor = 'var(--warning)';
+                    typeLabel = 'ประกาศจากผู้ดูแลระบบ';
+                }
+                
+                toast.className = 'toast';
+                toast.style.borderLeft = `5px solid ${borderColor}`;
+                toast.innerHTML = `
+                    <i class="fa-solid ${iconClass}" style="font-size:22px; color:${iconColor}"></i>
+                    <div>
+                        <div style="font-weight:700; font-size:15px;">${notification.title || typeLabel}</div>
+                        <div style="font-size:13px; color:var(--text-secondary);">${notification.message || ''}</div>
+                    </div>
+                `;
+                container.appendChild(toast);
+                setTimeout(() => {
+                    toast.style.animation = 'slideIn 0.4s ease reverse';
+                    setTimeout(() => toast.remove(), 400);
+                }, 5000);
             },
 
             cleanupRealtime: () => {
@@ -2399,7 +2546,7 @@
                 if (activeBtn) activeBtn.classList.add('active');
                 
                 window.scrollTo(0, 0);
-                if (pageId === 'home') App.loadDashboardStats();
+                if (pageId === 'home') App.renderHomePage();
                 if (pageId === 'view-lost') App.loadLostItems();
                 if (pageId === 'notifications') App.loadNotificationsPage();
                 if (pageId === 'admin') App.loadAdminPanel();
@@ -2435,115 +2582,114 @@
                         return;
                     }
                     App.profile = profile;
-                    App.updateProfileUI();
                 } catch (err) { 
                     console.error('Load profile error:', err);
                     App.toast('error', 'โหลดข้อมูลไม่สำเร็จ', 'กรุณาลองใหม่อีกครั้ง');
                 }
             },
 
-            updateProfileUI: () => {
-                document.getElementById('dash-name').textContent = App.isGuest ? 'ผู้เยี่ยมชม' : (App.profile.full_name || 'ผู้ใช้');
-                document.getElementById('dash-email').textContent = App.isGuest ? 'guest@visitor.com' : App.user.email;
+            // แก้ไขหน้า Home ให้แสดง UI ตามสถานะ Guest/Logged-in
+            renderHomePage: () => {
+                const card = document.getElementById('home-profile-card');
                 
-                const roleBadgeContainer = document.getElementById('role-badge-container');
                 if (App.isGuest) {
-                    roleBadgeContainer.innerHTML = '';
-                } else if (App.profile.role === 'admin') {
-                    roleBadgeContainer.innerHTML = '<span class="role-badge admin"><i class="fa-solid fa-shield-halved"></i> ผู้ดูแลระบบ</span>';
-                } else if (App.profile.role === 'teacher') {
-                    roleBadgeContainer.innerHTML = '<span class="role-badge teacher"><i class="fa-solid fa-chalkboard-user"></i> ครู</span>';
+                    // UI สำหรับ Guest - ไม่แสดงข้อมูลส่วนตัว
+                    card.innerHTML = `
+                        <div class="guest-profile-card">
+                            <div class="guest-icon-wrapper">
+                                <i class="fa-solid fa-user-secret"></i>
+                            </div>
+                            <h3 class="guest-title">ยินดีต้อนรับ ผู้เยี่ยมชม</h3>
+                            <p class="guest-description">
+                                คุณกำลังใช้งานในฐานะผู้เยี่ยมชม คุณสามารถดูรายการแจ้งเหตุของหายและเก็บของได้เท่านั้น
+                                หากต้องการใช้งานเต็มรูปแบบ กรุณาเข้าสู่ระบบหรือสร้างบัญชีใหม่
+                            </p>
+                            <div class="guest-features">
+                                <div class="guest-feature-item">
+                                    <i class="fa-solid fa-magnifying-glass"></i>
+                                    <div class="feature-title">ดูรายการ</div>
+                                    <div class="feature-desc">ดูของหายและเก็บของได้</div>
+                                </div>
+                                <div class="guest-feature-item">
+                                    <i class="fa-solid fa-bell"></i>
+                                    <div class="feature-title">การแจ้งเตือน</div>
+                                    <div class="feature-desc">ดูประกาศจากระบบ</div>
+                                </div>
+                                <div class="guest-feature-item">
+                                    <i class="fa-solid fa-lock"></i>
+                                    <div class="feature-title">จำกัดสิทธิ์</div>
+                                    <div class="feature-desc">ไม่สามารถแจ้งเหตุได้</div>
+                                </div>
+                            </div>
+                            <div class="guest-cta-buttons">
+                                <button class="btn btn-primary" onclick="App.exitGuestMode()">
+                                    <i class="fa-solid fa-right-to-bracket"></i> เข้าสู่ระบบ
+                                </button>
+                                <button class="btn btn-outline" onclick="App.nav('view-lost')">
+                                    <i class="fa-solid fa-magnifying-glass"></i> ดูรายการแจ้งเหตุ
+                                </button>
+                            </div>
+                        </div>
+                    `;
                 } else {
-                    roleBadgeContainer.innerHTML = '<span class="role-badge student"><i class="fa-solid fa-user-graduate"></i> นักเรียน</span>';
-                }
-                
-                const avatarUrl = App.isGuest 
-                    ? 'https://ui-avatars.com/api/?name=ผู้เยี่ยมชม&background=9CA3AF&color=fff&size=150'
-                    : (App.profile.avatar_url || `https://ui-avatars.com/api/?name=${(App.profile.full_name || 'U').charAt(0).toUpperCase()}&background=6366F1&color=fff&size=150`);
-                document.getElementById('dash-avatar').src = avatarUrl;
-                const settingsAvatar = document.getElementById('settings-avatar-preview');
-                if(settingsAvatar) settingsAvatar.src = avatarUrl;
-                
-                if (!App.isGuest) {
-                    document.getElementById('settings-username').value = App.profile.full_name || '';
-                    document.getElementById('settings-birthday').value = App.profile.birthday || '';
-                    document.getElementById('settings-homeroom').value = App.profile.homeroom || '';
-                    document.getElementById('settings-grade').value = App.profile.grade_level || '';
-                    document.getElementById('settings-phone').value = App.profile.phone || '';
+                    // UI สำหรับ Logged-in User - แสดงข้อมูลปกติ
+                    const avatarUrl = App.profile.avatar_url || `https://ui-avatars.com/api/?name=${(App.profile.full_name || 'U').charAt(0).toUpperCase()}&background=6366F1&color=fff&size=150`;
                     
-                    document.getElementById('account-email').textContent = App.user.email || '-';
-                    document.getElementById('account-role').textContent = App.profile.role === 'admin' ? 'ผู้ดูแลระบบ' : (App.profile.role === 'teacher' ? 'ครู' : 'นักเรียน');
-                    
-                    if (App.profile.created_at) {
-                        const date = new Date(App.profile.created_at);
-                        document.getElementById('account-created').textContent = `${date.toLocaleDateString('th-TH')} - ${date.toLocaleTimeString('th-TH', {hour: '2-digit', minute: '2-digit', second: '2-digit'})}`;
+                    let roleBadgeHtml = '';
+                    if (App.profile.role === 'admin') {
+                        roleBadgeHtml = '<span class="role-badge admin"><i class="fa-solid fa-shield-halved"></i> ผู้ดูแลระบบ</span>';
+                    } else if (App.profile.role === 'teacher') {
+                        roleBadgeHtml = '<span class="role-badge teacher"><i class="fa-solid fa-chalkboard-user"></i> ครู</span>';
+                    } else {
+                        roleBadgeHtml = '<span class="role-badge student"><i class="fa-solid fa-user-graduate"></i> นักเรียน</span>';
                     }
+                    
+                    card.innerHTML = `
+                        <img src="${avatarUrl}" class="avatar-large" alt="Profile">
+                        <h3 class="user-name">${App.profile.full_name || 'ผู้ใช้'}</h3>
+                        <p class="user-email">${App.user.email}</p>
+                        ${roleBadgeHtml}
+                        <div class="stats-row" id="stats-row"></div>
+                    `;
+                    
+                    App.loadDashboardStats();
                 }
             },
 
             loadDashboardStats: async () => {
-                const profileCard = document.getElementById('profile-card-content');
-                
-                if (App.isGuest) {
-                    profileCard.innerHTML = `
-                        <div class="guest-login-prompt">
-                            <i class="fa-solid fa-right-to-bracket"></i>
-                            <h3>กรุณาเข้าสู่ระบบ</h3>
-                            <p>เพื่อเข้าถึงข้อมูลโปรไฟล์และใช้งานระบบเต็มรูปแบบ<br>กรุณาออกจากระบบผู้เยี่ยมชมและเข้าสู่ระบบด้วยบัญชีของคุณ</p>
-                            <button class="btn btn-primary" onclick="App.logout()">
-                                <i class="fa-solid fa-right-to-bracket"></i> ออกจากระบบผู้เยี่ยมชม
-                            </button>
-                        </div>
-                    `;
-                    return;
-                }
-                
                 try {
+                    if (App.isGuest) return;
+                    
                     if (App.profile.role === 'admin') {
                         const { count: totalLost } = await sb.from('items').select('*', {count:'exact', head:true}).eq('type', 'lost');
                         const { count: totalFound } = await sb.from('items').select('*', {count:'exact', head:true}).eq('type', 'found');
                         const { count: totalUsers } = await sb.from('profiles').select('*', {count:'exact', head:true}).neq('id', App.user.id);
                         const { count: pendingReports } = await sb.from('admin_reports').select('*', {count:'exact', head:true}).eq('status', 'pending');
                         
-                        profileCard.innerHTML = `
-                            <img src="${App.profile.avatar_url || `https://ui-avatars.com/api/?name=${(App.profile.full_name || 'U').charAt(0).toUpperCase()}&background=6366F1&color=fff&size=150`}" class="avatar-large" alt="Profile">
-                            <h3 class="user-name">${App.profile.full_name || 'ผู้ใช้'}</h3>
-                            <p class="user-email">${App.user.email}</p>
-                            <div id="role-badge-container">
-                                <span class="role-badge admin"><i class="fa-solid fa-shield-halved"></i> ผู้ดูแลระบบ</span>
-                            </div>
-                            <div class="stats-row">
+                        const statsRow = document.getElementById('stats-row');
+                        if (statsRow) {
+                            statsRow.innerHTML = `
                                 <div class="stat-card"><div class="stat-value">${totalLost || 0}</div><div class="stat-label">การแจ้งของหาย (ทั้งหมด)</div></div>
                                 <div class="stat-card"><div class="stat-value">${totalFound || 0}</div><div class="stat-label">การแจ้งเก็บของได้ (ทั้งหมด)</div></div>
                                 <div class="stat-card"><div class="stat-value">${totalUsers || 0}</div><div class="stat-label">จำนวนสมาชิก</div></div>
                                 <div class="stat-card" onclick="App.nav('admin')" style="cursor:pointer; grid-column: span 3;"><div class="stat-value">${pendingReports || 0}</div><div class="stat-label">คำร้องขอที่รอดำเนินการ</div></div>
-                            </div>
-                        `;
+                            `;
+                        }
                     } else {
                         const { count: lost } = await sb.from('items').select('*', {count:'exact', head:true}).eq('user_id', App.user.id).eq('type', 'lost');
                         const { count: found } = await sb.from('items').select('*', {count:'exact', head:true}).eq('user_id', App.user.id).eq('type', 'found');
                         const { count: myReports } = await sb.from('admin_reports').select('*', {count:'exact', head:true}).eq('user_id', App.user.id);
                         
-                        profileCard.innerHTML = `
-                            <img src="${App.profile.avatar_url || `https://ui-avatars.com/api/?name=${(App.profile.full_name || 'U').charAt(0).toUpperCase()}&background=6366F1&color=fff&size=150`}" class="avatar-large" alt="Profile">
-                            <h3 class="user-name">${App.profile.full_name || 'ผู้ใช้'}</h3>
-                            <p class="user-email">${App.user.email}</p>
-                            <div id="role-badge-container">
-                                <span class="role-badge ${App.profile.role}">
-                                    <i class="fa-solid fa-${App.profile.role === 'teacher' ? 'chalkboard-user' : 'user-graduate'}"></i>
-                                    ${App.profile.role === 'teacher' ? 'ครู' : 'นักเรียน'}
-                                </span>
-                            </div>
-                            <div class="stats-row">
+                        const statsRow = document.getElementById('stats-row');
+                        if (statsRow) {
+                            statsRow.innerHTML = `
                                 <div class="stat-card"><div class="stat-value">${lost || 0}</div><div class="stat-label">แจ้งของหาย</div></div>
                                 <div class="stat-card"><div class="stat-value">${found || 0}</div><div class="stat-label">แจ้งเก็บของได้</div></div>
                                 <div class="stat-card"><div class="stat-value">${myReports || 0}</div><div class="stat-label">ส่งคำร้องขอ</div></div>
-                            </div>
-                        `;
+                            `;
+                        }
                     }
-                } catch (err) { 
-                    console.error('Stats error:', err);
-                }
+                } catch (err) { console.error('Stats error:', err); }
             },
 
             loadUnreadNotifications: async () => {
@@ -2821,12 +2967,13 @@
                         const dateTime = App.formatDateTime(notif.created_at);
                         let icon, badgeClass, typeLabel;
                         
+                        // แก้สีให้ตรงกับ legend
                         if (notif.type === 'admin_response') { 
-                            icon = 'fa-check-circle'; 
+                            icon = 'fa-circle-check'; 
                             badgeClass = 'success'; 
                             typeLabel = 'คำร้องได้รับการดำเนินการ'; 
                         } else if (notif.type === 'admin_reject') { 
-                            icon = 'fa-times-circle'; 
+                            icon = 'fa-circle-xmark'; 
                             badgeClass = 'danger'; 
                             typeLabel = 'คำร้องถูกปฏิเสธ'; 
                         } else if (notif.type === 'announcement') { 
@@ -3113,7 +3260,6 @@
                     App.toast('success', 'สำเร็จ', 'ส่งผลลัพธ์ให้ผู้ใช้แล้ว');
                     App.closeAdminAcceptModal();
                     App.loadAdminReports();
-                    App.loadDashboardStats();
                 } catch (err) { App.toast('error', 'เกิดข้อผิดพลาด', err.message); } 
                 finally { App.showLoading(false); }
             },
@@ -3128,7 +3274,6 @@
                     if (error) throw error;
                     App.toast('success', 'สำเร็จ', 'ลบคำร้องแล้ว (การแจ้งเตือนของผู้ใช้ยังคงอยู่)');
                     App.loadAdminReports();
-                    App.loadDashboardStats();
                 } catch (err) { App.toast('error', 'เกิดข้อผิดพลาด', err.message); } 
                 finally { App.showLoading(false); }
             },
@@ -3279,7 +3424,18 @@
                 finally { App.showLoading(false); }
             },
 
-            loadSettingsData: () => { App.updateProfileUI(); },
+            loadSettingsData: () => {
+                if (App.isGuest) return;
+                const avatarUrl = App.profile.avatar_url || `https://ui-avatars.com/api/?name=${(App.profile.full_name || 'U').charAt(0).toUpperCase()}&background=6366F1&color=fff&size=150`;
+                document.getElementById('settings-avatar-preview').src = avatarUrl;
+                document.getElementById('settings-username').value = App.profile.full_name || '';
+                document.getElementById('account-email').textContent = App.user.email || '-';
+                document.getElementById('account-role').textContent = App.profile.role === 'admin' ? 'ผู้ดูแลระบบ' : (App.profile.role === 'teacher' ? 'ครู' : 'นักเรียน');
+                if (App.profile.created_at) {
+                    const date = new Date(App.profile.created_at);
+                    document.getElementById('account-created').textContent = `${date.toLocaleDateString('th-TH')} - ${date.toLocaleTimeString('th-TH', {hour: '2-digit', minute: '2-digit', second: '2-digit'})}`;
+                }
+            },
 
             handleAvatarUpload: async (e) => {
                 const file = e.target.files[0];
@@ -3294,7 +3450,7 @@
                     const { error: updateError } = await sb.from('profiles').update({ avatar_url: publicUrl }).eq('id', App.user.id);
                     if (updateError) throw updateError;
                     App.profile.avatar_url = publicUrl;
-                    App.updateProfileUI();
+                    App.loadSettingsData();
                     App.toast('success', 'สำเร็จ', 'อัปเดตรูปโปรไฟล์แล้ว');
                 } catch (err) { App.toast('error', 'อัปโหลดไม่สำเร็จ', err.message); } 
                 finally { App.showLoading(false); e.target.value = ''; }
@@ -3309,7 +3465,7 @@
                     const { error } = await sb.from('profiles').update({ avatar_url: null }).eq('id', App.user.id);
                     if (error) throw error;
                     App.profile.avatar_url = null;
-                    App.updateProfileUI();
+                    App.loadSettingsData();
                     App.toast('success', 'สำเร็จ', 'ลบรูปโปรไฟล์แล้ว');
                 } catch (err) { App.toast('error', 'ลบไม่สำเร็จ', err.message); } 
                 finally { App.showLoading(false); }
@@ -3323,7 +3479,7 @@
                     const { error } = await sb.from('profiles').update({ full_name: newName }).eq('id', App.user.id);
                     if (error) throw error;
                     App.profile.full_name = newName;
-                    App.updateProfileUI();
+                    App.loadSettingsData();
                     App.toast('success', 'สำเร็จ', 'เปลี่ยนชื่อ-นามสกุลเรียบร้อยแล้ว');
                 } catch (err) { App.toast('error', 'เปลี่ยนไม่สำเร็จ', err.message); } 
                 finally { App.showLoading(false); }
@@ -3391,14 +3547,18 @@
                 finally { App.showLoading(false); }
             },
 
+            exitGuestMode: () => {
+                App.isGuest = false;
+                App.user = null;
+                App.profile = null;
+                App.cleanupRealtime();
+                App.showAuth();
+                App.toast('info', 'ออกจากระบบผู้เยี่ยมชม', 'กรุณาเข้าสู่ระบบเพื่อใช้งานเต็มรูปแบบ');
+            },
+
             logout: async () => {
                 if (App.isGuest) {
-                    App.isGuest = false;
-                    App.user = null;
-                    App.profile = null;
-                    App.cleanupRealtime();
-                    App.showAuth();
-                    App.toast('success', 'ออกจากระบบ', 'คุณได้ออกจากระบบแล้ว');
+                    App.exitGuestMode();
                     return;
                 }
                 if (confirm('คุณแน่ใจว่าต้องการออกจากระบบ?')) { 
@@ -3415,27 +3575,16 @@
                 toast.className = `toast ${type}`;
                 
                 let iconClass = 'fa-circle-xmark';
-                let borderColor = 'var(--danger)';
-                let iconColor = 'var(--danger)';
+                if (type === 'success') iconClass = 'fa-circle-check';
+                else if (type === 'warning') iconClass = 'fa-triangle-exclamation';
+                else if (type === 'info') iconClass = 'fa-circle-info';
                 
-                if (type === 'success') {
-                    iconClass = 'fa-circle-check';
-                    borderColor = 'var(--success)';
-                    iconColor = 'var(--success)';
-                } else if (type === 'warning') {
-                    iconClass = 'fa-triangle-exclamation';
-                    borderColor = 'var(--warning)';
-                    iconColor = 'var(--warning)';
-                } else if (title && title.includes('แจ้งเตือน')) {
-                    iconClass = 'fa-bullhorn';
-                    borderColor = 'var(--warning)';
-                    iconColor = 'var(--warning)';
-                }
-                
-                toast.style.borderLeftColor = borderColor;
-                toast.innerHTML = `<i class="fa-solid ${iconClass}" style="font-size:22px; color:${iconColor}"></i><div><div style="font-weight:700; font-size:15px;">${title}</div><div style="font-size:13px; color:var(--text-secondary);">${msg}</div></div>`;
+                toast.innerHTML = `<i class="fa-solid ${iconClass}" style="font-size:22px; color:${type==='success'?'var(--success)':type==='warning'?'var(--warning)':type==='info'?'var(--primary)':'var(--danger)'}"></i><div><div style="font-weight:700; font-size:15px;">${title}</div><div style="font-size:13px; color:var(--text-secondary);">${msg}</div></div>`;
                 container.appendChild(toast);
-                setTimeout(() => { toast.style.animation = 'slideIn 0.4s ease reverse'; setTimeout(() => toast.remove(), 400); }, 4000);
+                setTimeout(() => {
+                    toast.style.animation = 'slideIn 0.4s ease reverse';
+                    setTimeout(() => toast.remove(), 400);
+                }, 4000);
             }
         };
 
