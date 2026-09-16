@@ -1134,7 +1134,7 @@
             animation: spin 1s linear infinite;
         }
 
-        /* Notification Page - Enhanced */
+        /* Notification Page */
         .notification-page-header { 
             display: flex; 
             justify-content: space-between; 
@@ -1659,7 +1659,7 @@
                                 <img src="https://github.com/momo0991588175-sys/Lost_and_Found_School/raw/main/images/Logo_Admin.png" alt="Admin" onerror="this.style.display='none'; this.parentElement.innerHTML='<i class=\'fa-solid fa-user-shield\'></i>';">
                             </div>
                             <h3 class="report-type-title">แจ้งปัญหา</h3>
-                            <p class="report-type-desc">กรอกรายละเอียดหรือปัญหาที่พบ<br>เพื่อแจ้งให้ผู้ดูแลระบบทราบ</p>
+                            <p class="report-type-desc">กรอกรายละเอียดหรือปัญหาที่พบเพื่อแจ้งให้ผู้ดูแลระบบทราบ</p>
                         </div>
                     </div>
                 </div>
@@ -2123,10 +2123,7 @@
                 sb.auth.onAuthStateChange((event, session) => {
                     if (event === 'SIGNED_IN') { 
                         App.user = session.user; 
-                        App.loadProfile().then(() => {
-                            App.showApp();
-                            App.setupRealtime();
-                        }); 
+                        App.loadProfile().then(() => App.showApp()); 
                     } else if (event === 'SIGNED_OUT') { 
                         App.user = null; 
                         App.cleanupRealtime();
@@ -2488,7 +2485,6 @@
                 const profileCard = document.getElementById('profile-card-content');
                 
                 if (App.isGuest) {
-                    // แสดงข้อความแจ้งให้ login สำหรับ Guest
                     profileCard.innerHTML = `
                         <div class="guest-login-prompt">
                             <i class="fa-solid fa-right-to-bracket"></i>
@@ -2502,7 +2498,6 @@
                     return;
                 }
                 
-                // แสดงข้อมูลโปรไฟล์ปกติสำหรับผู้ใช้ที่ login แล้ว
                 try {
                     if (App.profile.role === 'admin') {
                         const { count: totalLost } = await sb.from('items').select('*', {count:'exact', head:true}).eq('type', 'lost');
