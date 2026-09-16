@@ -2212,6 +2212,184 @@
         const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhlY29wbWVqYmx1bG5zbnJtY21nIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODkwMDgwMDUsImV4cCI6MjEwNDU4NDAwNX0.ad_EFeHFhoFJAvVCycc0E_fZ-kYozNdvK_wy-x6slFA';
         const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
+        // ==========================================
+        // 🔒 ระบบป้องกัน DevTools แบบสมบูรณ์
+        // ==========================================
+        
+        const SecurityProtection = {
+            youtubeUrl: 'https://www.youtube.com/watch?v=GBIIQ0kP15E',
+            detectionInterval: null,
+            isDevToolsOpen: false,
+            
+            init() {
+                this.disableRightClick();
+                this.disableKeyboardShortcuts();
+                this.disableDeveloperTools();
+                this.detectDevTools();
+                this.detectConsole();
+            },
+            
+            // ป้องกันคลิกขวา
+            disableRightClick() {
+                document.addEventListener('contextmenu', (e) => {
+                    e.preventDefault();
+                    this.triggerProtection();
+                    return false;
+                }, true);
+                
+                document.addEventListener('mousedown', (e) => {
+                    if (e.button === 2) {
+                        this.triggerProtection();
+                    }
+                }, true);
+            },
+            
+            // ป้องกันคีย์ลัดต่างๆ
+            disableKeyboardShortcuts() {
+                document.addEventListener('keydown', (e) => {
+                    // F12
+                    if (e.key === 'F12' || e.keyCode === 123) {
+                        e.preventDefault();
+                        this.triggerProtection();
+                        return false;
+                    }
+                    
+                    // Ctrl+Shift+I (Inspect Element)
+                    if (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'i' || e.keyCode === 73)) {
+                        e.preventDefault();
+                        this.triggerProtection();
+                        return false;
+                    }
+                    
+                    // Ctrl+Shift+J (Console)
+                    if (e.ctrlKey && e.shiftKey && (e.key === 'J' || e.key === 'j' || e.keyCode === 74)) {
+                        e.preventDefault();
+                        this.triggerProtection();
+                        return false;
+                    }
+                    
+                    // Ctrl+Shift+C (Inspect Element)
+                    if (e.ctrlKey && e.shiftKey && (e.key === 'C' || e.key === 'c' || e.keyCode === 67)) {
+                        e.preventDefault();
+                        this.triggerProtection();
+                        return false;
+                    }
+                    
+                    // Ctrl+U (View Source)
+                    if (e.ctrlKey && (e.key === 'U' || e.key === 'u' || e.keyCode === 85)) {
+                        e.preventDefault();
+                        this.triggerProtection();
+                        return false;
+                    }
+                    
+                    // Ctrl+S (Save)
+                    if (e.ctrlKey && (e.key === 'S' || e.key === 's' || e.keyCode === 83)) {
+                        e.preventDefault();
+                        return false;
+                    }
+                    
+                    // Ctrl+P (Print)
+                    if (e.ctrlKey && (e.key === 'P' || e.key === 'p' || e.keyCode === 80)) {
+                        e.preventDefault();
+                        return false;
+                    }
+                    
+                    // Ctrl+A (Select All) - เฉพาะใน non-input elements
+                    if (e.ctrlKey && (e.key === 'A' || e.key === 'a' || e.keyCode === 65)) {
+                        const tagName = e.target.tagName.toLowerCase();
+                        if (tagName !== 'input' && tagName !== 'textarea') {
+                            e.preventDefault();
+                            return false;
+                        }
+                    }
+                }, true);
+            },
+            
+            // ปิด DevTools
+            disableDeveloperTools() {
+                // Block devtools shortcut keys
+                window.onbeforeunload = function() {
+                    return "การเปิด DevTools เป็นการละเมิดข้อกำหนดการใช้งาน";
+                };
+                
+                // Disable debugger
+                setInterval(() => {
+                    debugger;
+                }, 100);
+            },
+            
+            // ตรวจจับการเปิด DevTools
+            detectDevTools() {
+                const threshold = 160;
+                
+                const checkDevTools = () => {
+                    const widthThreshold = window.outerWidth - window.innerWidth > threshold;
+                    const heightThreshold = window.outerHeight - window.innerHeight > threshold;
+                    
+                    if (widthThreshold || heightThreshold) {
+                        if (!this.isDevToolsOpen) {
+                            this.isDevToolsOpen = true;
+                            this.triggerProtection();
+                        }
+                    } else {
+                        this.isDevToolsOpen = false;
+                    }
+                };
+                
+                // ตรวจสอบทุก 500ms
+                this.detectionInterval = setInterval(checkDevTools, 500);
+                
+                // ตรวจสอบเมื่อ resize
+                window.addEventListener('resize', checkDevTools);
+            },
+            
+            // ตรวจจับการใช้ Console
+            detectConsole() {
+                const detectDevTools = () => {
+                    const element = new Image();
+                    Object.defineProperty(element, 'id', {
+                        get: function() {
+                            SecurityProtection.triggerProtection();
+                            return 'devtools-detected';
+                        }
+                    });
+                    console.log(element);
+                    console.dir(element);
+                };
+                
+                setInterval(detectDevTools, 1000);
+            },
+            
+            // Trigger การป้องกัน - ปิดแท็บและ redirect
+            triggerProtection() {
+                // แสดงข้อความเตือน
+                alert('⚠️ การเปิด DevTools หรือพยายามเข้าถึงโค้ดแหล่งที่มาเป็นการละเมิดข้อกำหนดการใช้งาน\n\nระบบจะทำการปิดหน้าต่างนี้และนำคุณไปยังหน้า YouTube');
+                
+                // พยายามปิดแท็บ
+                window.close();
+                
+                // ถ้าปิดไม่ได้ ให้ redirect ไป YouTube
+                setTimeout(() => {
+                    window.location.href = this.youtubeUrl;
+                }, 100);
+                
+                // Force redirect อีกครั้งถ้ายังไม่ไป
+                setTimeout(() => {
+                    window.location.replace(this.youtubeUrl);
+                }, 500);
+                
+                // Final attempt
+                setTimeout(() => {
+                    window.top.location.href = this.youtubeUrl;
+                }, 1000);
+            }
+        };
+        
+        // เริ่มต้นระบบป้องกันเมื่อโหลดหน้า
+        document.addEventListener('DOMContentLoaded', () => {
+            SecurityProtection.init();
+        });
+
         const App = {
             user: null, 
             profile: null,
@@ -2225,7 +2403,6 @@
             unreadNotifications: 0,
             selectedNotifications: new Set(),
             realtimeChannels: [],
-            devToolsCheckInterval: null,
 
             init: async () => {
                 try {
@@ -2260,82 +2437,6 @@
 
                 App.generateGradeOptions();
                 App.setupPhoneInputMask();
-                App.initSecurityMeasures();
-            },
-
-            initSecurityMeasures: () => {
-                document.addEventListener('copy', (e) => {
-                    if (!e.target.matches('input, textarea')) {
-                        e.preventDefault();
-                        return false;
-                    }
-                });
-
-                document.addEventListener('cut', (e) => {
-                    if (!e.target.matches('input, textarea')) {
-                        e.preventDefault();
-                        return false;
-                    }
-                });
-
-                document.addEventListener('contextmenu', (e) => {
-                    if (!e.target.matches('input, textarea')) {
-                        e.preventDefault();
-                        return false;
-                    }
-                });
-
-                document.addEventListener('keydown', (e) => {
-                    if (e.key === 'F12' || e.keyCode === 123) {
-                        e.preventDefault();
-                        App.handleDevToolsDetection();
-                        return false;
-                    }
-                    if (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J' || e.key === 'C')) {
-                        e.preventDefault();
-                        App.handleDevToolsDetection();
-                        return false;
-                    }
-                    if (e.ctrlKey && e.key === 'U') {
-                        e.preventDefault();
-                        return false;
-                    }
-                    if (e.ctrlKey && e.key === 'S') {
-                        e.preventDefault();
-                        return false;
-                    }
-                    if (e.ctrlKey && e.key === 'P') {
-                        e.preventDefault();
-                        return false;
-                    }
-                    if (e.ctrlKey && e.key === 'A') {
-                        const tagName = e.target.tagName.toLowerCase();
-                        if (tagName !== 'input' && tagName !== 'textarea') {
-                            e.preventDefault();
-                            return false;
-                        }
-                    }
-                });
-
-                App.devToolsCheckInterval = setInterval(() => {
-                    App.detectDevTools();
-                }, 1000);
-            },
-
-            detectDevTools: () => {
-                if (App.profile?.role === 'admin') return;
-                
-                const threshold = 160;
-                const widthThreshold = window.outerWidth - window.innerWidth > threshold;
-                const heightThreshold = window.outerHeight - window.innerHeight > threshold;
-
-                if (widthThreshold || heightThreshold) {
-                    App.handleDevToolsDetection();
-                }
-            },
-
-            handleDevToolsDetection: () => {
-                window.location.href = 'https://www.youtube.com/watch?v=GBIIQ0kP15E';
             },
 
             enterGuestMode: () => {
@@ -2444,11 +2545,6 @@
                     sb.removeChannel(channel);
                 });
                 App.realtimeChannels = [];
-                
-                if (App.devToolsCheckInterval) {
-                    clearInterval(App.devToolsCheckInterval);
-                    App.devToolsCheckInterval = null;
-                }
             },
 
             toggleUserSelection: () => {
