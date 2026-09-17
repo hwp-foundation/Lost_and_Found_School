@@ -1771,12 +1771,12 @@
                         <div class="report-type-card lost" onclick="App.nav('report-lost')">
                             <div class="report-type-icon"><i class="fa-solid fa-circle-exclamation"></i></div>
                             <h3 class="report-type-title">ของหาย</h3>
-                            <p class="report-type-desc">กรอกรายละเอียดสิ่งของที่หาย<br>รูปภาพ/วิดีโอไม่บังคับ</p>
+                            <p class="report-type-desc">กรอกรายละเอียดสิ่งของที่หาย</p>
                         </div>
                         <div class="report-type-card found" onclick="App.nav('report-found')">
                             <div class="report-type-icon"><i class="fa-solid fa-hand-holding-heart"></i></div>
                             <h3 class="report-type-title">เก็บของได้</h3>
-                            <p class="report-type-desc">กรอกรายละเอียดสิ่งของที่เก็บได้<br>รูปภาพ/วิดีโอบังคับ</p>
+                            <p class="report-type-desc">กรอกรายละเอียดสิ่งของที่เก็บได้</p>
                         </div>
                         <div class="report-type-card admin" onclick="App.nav('report-problem')">
                             <div class="report-type-icon">
@@ -1898,11 +1898,11 @@
                                 <textarea id="found-desc" class="form-control" placeholder="บอกลักษณะเฉพาะ สี ยี่ห้อ" required></textarea>
                             </div>
                             <div class="form-group">
-                                <label>รูปภาพหรือวิดีโอ <span style="color:var(--danger)">*</span></label>
+                                <label>รูปภาพหรือวิดีโอ (บังคับ) <span style="color:var(--danger)">*</span></label>
                                 <label for="found-file" class="file-upload-box">
                                     <i class="fa-solid fa-cloud-arrow-up"></i>
                                     <p style="font-weight: 600; margin-bottom: 4px;">คลิกเพื่อเลือกรูปภาพหรือวิดีโอ</p>
-                                    <small style="color: var(--text-muted)">รองรับ PNG, JPG, MP4 (บังคับ)</small>
+                                    <small style="color: var(--text-muted)">รองรับ PNG, JPG, MP4 (สูงสุด 10MB)</small>
                                 </label>
                                 <input type="file" id="found-file" accept="image/png,image/jpeg,video/mp4" class="hidden" required>
                                 <div id="found-preview" class="preview-container"></div>
@@ -3303,7 +3303,7 @@
             },
 
             deleteAdminReportOwn: async (reportId) => {
-                if (!confirm('ยืนยันการลบ? (ลบเฉพาะในแผงควบคุม ไม่ลบการแจ้งเตือนของผู้ใช้)')) return;
+                if (!confirm('ยืนยันการลบ? (ลบทั้งหมด)')) return;
                 App.showLoading(true);
                 try {
                     const { data: report } = await sb.from('admin_reports').select('image_url').eq('id', reportId).single();
